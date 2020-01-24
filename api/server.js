@@ -8,4 +8,8 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
+server.get('/', (req, res) => {
+    res.status(200).json({ server: "server is up"})
+})
+
 module.exports = server;
