@@ -20,7 +20,7 @@ function addCoach(coach) {
 
 function findCoachBy(username) {
     return db('coaches')
-        .where(username)
+        .where({username})
         .first();
 }
 

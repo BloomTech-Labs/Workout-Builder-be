@@ -119,4 +119,8 @@ temp/
 # Ignore all local history of files
 .history
 
+### Don't include mac files
+.DS_Store
+
+
 # End of https://www.gitignore.io/api/node,visualstudiocode
