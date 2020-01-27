@@ -12,6 +12,7 @@ module.exports = router;
 
 const {
   validBodyCheck,
+  validTokenCheck,
 } = require('../middleware/custom_middleware');
 
 
@@ -91,3 +92,12 @@ function signToken(user) {
 
 
 
+// ********************************************************
+// GET /auth/logincheck
+// ********************************************************
+router.get('/logincheck',
+  validTokenCheck,
+  (req,res)=> {
+    res.status(200).send("You are on a restricted page");
+  }
+)
