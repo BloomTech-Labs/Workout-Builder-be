@@ -21,7 +21,7 @@ const {
 // POST /auth/register
 // ********************************************************
 router.post('/register',
-  validBodyCheck(["first_name","last_name", "username","password"]),
+  validBodyCheck(["first_name","last_name", "email","password"]),
   (req,res)=>{
     let coachesInfo = req.body;
 
@@ -29,12 +29,16 @@ router.post('/register',
     // hashRounds is the number of rounds (2^14) - iterations
     const hash = bcrypt.hashSync(coachesInfo.password, hashRounds);
 
+   
+
     // override the plain text password with the hash
     coachesInfo.password = hash;
 
     Coaches.addCoach(coachesInfo)
       .then(saved => {
-        res.status(201).json(saved);
+        const token = signToken(saved, 'coach');
+
+        res.status(200).json({ token, message: "Logged In", first_name: saved.first_name, last_name: saved.last_name });
       })
       .catch(error => {
         res.status(500).json(error);
@@ -49,21 +53,21 @@ router.post('/register',
 // POST /auth/login
 // ********************************************************
 router.post("/login",
-  validBodyCheck(["username","password"]),
+  validBodyCheck(["email","password"]),
   (req,res)=>{
-    let {username, password} =req.body;
-    // console.log("In router.post",username,password);
-    Coaches.findCoachBy(username)
+    let {email, password} =req.body;
+    // console.log("In router.post",email,password);
+    Coaches.findCoachBy(email)
       .then(user=>{
         if (user && bcrypt.compareSync(password, user.password)) {
 
         //Create a token
-        const token = signToken(user);
+        const token = signToken(user,'coach');
 
-          res.status(200).json({ token, message: "Logged In", coachID:user.id, username:user.username });
+          res.status(200).json({ token, message: "Logged In", first_name: user.first_name, last_name: user.last_name });
         }
         else {
-          res.status(401).json({ message: "Failed to login. Incorrect username or password" });
+          res.status(401).json({ message: "Failed to login. Incorrect email or password" });
         }
       })
       .catch(error => {
@@ -76,13 +80,14 @@ router.post("/login",
 // ********************************************************
 // signToken
 // ********************************************************
-function signToken(user) {
+function signToken(user, role) {
   const payload = {
-    coachID: user.id
+    coachID: user.id,
+    role: role
   };
 
   const secret = jwtSecret;
-
+  
   const options = {
     expiresIn: "24h",
   };

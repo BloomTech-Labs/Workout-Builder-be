@@ -1,7 +1,10 @@
+
+
+
 module.exports = {
 
   hashRounds:14,
-  jwtSecret:"Hello"
+  jwtSecret: process.env.DB_JWTSECRET
 
 
 }
