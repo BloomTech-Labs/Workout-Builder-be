@@ -11,7 +11,7 @@ server.use(cors());
 
 // first endpoint
 server.get('/', (req, res) => {
-    res.status(200).json({ server: "server is up"})
-})
+  res.status(200).json({ server: 'server is up' });
+});
 
 module.exports = server;
