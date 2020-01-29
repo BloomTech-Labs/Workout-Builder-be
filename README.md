@@ -8,6 +8,7 @@
 
 #### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
 
+
 ## 1️⃣ Getting started
 
 To get the server running locally:
@@ -28,17 +29,19 @@ To get the server running locally:
 -    Point Three
 -    Point Four
 
+
 ## 2️⃣ Endpoints
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+#### Base URL for heroku deployed API
+https://labs20-workout-builder.herokuapp.com
 
-#### Organization Routes
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+#### Auth Routes
+
+| Method | Endpoint                | Access Control | Description                                  | 
+| ------ | ----------------------- | -------------- | -------------------------------------------- | 
+| POST   | `/auth/register`        | all users      | Register as a new coach (sends token)        | 
+| POST   | `/auth/login`           | all users      | Log in as an existing coach (sends token)    | 
 
 #### User Routes
 
@@ -51,22 +54,29 @@ To get the server running locally:
 | PUT    | `/users/:userId`        | owners, supervisors |                                                    |
 | DELETE | `/users/:userId`        | owners, supervisors |                                                    |
 
+
 # Data Model
 
-🚫This is just an example. Replace this with your data model
-
-#### 2️⃣ ORGANIZATIONS
+#### Coaches
 
 ---
 
 ```
+| Name | Type | Required | Unique | Notes |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Coach's id |
+| first_name | string | yes* | no | Coach's first name |
+| last_name | string | yes* | no | Coach's last name  |
+| email | string | yes | yes | Coach's email (max 100 char) |
+| password | string | yes | no | Coach's password (max 100 char) |
+*for registration only 
+
 {
   id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+  first_name: STRING
+  last_name: STRING
+  email: STRING
+  password: STRING
 }
 ```
 
