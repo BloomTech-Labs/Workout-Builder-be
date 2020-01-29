@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   validBodyCheck,
@@ -18,11 +18,11 @@ function validBodyCheck(propts) {
   return function (req,res,next) {
     const body = req.body;
     let isError = false;
-    let errMsg = "";
+    let errMsg = '';
 
     if(Object.keys(body).length === 0) {
       isError = true;
-      errMsg = "missing request body";
+      errMsg = 'missing request body';
     } 
     else if(!isError) {
       propts.forEach(elem=>{
@@ -30,7 +30,7 @@ function validBodyCheck(propts) {
           isError = true;
           errMsg = `missing field ${elem} in request body`;
         }
-      })  
+      });  
     }
 
     if(isError) {
@@ -39,7 +39,7 @@ function validBodyCheck(propts) {
     else {
       next();
     }    
-  }
+  };
 }
 
 // ********************************************************
@@ -52,7 +52,7 @@ function validTokenCheck(req, res, next) {
 
     jwt.verify(authorization, jwtSecret, function(err, decodedToken) {
       if (err) {
-        res.status(401).json({ message: "Invalid Token" });
+        res.status(401).json({ message: 'Invalid Token' });
       } else {
 
         req.token = decodedToken;
@@ -61,6 +61,6 @@ function validTokenCheck(req, res, next) {
       }
     });
   } else {
-    res.status(400).json({ message: "Please login first" });
+    res.status(400).json({ message: 'Please login first' });
   }
 }

@@ -4,4 +4,4 @@ module.exports = {
   jwtSecret: process.env.DB_JWTSECRET
 
 
-}
+};

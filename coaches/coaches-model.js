@@ -1,32 +1,34 @@
 const db = require('../data/db-config');
 
 module.exports = {
-    addCoach,
-    findCoachBy,
-    getCoachById
-}
+  addCoach,
+  findCoachBy,
+  getCoachById
+};
 
 
 function addCoach(coach) {
-    return db('coaches')
-        .insert(coach, 'id')
-        .then(ids => {
-            const [id] = ids;
-            return db('coaches')
-                .where({ id })
-                .first();
-        })
+  return db('coaches')
+    .insert(coach, 'id')
+    .then(ids => {
+      const [id] = ids;
+      return db('coaches')
+        .where({ id })
+        .first();
+    });
 }
 
 function findCoachBy(email) {
-    return db('coaches')
-        .where({email})
-        .first();
+  // console.log('in findcoachby', email)
+  return db('coaches')
+
+    .where({email})
+    .first();
 }
 
 function getCoachById(id) {
-    return db('coaches')
-        .where({ id })
-        .first();
+  return db('coaches')
+    .where({ id })
+    .first();
 }
 

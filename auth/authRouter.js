@@ -1,15 +1,15 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const passport = require('passport');
 const router = express.Router();
 
 const Coaches = require('../coaches/coaches-model');
-
+const passportSetup = require('../config/passport-setup');
 const {jwtSecret,hashRounds} = require('../consts');
 
 module.exports = router;
-
+router.use(passport.initialize());
 const {
   validBodyCheck,
   validTokenCheck,
@@ -25,24 +25,37 @@ router.post('/register',
   (req,res)=>{
     let coachesInfo = req.body;
 
-    // hash the password
-    // hashRounds is the number of rounds (2^14) - iterations
-    const hash = bcrypt.hashSync(coachesInfo.password, hashRounds);
+    Coaches 
+      .findCoachBy(coachesInfo.email)
+      .then(coach => {
+        // console.log(coach, 'coach');
+        if (coach && coach.password === null){
+          res.status(400).json({message: 'Google social login was done previously, can not register local login'});
+        } else if(coach && coach.password !== null){
+          res.status(400).json({message: 'local login was done previously'});
+
+        }else{
+          // hash the password
+          // hashRounds is the number of rounds (2^14) - iterations
+          const hash = bcrypt.hashSync(coachesInfo.password, hashRounds);
 
    
 
-    // override the plain text password with the hash
-    coachesInfo.password = hash;
+          // override the plain text password with the hash
+          coachesInfo.password = hash;
 
-    Coaches.addCoach(coachesInfo)
-      .then(saved => {
-        const token = signToken(saved, 'coach');
+          Coaches.addCoach(coachesInfo)
+            .then(saved => {
+              const token = signToken(saved, 'coach');
 
-        res.status(200).json({ token, message: 'Logged In', first_name: saved.first_name, last_name: saved.last_name });
-      })
-      .catch(error => {
-        res.status(500).json(error);
+              res.status(200).json({ token, message: 'Logged In', first_name: saved.first_name, last_name: saved.last_name });
+            })
+            .catch(error => {
+              res.status(500).json(error);
+            });
+        }
       });
+ 
   }
 
 );
@@ -58,15 +71,19 @@ router.post('/login',
     let {email, password} =req.body;
     // console.log("In router.post",email,password);
     Coaches.findCoachBy(email)
+      
       .then(user=>{
-        if (user && bcrypt.compareSync(password, user.password)) {
+        // console.log('in the then statement', user)
+        if (user && user.password !== null && bcrypt.compareSync(password, user.password)) {
 
           //Create a token
           const token = signToken(user,'coach');
 
           res.status(200).json({ token, message: 'Logged In', first_name: user.first_name, last_name: user.last_name });
-        }
-        else {
+        } else if (user && user.password === null ){
+          res.status(400).json({message: 'Google social login was done previously, can not local login'})
+
+        } else {
           res.status(401).json({ message: 'Failed to login. Incorrect email or password' });
         }
       })
@@ -76,6 +93,23 @@ router.post('/login',
   }
 );
 
+// ********************************************************
+//  auth with google
+// ********************************************************
+
+router.get('/google', passport.authenticate('google', {
+  scope:['profile', 'email']
+}));
+
+
+
+router.get('/google/callback', passport.authenticate('google', { session: false}), (req,res) => {
+  console.log('callback', req.user );
+  const token = signToken(req.user,'coach');
+
+  res.status(200).json({ token, message: 'Logged In', first_name: req.user.first_name, last_name: req.user.last_name });
+  // res.redirect('/profile');
+});
 
 // ********************************************************
 // signToken
