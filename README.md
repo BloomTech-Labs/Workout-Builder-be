@@ -68,7 +68,8 @@ https://labs20-workout-builder.herokuapp.com
 | last_name | string | yes* | no | Coach's last name  |
 | email | string | yes | yes | Coach's email (max 100 char) |
 | password | string | yes | no | Coach's password (max 100 char) |
-*for registration only 
+
+_*for registration only_
 
 ```
 {
