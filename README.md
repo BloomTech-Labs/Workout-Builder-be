@@ -61,7 +61,6 @@ https://labs20-workout-builder.herokuapp.com
 
 ---
 
-```
 | Name | Type | Required | Unique | Notes |
 | ---- | ---- | -------- | ------ | ----- |
 | id | integer | yes | yes | Coach's id |
@@ -71,6 +70,7 @@ https://labs20-workout-builder.herokuapp.com
 | password | string | yes | no | Coach's password (max 100 char) |
 *for registration only 
 
+```
 {
   id: UUID
   first_name: STRING
