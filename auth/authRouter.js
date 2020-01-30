@@ -50,7 +50,7 @@ router.post('/register',
             .then(saved => {
               const token = signToken(saved, 'coach');
 
-              res.status(200).json({ token, message: 'Logged In', first_name: saved.first_name, last_name: saved.last_name });
+              res.status(201).json({ token, message: 'Logged In', first_name: saved.first_name, last_name: saved.last_name });
             })
             .catch(error => {
               res.status(500).json(error);
