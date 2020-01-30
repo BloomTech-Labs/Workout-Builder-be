@@ -39,27 +39,36 @@ https://labs20-workout-builder.herokuapp.com
 ### Auth Routes
 
 #### Register
-----
+
 Registers a new coach
 
 * **Method**
+
   `POST`
 
 * **Endpoint**
+
   `/auth/register`
 
 * **Data Params**
+
     **Required:**
-    `first_name: [string]`
-    `last_name: [string]`
-    `email: [string]`
-    `password: [string]`
+
+    ```
+    {
+      first_name: [string]
+      last_name: [string]
+      email: [string]
+      password: [string]
+    }
+    ```
 
 * **Success Response**
     * **Code:** 201
     * **Content:** 
       ```
-      { token: [jwt],
+      { 
+        token: [jwt],
         message: 'Logged In',
         first_name: [first name],
         last_name: [last name]
@@ -68,25 +77,35 @@ Registers a new coach
 
 
 #### Login
-----
+
 Logs in an existing coach
 
 * **Method**
+
   `POST`
 
 * **Endpoint**
+
   `/auth/login`
 
 * **Data Params**
+
     **Required:**
-    `email: [string]`
-    `password: [string]`
+
+    ```
+    {
+      email: [string]
+      password: [string]
+    }
+    ```
 
 * **Success Response**
+
     * **Code:** 200
     * **Content:** 
       ```
-      { token: [jwt],
+      { 
+        token: [jwt],
         message: 'Logged In',
         first_name: [first name],
         last_name: [last name]
