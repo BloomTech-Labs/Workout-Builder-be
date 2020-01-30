@@ -37,22 +37,17 @@ https://labs20-workout-builder.herokuapp.com
 
 
 ### Auth Routes
+----
 
-#### Register
-
-Registers a new coach
+### REGISTER
 
 * **Method**
-
   `POST`
 
 * **Endpoint**
-
   `/auth/register`
 
 * **Data Params**
-
-    **Required:**
 
     ```
     {
@@ -76,9 +71,7 @@ Registers a new coach
       ```
 
 
-#### Login
-
-Logs in an existing coach
+### LOGIN
 
 * **Method**
 
@@ -89,8 +82,6 @@ Logs in an existing coach
   `/auth/login`
 
 * **Data Params**
-
-    **Required:**
 
     ```
     {
