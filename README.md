@@ -40,8 +40,20 @@ https://labs20-workout-builder.herokuapp.com
 
 | Method | Endpoint                | Access Control | Description                                  | 
 | ------ | ----------------------- | -------------- | -------------------------------------------- | 
-| POST   | `/auth/register`        | all users      | Register as a new coach (sends token)        | 
-| POST   | `/auth/login`           | all users      | Log in as an existing coach (sends token)    | 
+| POST   | `/auth/register`        | all users      | Register as a new coach       | 
+| POST   | `/auth/login`           | all users      | Log in as an existing coach    |
+
+
+##### Returned Response for Register & Login: 
+```
+{
+  id: UUID
+  first_name: STRING
+  last_name: STRING
+  email: STRING
+  token: JWT
+}
+```
 
 #### User Routes
 
