@@ -36,24 +36,68 @@ To get the server running locally:
 https://labs20-workout-builder.herokuapp.com
 
 
-#### Auth Routes
+### Auth Routes
 
-| Method | Endpoint                | Access Control | Description                                  | 
-| ------ | ----------------------- | -------------- | -------------------------------------------- | 
-| POST   | `/auth/register`        | all users      | Register as a new coach       | 
-| POST   | `/auth/login`           | all users      | Log in as an existing coach    |
+#### Register
+----
+Registers a new coach
+
+* **Method**
+  `POST`
+
+* **Endpoint**
+  `/auth/register`
+
+* **Data Params**
+    **Required:**
+    `first_name: [string]`
+    `last_name: [string]`
+    `email: [string]`
+    `password: [string]`
+
+* **Success Response**
+    * **Code:** 201
+    * **Content:** 
+      ```
+      { token: [jwt],
+        message: 'Logged In',
+        first_name: [first name],
+        last_name: [last name]
+      }
+      ```
 
 
-##### Returned Response for Register & Login: 
-```
-{
-  id: UUID
-  first_name: STRING
-  last_name: STRING
-  email: STRING
-  token: JWT
-}
-```
+#### Login
+----
+Logs in an existing coach
+
+* **Method**
+  `POST`
+
+* **Endpoint**
+  `/auth/login`
+
+* **Data Params**
+    **Required:**
+    `email: [string]`
+    `password: [string]`
+
+* **Success Response**
+    * **Code:** 200
+    * **Content:** 
+      ```
+      { token: [jwt],
+        message: 'Logged In',
+        first_name: [first name],
+        last_name: [last name]
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 401
+    * **Content:** `{ message: 'Failed to login. Incorrect email or password' }`
+
+
 
 #### User Routes
 
