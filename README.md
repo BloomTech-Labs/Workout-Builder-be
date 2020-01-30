@@ -36,15 +36,17 @@ To get the server running locally:
 https://labs20-workout-builder.herokuapp.com
 
 
-### Auth Routes
+### AUTH Routes
+
+#### Register
 ----
 
-### REGISTER
-
 * **Method**
+
   `POST`
 
 * **Endpoint**
+
   `/auth/register`
 
 * **Data Params**
@@ -71,7 +73,8 @@ https://labs20-workout-builder.herokuapp.com
       ```
 
 
-### LOGIN
+#### Login
+----
 
 * **Method**
 
@@ -123,7 +126,7 @@ https://labs20-workout-builder.herokuapp.com
 
 # Data Model
 
-#### Coaches
+#### COACHES
 
 ---
 
