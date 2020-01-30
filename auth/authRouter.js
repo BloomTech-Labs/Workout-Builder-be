@@ -83,7 +83,7 @@ router.post('/login',
 
           res.status(200).json({ token, message: 'Logged In', first_name: user.first_name, last_name: user.last_name });
         } else if (user && user.password === null ){
-          res.status(400).json({message: 'Google social login was done previously, can not local login'})
+          res.status(400).json({message: 'Google social login was done previously, can not local login'});
 
         } else {
           res.status(401).json({ message: 'Failed to login. Incorrect email or password' });
