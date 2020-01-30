@@ -5,7 +5,9 @@ const passport = require('passport');
 const router = express.Router();
 
 const Coaches = require('../coaches/coaches-model');
-const passportSetup = require('../config/passport-setup');
+// const passportSetup = require('../config/passport-setup');
+
+require('../config/passport-setup')(passport);
 const {jwtSecret,hashRounds} = require('../consts');
 
 module.exports = router;
@@ -28,7 +30,7 @@ router.post('/register',
     Coaches 
       .findCoachBy(coachesInfo.email)
       .then(coach => {
-        // console.log(coach, 'coach');
+       
         if (coach && coach.password === null){
           res.status(400).json({message: 'Google social login was done previously, can not register local login'});
         } else if(coach && coach.password !== null){
@@ -69,11 +71,11 @@ router.post('/login',
   validBodyCheck(['email','password']),
   (req,res)=>{
     let {email, password} =req.body;
-    // console.log("In router.post",email,password);
+
     Coaches.findCoachBy(email)
       
       .then(user=>{
-        // console.log('in the then statement', user)
+       
         if (user && user.password !== null && bcrypt.compareSync(password, user.password)) {
 
           //Create a token
@@ -104,7 +106,7 @@ router.get('/google', passport.authenticate('google', {
 
 
 router.get('/google/callback', passport.authenticate('google', { session: false}), (req,res) => {
-  console.log('callback', req.user );
+ 
   const token = signToken(req.user,'coach');
 
   res.status(200).json({ token, message: 'Logged In', first_name: req.user.first_name, last_name: req.user.last_name });

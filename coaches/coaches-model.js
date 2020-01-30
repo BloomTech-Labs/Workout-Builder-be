@@ -19,7 +19,7 @@ function addCoach(coach) {
 }
 
 function findCoachBy(email) {
-  // console.log('in findcoachby', email)
+ 
   return db('coaches')
 
     .where({email})
