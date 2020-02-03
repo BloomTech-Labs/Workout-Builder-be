@@ -3,10 +3,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const router = express.Router();
-
 const Coaches = require('../coaches/coaches-model');
 // const passportSetup = require('../config/passport-setup');
-
+const url = require('url');
 require('../config/passport-setup')(passport);
 const {jwtSecret,hashRounds} = require('../consts');
 
@@ -108,8 +107,18 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/callback', passport.authenticate('google', { session: false}), (req,res) => {
  
   const token = signToken(req.user,'coach');
-  const url = process.env.FRONTEND_DOMAIN;
-  res.redirect(`${url}/${token}/${req.user.first_name}/${req.user.last_name}`);
+  // const url = process.env.FRONTEND_DOMAIN;
+  // res.redirect(`${url}/${token}/${req.user.first_name}/${req.user.last_name}`);
+  
+  res.redirect(url.format({
+    pathname: process.env.FRONTEND_DOMAIN,
+    query: {
+      token,
+      first_name: req.user.first_name,
+      last_name: req.user.last_name
+    }
+  }));
+
 });
 
 // ********************************************************
