@@ -62,6 +62,7 @@ https://labs20-workout-builder.herokuapp.com
 
 * **Success Response**
     * **Code:** 201
+    
       **Content:** 
       ```
       { 
@@ -74,11 +75,15 @@ https://labs20-workout-builder.herokuapp.com
 
 * **Error Response**
     * **Code:** 400
+
       **Reason:** Email already exists and registered via Google social login
+
       **Content:** `{ message: 'Google social login was done previously, cannot register local login' }`
 
     * **Code:** 400
+
       **Reason:** Email already exists and registered via local login
+
       **Content:** `{ message: 'local login was done previously' }`
 
 
@@ -105,6 +110,7 @@ https://labs20-workout-builder.herokuapp.com
 * **Success Response**
 
     * **Code:** 200
+
       **Content:** 
       ```
       { 
@@ -117,11 +123,15 @@ https://labs20-workout-builder.herokuapp.com
 
 * **Error Response**
     * **Code:** 401
+
       **Reason:** Incorrect email or password; cannot find match in database
+
       **Content:** `{ message: 'Failed to login. Incorrect email or password' }`
 
     * **Code:** 400
+
       **Reason:** Email already exists and logged in via Google social login
+
       **Content:** `{ message: 'Google social login was done previously, cannot local login' }`
 
 
