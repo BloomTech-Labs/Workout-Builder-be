@@ -38,8 +38,8 @@ https://labs20-workout-builder.herokuapp.com
 
 ### AUTH Routes
 
-#### Register
 ----
+#### _Register_
 
 * **Method**
 
@@ -62,7 +62,7 @@ https://labs20-workout-builder.herokuapp.com
 
 * **Success Response**
     * **Code:** 201
-    
+
       **Content:** 
       ```
       { 
@@ -86,9 +86,8 @@ https://labs20-workout-builder.herokuapp.com
 
       **Content:** `{ message: 'local login was done previously' }`
 
-
-#### Login
 ----
+#### _Login_
 
 * **Method**
 
@@ -134,9 +133,8 @@ https://labs20-workout-builder.herokuapp.com
 
       **Content:** `{ message: 'Google social login was done previously, cannot local login' }`
 
-
-#### Google Login
 ----
+#### _Google Login_
 
 * **Method**
 
