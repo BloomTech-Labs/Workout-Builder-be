@@ -1,45 +1,33 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend delpoyed at [Heroku](https://labs20-workout-builder.herokuapp.com) <br>
 
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
-
 - Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+- **npm install** to install all required dependencies
+- **npm run server** to start the local server
+- **npm test** to start server using testing environment
 
-### Backend framework goes here
+### Node.js with Express & Knex
 
-🚫 Why did you choose this framework?
-
--    Point One
--    Point Two
--    Point Three
--    Point Four
+-    Powerful performance
+-    Ease of coding with JavaScript
+-    Perfect for scalable network applications
+-    Express is commonly considered the standard framework for the majority of Node.js applications
+-    Knex is simple and optimal for server/database interaction
 
 
 ## 2️⃣ Endpoints
-
-#### Base URL for heroku deployed API
-https://labs20-workout-builder.herokuapp.com
 
 
 ### AUTH Routes
 
 ----
-#### _Register_
+#### _REGISTER_
 
 * **Method**
 
@@ -87,7 +75,7 @@ https://labs20-workout-builder.herokuapp.com
       **Content:** `{ message: 'local login was done previously' }`
 
 ----
-#### _Login_
+#### _LOGIN_
 
 * **Method**
 
@@ -134,7 +122,7 @@ https://labs20-workout-builder.herokuapp.com
       **Content:** `{ message: 'Google social login was done previously, cannot local login' }`
 
 ----
-#### _Google Login_
+#### _GOOGLE LOGIN_
 
 * **Method**
 
@@ -150,23 +138,9 @@ https://labs20-workout-builder.herokuapp.com
 
 
 
-#### User Routes
-
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
-
-
 # Data Model
 
 #### COACHES
-
----
 
 | Name | Type | Required | Unique | Notes |
 | ---- | ---- | -------- | ------ | ----- |
@@ -188,25 +162,6 @@ _*for registration only_
 }
 ```
 
-#### USERS
-
----
-
-```
-{
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
-}
-```
 
 ## 2️⃣ Actions
 
