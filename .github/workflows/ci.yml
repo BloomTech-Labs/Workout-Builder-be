@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
         with:
-          node-version: '12'
+          node-version: ${{ matrix.node-version }}
       - run: npm install
       - uses: paambaati/codeclimate-action@v2.2.4
         env:
