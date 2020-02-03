@@ -1,0 +1,35 @@
+name: build
+on: [push]
+jobs:
+  test:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macOS-latest]
+        node: [12.x, 10.x]
+    name: test/node ${{ matrix.node-version }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build --if-present
+      - run: npm test
+        env:
+          CI: true
+  coverage:
+    needs: [test]
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: '12'
+      - run: npm install
+      - uses: paambaati/codeclimate-action@v2.2.4
+        env:
+          CC_TEST_REPORTER_ID: 73e5c9192cc4ce120a00d08984a41341c6c280822a15fd878936d410b193e809
+        with:
+          coverageCommand: npx jest --coverage
