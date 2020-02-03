@@ -6,6 +6,8 @@
 
 # API Documentation
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/bf39ec6641781d731b81/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/Workout-Builder-be/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/bf39ec6641781d731b81/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/Workout-Builder-be/test_coverage)
+
 #### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
 
 ## 1️⃣ Getting started
