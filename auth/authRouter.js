@@ -108,9 +108,8 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/callback', passport.authenticate('google', { session: false}), (req,res) => {
  
   const token = signToken(req.user,'coach');
-
-  res.status(200).json({ token, message: 'Logged In', first_name: req.user.first_name, last_name: req.user.last_name });
-  // res.redirect('/profile');
+  const url = process.env.FRONTEND_DOMAIN;
+  res.redirect(`${url}/${token}/${req.user.first_name}/${req.user.last_name}`);
 });
 
 // ********************************************************
