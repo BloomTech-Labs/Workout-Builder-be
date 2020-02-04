@@ -142,7 +142,7 @@ To get the server running locally:
 
 #### COACHES
 
-| Name | Type | Required | Unique | Notes |
+| Name | Type | Required | Unique | Description |
 | ---- | ---- | -------- | ------ | ----- |
 | id | integer | yes | yes | Coach's id |
 | first_name | string | yes<sup>1</sup> | no | Coach's first name |
@@ -151,6 +151,7 @@ To get the server running locally:
 | password | string | yes<sup>2</sup> | no | Coach's password (max 100 char) |
 
 <sup>1</sup> _for registration only_
+
 <sup>2</sup> _for local auth only_
 
 ```
