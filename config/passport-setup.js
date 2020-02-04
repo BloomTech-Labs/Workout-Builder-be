@@ -6,18 +6,15 @@ const Coaches = require('../coaches/coaches-model');
 
 function googleStrt(accessToken, refreshToken, users, done) {
   // //check if user already exists in our own db
-  // console.log('Inside the googleStrt function');
 
   Coaches
     .findCoachBy(users._json.email)
     .then((currentUser) => {
       if(currentUser){
       // already have this user
-        // console.log('Inside the googleStrt function & if block');
         done(null, currentUser);
       } else {
       // if not, create user in our db
-        // console.log('Inside the googleStrt function & else block');
         const coach = { 
           first_name: users.name.givenName, 
           last_name: users.name.familyName,  
@@ -25,7 +22,6 @@ function googleStrt(accessToken, refreshToken, users, done) {
         };
         Coaches.addCoach(coach)
           .then((newUser) => {
-            // console.log('created new user: ', newUser);
             done(null, newUser);
           });
       }

@@ -24,7 +24,6 @@ describe ('coaches model', () => {
     it('find a coach by email', async () => {
       let coachObtained = await Coaches.findCoachBy('test@mail.com');
       expect(coachObtained.password).toBe('Hello');
-      expect(coachObtained.email).toBe('test@mail.com');
     });
   });
 

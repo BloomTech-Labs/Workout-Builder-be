@@ -3,11 +3,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const router = express.Router();
-
 const Coaches = require('../coaches/coaches-model');
 // const passportSetup = require('../config/passport-setup');
-
-// require('../config/passport-setup')(passport);
+const url = require('url');
 require('../config/passport-setup');
 const {jwtSecret,hashRounds} = require('../consts');
 
@@ -42,8 +40,6 @@ router.post('/register',
           // hashRounds is the number of rounds (2^14) - iterations
           const hash = bcrypt.hashSync(coachesInfo.password, hashRounds);
 
-   
-
           // override the plain text password with the hash
           coachesInfo.password = hash;
 
@@ -58,12 +54,8 @@ router.post('/register',
             });
         }
       });
- 
   }
-
 );
-
-
 
 // ********************************************************
 // POST /auth/login
@@ -106,12 +98,18 @@ router.get('/google', passport.authenticate('google', {
 
 
 
-router.get('/google/callback', passport.authenticate('google', { session: false}), (req,res) => {
+router.get('/google/callback', passport.authenticate('google', { session: false, scope:['profile', 'email']}), (req,res) => {
  
-  const token = signToken(req.user,'coach');
+  const token = signToken(req.user,'coach');  
+  res.redirect(url.format({
+    pathname: process.env.FRONTEND_DOMAIN,
+    query: {
+      token,
+      first_name: req.user.first_name,
+      last_name: req.user.last_name
+    }
+  }));
 
-  res.status(200).json({ token, message: 'Logged In', first_name: req.user.first_name, last_name: req.user.last_name });
-  // res.redirect('/profile');
 });
 
 // ********************************************************
@@ -131,8 +129,6 @@ function signToken(user, role) {
 
   return jwt.sign(payload, secret, options); 
 }
-
-
 
 // ********************************************************
 // GET /auth/logincheck

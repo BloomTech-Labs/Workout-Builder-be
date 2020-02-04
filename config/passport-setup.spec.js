@@ -24,7 +24,6 @@ describe ('test google strategy function', () => {
         googleStrt(null,null,usersMockA,doneMock);
       });
 
-      // console.log('In pass-setup test, & coachesObj:',coachesObj);
       expect(coachesObj.first_name).toBe('HelloNew');
       expect(coachesObj.last_name).toBe('WorldNew');
 
