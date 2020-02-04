@@ -1,5 +1,7 @@
 # API Documentation
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/bf39ec6641781d731b81/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/Workout-Builder-be/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/bf39ec6641781d731b81/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/Workout-Builder-be/test_coverage)
+
 #### Backend delpoyed at [Heroku](https://labs20-workout-builder.herokuapp.com) <br>
 
 
@@ -14,11 +16,11 @@ To get the server running locally:
 
 ### Node.js with Express & Knex
 
--    Powerful performance
--    Ease of coding with JavaScript
--    Perfect for scalable network applications
--    Express is commonly considered the standard framework for the majority of Node.js applications
--    Knex is simple and optimal for server/database interaction
+- Powerful performance
+- Ease of coding with JavaScript
+- Perfect for scalable network applications
+- Express is commonly considered the standard framework for the majority of Node.js applications
+- Knex is simple and optimal for server/database interaction
 
 
 ## Endpoints
