@@ -21,7 +21,7 @@ To get the server running locally:
 -    Knex is simple and optimal for server/database interaction
 
 
-## 2️⃣ Endpoints
+## Endpoints
 
 
 ### AUTH Routes
@@ -124,17 +124,17 @@ To get the server running locally:
 ----
 #### _GOOGLE LOGIN_
 
-* **Method**
-
-  `GET`
-
 * **Endpoint**
 
-  `/auth/google/callback`
+  `/auth/google`
+
+* **Redirect URL**
+
+  `{deployed url}/auth`
 
 * **URL Params**
 
-  `{frontend url}/{token}/{first_name}/{lsat_name}`
+  token, first_name, last_name
 
 
 
@@ -145,12 +145,13 @@ To get the server running locally:
 | Name | Type | Required | Unique | Notes |
 | ---- | ---- | -------- | ------ | ----- |
 | id | integer | yes | yes | Coach's id |
-| first_name | string | yes* | no | Coach's first name |
-| last_name | string | yes* | no | Coach's last name  |
+| first_name | string | yes<sup>1</sup> | no | Coach's first name |
+| last_name | string | yes<sup>1</sup> | no | Coach's last name  |
 | email | string | yes | yes | Coach's email (max 100 char) |
-| password | string | yes | no | Coach's password (max 100 char) |
+| password | string | yes<sup>2</sup> | no | Coach's password (max 100 char) |
 
-_*for registration only_
+<sup>1</sup> _for registration only_
+<sup>2</sup> _for local auth only_
 
 ```
 {
@@ -163,15 +164,15 @@ _*for registration only_
 ```
 
 
-## 2️⃣ Actions
+## Actions
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+`addCoach(coach)` -> Creates a new coach and returns that coach
 
-`getOrgs()` -> Returns all organizations
+`findCoachBy(email)` -> Returns a single coach by email
 
-`getOrg(orgId)` -> Returns a single organization by ID
+`getCoachById(id)` -> Returns a single coach by id
 
-`addOrg(org)` -> Returns the created org
+---
 
 `updateOrg(orgId)` -> Update an organization by ID
 
@@ -189,17 +190,20 @@ _*for registration only_
 
 `deleteUser(userId)` -> deletes everything dependent on the user
 
-## 3️⃣ Environment Variables
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
 
-🚫 These are just examples, replace them with the specifics for your app
-    
+    *  DB_JWTSECRET - secret key for access
+    *  DATABASE_URL - URL for Heroku postgres deployment
+    *  FRONTEND_DOMAIN - URL for frontend deployed application
+    *  CLIENT_ID - id for authenticating application with Google
+    *  CLIENT_SECRET - secret for authenticating application with Google
+
     *  STAGING_DB - optional development db for using functionality not available in SQLite
     *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
     *  SENDGRID_API_KEY - this is generated in your Sendgrid account
     *  stripe_secret - this is generated in the Stripe dashboard
     
@@ -241,5 +245,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/Workout-Builder-fe) for details on the frontend of our project.
