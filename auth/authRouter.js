@@ -40,8 +40,6 @@ router.post('/register',
           // hashRounds is the number of rounds (2^14) - iterations
           const hash = bcrypt.hashSync(coachesInfo.password, hashRounds);
 
-   
-
           // override the plain text password with the hash
           coachesInfo.password = hash;
 
@@ -56,12 +54,8 @@ router.post('/register',
             });
         }
       });
- 
   }
-
 );
-
-
 
 // ********************************************************
 // POST /auth/login
@@ -104,12 +98,9 @@ router.get('/google', passport.authenticate('google', {
 
 
 
-router.get('/google/callback', passport.authenticate('google', { session: false}), (req,res) => {
+router.get('/google/callback', passport.authenticate('google', { session: false, scope:['profile', 'email']}), (req,res) => {
  
-  const token = signToken(req.user,'coach');
-  // const url = process.env.FRONTEND_DOMAIN;
-  // res.redirect(`${url}/${token}/${req.user.first_name}/${req.user.last_name}`);
-  
+  const token = signToken(req.user,'coach');  
   res.redirect(url.format({
     pathname: process.env.FRONTEND_DOMAIN,
     query: {
@@ -138,8 +129,6 @@ function signToken(user, role) {
 
   return jwt.sign(payload, secret, options); 
 }
-
-
 
 // ********************************************************
 // GET /auth/logincheck
