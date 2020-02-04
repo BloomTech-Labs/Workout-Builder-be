@@ -1,106 +1,181 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/bf39ec6641781d731b81/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/Workout-Builder-be/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/bf39ec6641781d731b81/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/Workout-Builder-be/test_coverage)
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend delpoyed at [Heroku](https://labs20-workout-builder.herokuapp.com) <br>
 
-## 1️⃣ Getting started
+
+## Getting started
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
-
 - Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+- **npm install** to install all required dependencies
+- **npm run server** to start the local server
+- **npm test** to start server using testing environment
 
-### Backend framework goes here
+### Node.js with Express & Knex
 
-🚫 Why did you choose this framework?
+- Powerful performance
+- Ease of coding with JavaScript
+- Perfect for scalable network applications
+- Express is commonly considered the standard framework for the majority of Node.js applications
+- Knex is simple and optimal for server/database interaction
 
--    Point One
--    Point Two
--    Point Three
--    Point Four
 
-## 2️⃣ Endpoints
+## Endpoints
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
 
-#### Organization Routes
+### AUTH Routes
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+----
+#### _REGISTER_
 
-#### User Routes
+* **Method**
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+  `POST`
+
+* **Endpoint**
+
+  `/auth/register`
+
+* **Data Params**
+
+    ```
+    {
+      first_name: [string]
+      last_name: [string]
+      email: [string]
+      password: [string]
+    }
+    ```
+
+* **Success Response**
+    * **Code:** 201
+
+      **Content:** 
+      ```
+      { 
+        token: [jwt],
+        message: 'Logged In',
+        first_name: [first name],
+        last_name: [last name]
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+      **Reason:** Email already exists and registered via Google social login
+
+      **Content:** `{ message: 'Google social login was done previously, cannot register local login' }`
+
+    * **Code:** 400
+
+      **Reason:** Email already exists and registered via local login
+
+      **Content:** `{ message: 'local login was done previously' }`
+
+----
+#### _LOGIN_
+
+* **Method**
+
+  `POST`
+
+* **Endpoint**
+
+  `/auth/login`
+
+* **Data Params**
+
+    ```
+    {
+      email: [string]
+      password: [string]
+    }
+    ```
+
+* **Success Response**
+
+    * **Code:** 200
+
+      **Content:** 
+      ```
+      { 
+        token: [jwt],
+        message: 'Logged In',
+        first_name: [first name],
+        last_name: [last name]
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 401
+
+      **Reason:** Incorrect email or password; cannot find match in database
+
+      **Content:** `{ message: 'Failed to login. Incorrect email or password' }`
+
+    * **Code:** 400
+
+      **Reason:** Email already exists and logged in via Google social login
+
+      **Content:** `{ message: 'Google social login was done previously, cannot local login' }`
+
+----
+#### _GOOGLE LOGIN_
+
+* **Endpoint**
+
+  `/auth/google`
+
+* **Redirect URL**
+
+  `{deployed url}/auth`
+
+* **URL Params**
+
+  token, first_name, last_name
+
+
 
 # Data Model
 
-🚫This is just an example. Replace this with your data model
+#### COACHES
 
-#### 2️⃣ ORGANIZATIONS
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Coach's id |
+| first_name | string | yes<sup>1</sup> | no | Coach's first name |
+| last_name | string | yes<sup>1</sup> | no | Coach's last name  |
+| email | string | yes | yes | Coach's email (max 100 char) |
+| password | string | yes<sup>2</sup> | no | Coach's password (max 100 char) |
 
----
+<sup>1</sup> _for registration only_
 
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
-```
-
-#### USERS
-
----
+<sup>2</sup> _for local auth only_
 
 ```
 {
   id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
   first_name: STRING
   last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
   email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+  password: STRING
 }
 ```
 
-## 2️⃣ Actions
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+## Actions
 
-`getOrgs()` -> Returns all organizations
+`addCoach(coach)` -> Creates a new coach and returns that coach
 
-`getOrg(orgId)` -> Returns a single organization by ID
+`findCoachBy(email)` -> Returns a single coach by email
 
-`addOrg(org)` -> Returns the created org
+`getCoachById(id)` -> Returns a single coach by id
+
+---
 
 `updateOrg(orgId)` -> Update an organization by ID
 
@@ -118,17 +193,20 @@ To get the server running locally:
 
 `deleteUser(userId)` -> deletes everything dependent on the user
 
-## 3️⃣ Environment Variables
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
 
-🚫 These are just examples, replace them with the specifics for your app
-    
+    *  DB_JWTSECRET - secret key for access
+    *  DATABASE_URL - URL for Heroku postgres deployment
+    *  FRONTEND_DOMAIN - URL for frontend deployed application
+    *  CLIENT_ID - id for authenticating application with Google
+    *  CLIENT_SECRET - secret for authenticating application with Google
+
     *  STAGING_DB - optional development db for using functionality not available in SQLite
     *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
     *  SENDGRID_API_KEY - this is generated in your Sendgrid account
     *  stripe_secret - this is generated in the Stripe dashboard
     
@@ -170,5 +248,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/Workout-Builder-fe) for details on the frontend of our project.
