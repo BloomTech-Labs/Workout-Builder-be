@@ -8,6 +8,7 @@ module.exports = {
 
 
 function addCoach(coach) {
+  if (coach.email) coach.email = coach.email.toLowerCase();
   return db('coaches')
     .insert(coach, 'id')
     .then(ids => {
@@ -19,9 +20,8 @@ function addCoach(coach) {
 }
 
 function findCoachBy(email) {
- 
+  email = email.toLowerCase();
   return db('coaches')
-
     .where({email})
     .first();
 }
@@ -31,4 +31,3 @@ function getCoachById(id) {
     .where({ id })
     .first();
 }
-
