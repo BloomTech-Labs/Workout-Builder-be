@@ -7,7 +7,8 @@ const router = express.Router();
 const Coaches = require('../coaches/coaches-model');
 // const passportSetup = require('../config/passport-setup');
 
-require('../config/passport-setup')(passport);
+// require('../config/passport-setup')(passport);
+require('../config/passport-setup');
 const {jwtSecret,hashRounds} = require('../consts');
 
 module.exports = router;
