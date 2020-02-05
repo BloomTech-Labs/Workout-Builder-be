@@ -6,7 +6,6 @@ module.exports = {
   getCoachById
 };
 
-
 function addCoach(coach) {
   if (coach.email) coach.email = coach.email.toLowerCase();
   return db('coaches')
