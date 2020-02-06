@@ -10,12 +10,12 @@ module.exports = {
 
 function getExercises(coach_id) {
   return db('exercises')
-    .where({coach_id});
+    .where({ coach_id });
 }
 
 function getExerciseById(id) {
   return db('exercises')
-    .where({id})
+    .where({ id })
     .first();
 }
 
