@@ -5,8 +5,7 @@ exports.up = function(knex) {
       tbl.increments();
       tbl.string('name')
         .notNullable();
-      tbl.string('phase')
-        .notNullable();
+      tbl.string('phase');
       tbl.string('description', 1000);
       tbl.integer('length')
         .notNullable();

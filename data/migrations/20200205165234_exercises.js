@@ -5,9 +5,8 @@ exports.up = function(knex) {
       tbl.increments();
       tbl.string('name')
         .notNullable();
-      tbl.string('type')
-        .notNullable();
-      tbl.string('description', 1000);
+      tbl.string('type');
+      tbl.string('focal_points', 1000);
       tbl.string('video_url', 1000);
       tbl.string('thumbnail_url', 1000);
       tbl
