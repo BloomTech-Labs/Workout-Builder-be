@@ -3,15 +3,11 @@ const db = require('../data/db-config');
 const request = require('supertest');
 const server = require('../api/server');
 
-
-
-
 // ------------------- CLEARING DATABASE ---------------------- //
 describe('authRouter', function() {
   beforeAll(async () => {
     await db('coaches').truncate();
   });
-
 
   // ------------------- REGISTER ENDPOINT ---------------------- //
   describe('/auth/register', function() {
@@ -64,7 +60,7 @@ describe('authRouter', function() {
           expect(res.body.token).toBe(undefined);
         });
     });
-      
+
     it ('should NOT register a user - body not provided', () => {
       return request(server)
         .post('/auth/register')
@@ -75,7 +71,6 @@ describe('authRouter', function() {
         });
     });
 
-      
   });
 
   // ------------------- LOGIN ENDPOINT ---------------------- //
@@ -126,8 +121,6 @@ describe('authRouter', function() {
     });
   });
 });
-
-
 
 // ------------------- GET ENDPOINT - AUTH GOOGLE ---------------------- //
 describe('/auth/google', function() {

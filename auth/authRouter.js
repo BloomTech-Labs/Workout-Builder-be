@@ -16,8 +16,6 @@ const {
   validTokenCheck,
 } = require('../middleware/custom_middleware');
 
-
-
 // ********************************************************
 // POST /auth/register
 // ********************************************************
@@ -26,10 +24,10 @@ router.post('/register',
   (req,res)=>{
     let coachesInfo = req.body;
 
-    Coaches 
+    Coaches
       .findCoachBy(coachesInfo.email)
       .then(coach => {
-       
+
         if (coach && coach.password === null){
           res.status(400).json({message: 'Google social login was done previously, can not register local login'});
         } else if(coach && coach.password !== null){
@@ -66,9 +64,9 @@ router.post('/login',
     let {email, password} =req.body;
 
     Coaches.findCoachBy(email)
-      
+
       .then(user=>{
-       
+
         if (user && user.password !== null && bcrypt.compareSync(password, user.password)) {
 
           //Create a token
@@ -96,11 +94,9 @@ router.get('/google', passport.authenticate('google', {
   scope:['profile', 'email']
 }));
 
-
-
 router.get('/google/callback', passport.authenticate('google', { session: false, scope:['profile', 'email']}), (req,res) => {
- 
-  const token = signToken(req.user,'coach');  
+
+  const token = signToken(req.user,'coach');
   res.redirect(url.format({
     pathname: process.env.FRONTEND_DOMAIN,
     query: {
@@ -122,12 +118,12 @@ function signToken(user, role) {
   };
 
   const secret = jwtSecret;
-  
+
   const options = {
     expiresIn: '24h',
   };
 
-  return jwt.sign(payload, secret, options); 
+  return jwt.sign(payload, secret, options);
 }
 
 // ********************************************************
