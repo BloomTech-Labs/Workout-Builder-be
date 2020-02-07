@@ -6,6 +6,7 @@ module.exports = {
   addWorkout,
   updateWorkout,
   deleteWorkout,
+  getExercisesInWorkout,
   addExerciseToWorkout
 };
 
@@ -63,24 +64,13 @@ function getExercisesInWorkout(exerciseWorkout) {
   const workoutIds = exerciseWorkout.map(el => el.workout_id);
   return db('exercises_workouts')
     .whereIn('exercise_id', exerciseIds)
-    .andWhereIn('workout_id', workoutIds);
+    .whereIn('workout_id', workoutIds);
 }
 
 function addExerciseToWorkout(exerciseWorkout) {
-//   const exerciseIds = exerciseWorkout.map(el => el.exercise_id);
-//   const workoutIds = exerciseWorkout.map(el => el.workout_id);
   return db('exercises_workouts')
     .insert(exerciseWorkout)
-    .then(ids => {
-      console.log(ids);
-      //const [id] = ids;
+    .then(() => {
       return getExercisesInWorkout(exerciseWorkout);
     });
-
-  //.where({ exercise_id:exerciseWorkout[0].exercise_id, workout_id:exerciseWorkout[0].workout_id });
 }
-//      else if (count[0] > 1) {
-//       return db('exercises_worktous')
-//       .where({ exerciseWorkout })
-//   }
-

@@ -8,8 +8,20 @@ const Workouts = require('./workouts-model');
 router.post('/exercises', (req, res) => {
   Workouts.addExerciseToWorkout(req.body)
     .then(saved => {
-      console.log(saved, 'console log for "saved"');
       res.status(201).json(saved);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+// ********************************************************
+// GET /workouts/exercises
+// ********************************************************
+router.get('/exercises', (req, res) => {
+  Workouts.getExercisesInWorkout(req.body)
+    .then(data => {
+      res.status(200).json(data);
     })
     .catch(error => {
       res.status(500).json(error);
