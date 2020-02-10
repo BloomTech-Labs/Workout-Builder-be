@@ -7,11 +7,10 @@ module.exports = {
 
 const {jwtSecret} = require('../consts');
 
-
 // ********************************************************
 // validBodyCheck
 // This checks the body when it is one object
-// The propts is an array of properties that the object should 
+// The propts is an array of properties that the object should
 // contain
 // ********************************************************
 function validBodyCheck(propts) {
@@ -23,14 +22,14 @@ function validBodyCheck(propts) {
     if(Object.keys(body).length === 0) {
       isError = true;
       errMsg = 'missing request body';
-    } 
+    }
     else if(!isError) {
       propts.forEach(elem=>{
         if(!body[elem]) {
           isError = true;
           errMsg = `missing field ${elem} in request body`;
         }
-      });  
+      });
     }
 
     if(isError) {
@@ -38,7 +37,7 @@ function validBodyCheck(propts) {
     }
     else {
       next();
-    }    
+    }
   };
 }
 

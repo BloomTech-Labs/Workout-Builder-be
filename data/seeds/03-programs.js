@@ -4,7 +4,8 @@ exports.seed = function(knex) {
     .truncate()
     .then(function () {
       return knex('programs').insert([
-        {name: 'progA', description:'pr blahA', length: 21, phase: 'strength', coach_id:1}
+        {name: 'progA', description:'pr blahA', length: 21, phase: 'strength', coach_id:1},
+        {name: 'progB', description:'pr blahB', length: 21, phase: 'strength', coach_id:2}
       ]);
     });
 };
