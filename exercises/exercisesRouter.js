@@ -64,16 +64,20 @@ router.delete('/:id', validTokenCheck, (req, res) => {
 
   Exercises.getExerciseById(id)
     .then(exercise => {
-      if (exercise.coach_id === coach_id) {
+      console.log(exercise);
+      if (exercise && exercise.coach_id === coach_id) {
         Exercises.deleteExercise(id)
           .then(exercise => {
             res.status(200).json(exercise);
           });
+      } else if (!exercise) {
+        res.status(404).json({ error: `cannot delete exercise with id: ${id} because it does not exist` });
       } else {
         res.status(403).json({ error: `you are not authorized to delete exercise with id: ${id}`});
       }
     })
     .catch(error => {
+      console.log(error);
       res.status(500).json(error);
     });
 });
@@ -89,11 +93,13 @@ router.put('/:id', validTokenCheck, validBodyCheck(['name']), (req, res) => {
 
   Exercises.getExerciseById(id)
     .then(exercise => {
-      if (exercise.coach_id === coach_id) {
+      if (exercise && exercise.coach_id === coach_id) {
         Exercises.updateExercise(id, exerciseData)
           .then(exercise => {
             res.status(200).json(exercise);
           });
+      } else if (!exercise) {
+        res.status(404).json({ error: `cannot update exercise with id: ${id} because it does not exist` });
       } else {
         res.status(403).json({ error: `you are not authorized to update exercise with id: ${id}`});
       }
