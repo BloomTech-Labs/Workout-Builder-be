@@ -28,4 +28,17 @@ router.get('/exercises', (req, res) => {
     });
 });
 
+// ********************************************************
+// DELETE /workouts/exercises
+// ********************************************************
+router.delete('/exercises', (req, res) => {
+  Workouts.deleteExerciseInWorkout(req.body)
+    .then(data => {
+      res.status(200).json(`${data} items deleted successfully`);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
 module.exports = router;

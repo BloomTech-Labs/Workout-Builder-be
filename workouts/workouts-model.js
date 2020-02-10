@@ -7,7 +7,8 @@ module.exports = {
   updateWorkout,
   deleteWorkout,
   getExercisesInWorkout,
-  addExerciseToWorkout
+  addExerciseToWorkout,
+  deleteExerciseInWorkout
 };
 
 function getWorkouts(coach_id) {
@@ -59,6 +60,7 @@ function deleteWorkout(id) {
     });
 }
 
+//JSON body should be an array; each element in the array is { exercise_id, workout_id }
 function getExercisesInWorkout(exerciseWorkout) {
   const exerciseIds = exerciseWorkout.map(el => el.exercise_id);
   const workoutIds = exerciseWorkout.map(el => el.workout_id);
@@ -67,10 +69,24 @@ function getExercisesInWorkout(exerciseWorkout) {
     .whereIn('workout_id', workoutIds);
 }
 
+//JSON body should be an array; each element in the array is { exercise_id, workout_id, order, exercise_details }
 function addExerciseToWorkout(exerciseWorkout) {
   return db('exercises_workouts')
     .insert(exerciseWorkout)
     .then(() => {
       return getExercisesInWorkout(exerciseWorkout);
+    });
+}
+
+//JSON body should be an array; each element in the array is { exercise_id, workout_id }
+function deleteExerciseInWorkout(exerciseWorkout) {
+  const exerciseIds = exerciseWorkout.map(el => el.exercise_id);
+  const workoutIds = exerciseWorkout.map(el => el.workout_id);
+  return db('exercises_workouts')
+    .whereIn('exercise_id', exerciseIds)
+    .whereIn('workout_id', workoutIds)
+    .del()
+    .then(count => {
+      return count;
     });
 }
