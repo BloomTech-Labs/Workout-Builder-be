@@ -4,6 +4,7 @@ const cors = require('cors');
 const authRouter = require('../auth/authRouter');
 const exercisesRouter = require('../exercises/exercisesRouter');
 const workoutsRouter = require('../workouts/workoutsRouter');
+const clientsRouter = require('../clients/clientsRouter');
 
 // create server
 const server = express();
@@ -20,5 +21,6 @@ server.get('/', (req, res) => {
 server.use('/auth', authRouter);
 server.use('/exercises', exercisesRouter);
 server.use('/workouts', workoutsRouter);
+server.use('/clients', clientsRouter);
 
 module.exports = server;
