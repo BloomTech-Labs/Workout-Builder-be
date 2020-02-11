@@ -165,4 +165,54 @@ describe('exercisesRouter', function() {
       });
   });
 
+  // ------------------- Put Request ---------------------- //
+  it ('it should update data to exercises db', function() {
+
+    return request(server)
+      .put('/exercises/1')
+      .set('Authorization', token)
+      .send({name:'pushup'})
+
+      .then(res => {
+        expect(res.status).toBe(200);
+      });
+  });
+  it ('it should not update data to exercises db since no token', function() {
+
+    return request(server)
+      .put('/exercises/1')
+      .send({name:'pushup'})
+      .then(res => {
+        expect(res.status).toBe(400);
+      });
+  });
+  it ('it should not update data to exercises db since no body', function() {
+
+    return request(server)
+      .put('/exercises/1')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(400);
+      });
+  });
+  it ('it should not update data to exercises db since wrong field', function() {
+
+    return request(server)
+      .put('/exercises/1')
+      .set('Authorization', token)
+      .send({names:'pushup'})
+      .then(res => {
+        expect(res.status).toBe(400);
+      });
+  });
+  it ('it should not update data to exercises db since it does not exist', function() {
+
+    return request(server)
+      .put('/exercises/55')
+      .set('Authorization', token)
+      .send({name:'pushup'})
+      .then(res => {
+        expect(res.status).toBe(404);
+      });
+  });
 });
