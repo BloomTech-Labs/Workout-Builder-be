@@ -5,14 +5,14 @@ const server = require('../api/server');
 
 let token ;
 
-// ------------------- CLEARING DATABASE And Registering Account---------------------- //
-describe('exercisesRouter', function() {
+// ------------------- CLEARING DATABASE and Registering Account---------------------- //
+describe('clientsRouter', function() {
   beforeAll(async() => {
     await db('coaches').truncate();
-    await db('exercises').truncate();
+    await db('clients').truncate();
     return request(server)
       .post('/auth/register')
-      .send({ first_name: 'Hello', last_name: 'World', email: 'helloworld@email.com', password: 'pass' })
+      .send({ first_name: 'Hello2', last_name: 'World2', email: 'helloworld2@email.com', password: 'pass' })
       .then(res => {
         expect(res.status).toBe(201);
         token = res.body.token;
@@ -22,12 +22,12 @@ describe('exercisesRouter', function() {
   });
   // ------------------- Post request ---------------------- //
 
-  it ('it should add data to exercises db', function() {
+  it ('it should add data to clients db', function() {
 
     return request(server)
-      .post('/exercises')
+      .post('/clients')
       .set('Authorization', token)
-      .send({name:'Burpees'})
+      .send({first_name:'tod',last_name:'Smith',email:'ts@gmail.com'})
 
       .then(res => {
         expect(res.status).toBe(201);
@@ -38,8 +38,8 @@ describe('exercisesRouter', function() {
   it ('it should not post since no token', function() {
 
     return request(server)
-      .post('/exercises')
-      .send({name:'Burpees'})
+      .post('/clients')
+      .send({first_name:'jerry',last_name:'Smiths',email:'js@gmail.com'})
 
       .then(res => {
         expect(res.status).toBe(400);
@@ -49,7 +49,7 @@ describe('exercisesRouter', function() {
   it ('it should not add data to db because no body', function() {
 
     return request(server)
-      .post('/exercises')
+      .post('/clients')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(400);
@@ -58,9 +58,9 @@ describe('exercisesRouter', function() {
   it ('it should not add data to db because wrong field', function() {
 
     return request(server)
-      .post('/exercises')
+      .post('/clients')
       .set('Authorization', token)
-      .send({names:'Burpees'})
+      .send({first_names:'jerry',last_name:'Smiths',email:'js@gmail.com'})
       .then(res => {
         expect(res.status).toBe(400);
       });
@@ -69,33 +69,33 @@ describe('exercisesRouter', function() {
   it ('it should not add data to db because missing required field', function() {
 
     return request(server)
-      .post('/exercises')
+      .post('/clients')
       .set('Authorization', token)
-      .send({name:''})
+      .send({first_name:'',last_name:'Smiths',email:'js@gmail.com'})
       .then(res => {
         expect(res.status).toBe(400);
       });
   });
-  // ------------------- Get request for all exercises for one coach ---------------------- //
+  // ------------------- Get request for all clients for one coach ---------------------- //
 
-  // seeding a 2nd workout
-  it('it should add another workout for get all', function() {
+  // seeding a 2nd client
+  it('it should add another client for get all', function() {
     return request(server)
-      .post('/exercises')
+      .post('/clients')
       .set('Authorization', token)
-      .send({name:'Burpees2'})
+      .send({first_name:'tod2',last_name:'Smith2',email:'ts2@gmail.com'})
 
       .then(res => {
         expect(res.status).toBe(201);
       });
   });
-  it('getting 200 and data from exercises route', function() {
+  it('getting 200 and data from clients route', function() {
     return request(server)
-      .get('/exercises')
+      .get('/clients')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
-        expect(res.body).toMatchObject([{name: 'Burpees'},{name: 'Burpees2'}]);
+        expect(res.body).toMatchObject([{first_name:'tod',last_name:'Smith',email:'ts@gmail.com'},{first_name:'tod2',last_name:'Smith2',email:'ts2@gmail.com'}]);
 
       });
   });
@@ -104,45 +104,45 @@ describe('exercisesRouter', function() {
   it ('it should not get since no token', function() {
 
     return request(server)
-      .get('/exercises')
+      .get('/clients')
       .then(res => {
         expect(res.status).toBe(400);
       });
   });
 
-  // ------------------- Get request for one exercises for one coach ---------------------- //
-  it ('it should get an exercise', function() {
+  // ------------------- Get request for one clients for one coach ---------------------- //
+  it ('it should get an client', function() {
 
     return request(server)
-      .get('/exercises/1')
+      .get('/clients/1')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
-        expect(res.body).toMatchObject({'coach_id': 1, 'focal_points': null, 'id': 1, 'name': 'Burpees', 'thumbnail_url': null, 'type': null, 'video_url': null});
+        expect(res.body).toMatchObject({first_name:'tod',last_name:'Smith',email:'ts@gmail.com'});
       });
   });
   // this should be a 401 right?
   it ('it should not get since no token', function() {
 
     return request(server)
-      .get('/exercises/1')
+      .get('/clients/1')
       .then(res => {
         expect(res.status).toBe(400);
       });
   });
-  it ('it should not get an exercise since it does not exist', function() {
+  it ('it should not get a client since it does not exist', function() {
     // this should be a 404?
     return request(server)
-      .get('/exercises/55')
+      .get('/clients/55')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(500);
       });
   });
   // ------------------- Delete Request ---------------------- //
-  it ('it should delete an exercise', function () {
+  it ('it should delete a client', function () {
     return request(server)
-      .delete('/exercises/2')
+      .delete('/clients/2')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
@@ -150,16 +150,16 @@ describe('exercisesRouter', function() {
   });
 
   // this should be a 401 right?
-  it ('it should not delete an exercise since no token', function () {
+  it ('it should not delete a client since no token', function () {
     return request(server)
-      .delete('/exercises/2')
+      .delete('/clients/2')
       .then(res => {
         expect(res.status).toBe(400);
       });
   });
-  it ('it should not delete an exercise since the exercise does not exist', function () {
+  it ('it should not delete a client since the client does not exist', function () {
     return request(server)
-      .delete('/exercises/55')
+      .delete('/clients/55')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(404);
@@ -167,51 +167,51 @@ describe('exercisesRouter', function() {
   });
 
   // ------------------- Put Request ---------------------- //
-  it ('it should update data to exercises db', function() {
+  it ('it should update data to clients db', function() {
 
     return request(server)
-      .put('/exercises/1')
+      .put('/clients/1')
       .set('Authorization', token)
-      .send({name:'pushup'})
+      .send({first_name:'jerry',last_name:'Smiths',email:'js@gmail.com'})
 
       .then(res => {
         expect(res.status).toBe(200);
       });
   });
-  it ('it should not update data to exercises db since no token', function() {
+  it ('it should not update data to clients db since no token', function() {
 
     return request(server)
-      .put('/exercises/1')
-      .send({name:'pushup'})
+      .put('/clients/1')
+      .send({first_name:'jerry',last_name:'Smiths',email:'js@gmail.com'})
       .then(res => {
         expect(res.status).toBe(400);
       });
   });
-  it ('it should not update data to exercises db since no body', function() {
+  it ('it should not update data to clients db since no body', function() {
 
     return request(server)
-      .put('/exercises/1')
+      .put('/clients/1')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(400);
       });
   });
-  it ('it should not update data to exercises db since wrong field', function() {
+  it ('it should not update data to clients db since wrong field', function() {
 
     return request(server)
-      .put('/exercises/1')
+      .put('/clients/1')
       .set('Authorization', token)
-      .send({names:'pushup'})
+      .send({first_names:'jerry',last_name:'Smiths',email:'js@gmail.com'})
       .then(res => {
         expect(res.status).toBe(400);
       });
   });
-  it ('it should not update data to exercises db since it does not exist', function() {
+  it ('it should not update data to clients db since it does not exist', function() {
 
     return request(server)
-      .put('/exercises/55')
+      .put('/clients/55')
       .set('Authorization', token)
-      .send({name:'pushup'})
+      .send({first_name:'jerry',last_name:'Smiths',email:'js@gmail.com'})
       .then(res => {
         expect(res.status).toBe(404);
       });
