@@ -7,7 +7,7 @@
     "server": "nodemon index.js",
     "start": "node index.js",
     "test": "jest --watch",
-    "coverage": "jest --coverage --detectOpenHandles"
+    "coverage": "jest --coverage --detectOpenHandles --forceExit"
   },
   "jest": {
     "testEnvironment": "node",
