@@ -29,7 +29,7 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
-      - uses: paambaati/codeclimate-action@v2.2.4
+      - uses: paambaati/codeclimate-action@v2.4.0
         env:
           CC_TEST_REPORTER_ID: 73e5c9192cc4ce120a00d08984a41341c6c280822a15fd878936d410b193e809
         with:
