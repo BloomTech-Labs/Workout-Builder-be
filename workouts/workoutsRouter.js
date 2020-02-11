@@ -1,6 +1,51 @@
+/* eslint-disable no-multiple-empty-lines */
 const express = require('express');
 const router = express.Router();
 const Workouts = require('./workouts-model');
+
+// ************************************** WORKOUTS ********************************************* //
+
+// ********************************************************
+// POST /workouts
+// ********************************************************
+router.post('/', (req, res) => {
+  Workouts.addWorkout(req.body)
+    .then(saved => {
+      res.status(201).json(saved);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************** EXERCISES_WORKOUTS ********************************************* //
 
 // ********************************************************
 // POST /workouts/exercises

@@ -5,6 +5,7 @@ const authRouter = require('../auth/authRouter');
 const exercisesRouter = require('../exercises/exercisesRouter');
 const workoutsRouter = require('../workouts/workoutsRouter');
 const clientsRouter = require('../clients/clientsRouter');
+const programsRouter = require('../programs/programsRouter');
 
 // create server
 const server = express();
@@ -22,5 +23,6 @@ server.use('/auth', authRouter);
 server.use('/exercises', exercisesRouter);
 server.use('/workouts', workoutsRouter);
 server.use('/clients', clientsRouter);
+server.use('/programs', programsRouter);
 
 module.exports = server;

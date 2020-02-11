@@ -18,16 +18,25 @@ function getWorkouts(coach_id) {
 
 function getWorkoutById(id) {
   return db('workouts')
-    .where({ id })
-    .first();
+    .whereIn('id', id);
+  //.where({ id });
 }
 
-function addWorkout(workout) {
+function addWorkout(workouts) {
   return db('workouts')
-    .insert(workout, 'id')
+    .insert(workouts, 'id')
     .then(ids => {
-      const [id] = ids;
-      return getWorkoutById(id);
+      // added logic to account for differences between returning method of sqlite3 and postgres
+      let builtArray = [];
+      if (workouts.length > 1 && ids.length === 1) {
+        for (let i = 0; i < workouts.length; i++) {
+          builtArray[i] = ids[0] - (workouts.length-1) + i;
+        }
+        console.log(builtArray, '<-- builtArray');
+        return getWorkoutById(builtArray);
+      }
+      console.log(ids, '<-- ids');
+      return getWorkoutById(ids);
     });
 }
 
