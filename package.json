@@ -20,7 +20,7 @@
     "url": "git+https://github.com/Lambda-School-Labs/Workout-Builder-be.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Lambda-School-Labs/Workout-Builder-be/issues"
   },
