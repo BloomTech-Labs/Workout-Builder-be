@@ -20,7 +20,6 @@ describe('exercisesRouter', function() {
 
   });
   // ------------------- Post request ---------------------- //
-  // should this error message return a 401?
 
   it ('it should add data to exercises db', function() {
 
@@ -28,17 +27,19 @@ describe('exercisesRouter', function() {
       .post('/exercises')
       .set('Authorization', token)
       .send({name:'Burpees'})
+
       .then(res => {
         expect(res.status).toBe(201);
       });
 
   });
-
+  // should this error message return a 401?
   it ('it should not post since no token', function() {
 
     return request(server)
       .post('/exercises')
       .send({name:'Burpees'})
+
       .then(res => {
         expect(res.status).toBe(400);
       });
@@ -74,14 +75,27 @@ describe('exercisesRouter', function() {
         expect(res.status).toBe(400);
       });
   });
-  // ------------------- Get request ---------------------- //
+  // ------------------- Get request for all exercises for one coach ---------------------- //
+
+  // seeding a 2nd workout
+  it('it should add another workout for get all', function() {
+    return request(server)
+      .post('/exercises')
+      .set('Authorization', token)
+      .send({name:'Burpees2'})
+
+      .then(res => {
+        expect(res.status).toBe(201);
+      });
+  });
   it('getting 200 and data from exercises route', function() {
     return request(server)
       .get('/exercises')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
-        expect(res.body).toMatchObject([{name: 'Burpees'}]);
+        expect(res.body).toMatchObject([{name: 'Burpees'},{name: 'Burpees2'}]);
+
       });
   });
 
@@ -90,9 +104,64 @@ describe('exercisesRouter', function() {
 
     return request(server)
       .get('/exercises')
-
       .then(res => {
         expect(res.status).toBe(400);
+      });
+  });
+
+  // ------------------- Get request for one exercises for one coach ---------------------- //
+  it ('it should get an exercise', function() {
+
+    return request(server)
+      .get('/exercises/1')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(200);
+        expect(res.body).toMatchObject({'coach_id': 1, 'focal_points': null, 'id': 1, 'name': 'Burpees', 'thumbnail_url': null, 'type': null, 'video_url': null});
+      });
+  });
+  // this should be a 401 right?
+  it ('it should not get since no token', function() {
+
+    return request(server)
+      .get('/exercises/1')
+      .then(res => {
+        expect(res.status).toBe(400);
+      });
+  });
+  it ('it should not get an exercise since it does not exist', function() {
+    // this should be a 404?
+    return request(server)
+      .get('/exercises/55')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(500);
+      });
+  });
+  // ------------------- Delete Request ---------------------- //
+  it ('it should delete an exercise', function () {
+    return request(server)
+      .delete('/exercises/2')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(200);
+      });
+  });
+
+  // this should be a 401 right?
+  it ('it should not delete an exercise since no token', function () {
+    return request(server)
+      .delete('/exercises/2')
+      .then(res => {
+        expect(res.status).toBe(400);
+      });
+  });
+  it ('it should not delete an exercise since the exercise does not exist', function () {
+    return request(server)
+      .delete('/exercises/55')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(404);
       });
   });
 
