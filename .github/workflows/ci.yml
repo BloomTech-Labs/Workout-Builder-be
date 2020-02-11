@@ -6,7 +6,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, macos-latest]
         node: [12, 10]
     name: Test ${{ matrix.os }}/${{ matrix.node }}
     runs-on: ${{ matrix.os }}
@@ -21,6 +21,7 @@ jobs:
         env:
           CI: true
   coverage:
+    name: Test and publish test coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -28,8 +29,7 @@ jobs:
         with:
           node-version: "12"
       - run: npm install
-      - name: Test and publish code coverage
-        uses: paambaati/codeclimate-action@v2.4.0
+      - uses: paambaati/codeclimate-action@v2.4.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CodeClimateReporterId }}
         with:
