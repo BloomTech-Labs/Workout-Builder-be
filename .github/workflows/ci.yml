@@ -6,20 +6,20 @@ jobs:
   test:
     strategy:
       matrix:
-        platform: [ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest]
         node: [12, 10]
-    name: test/node ${{ matrix.node-version }}
+    name: Test ${{ matrix.os }}/${{ matrix.node }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@master
-      # - uses: actions/setup-node@master
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-      # - run: npm install
-      # - run: npm run build --if-present
-      # - run: npm test
-      #   env:
-      #     CI: true
+      - uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm run build --if-present
+      - run: npm test
+        env:
+          CI: true
   coverage:
     runs-on: ubuntu-latest
     steps:
