@@ -7,7 +7,7 @@ module.exports = {
   updateWorkout,
   deleteWorkout,
   getExercisesInWorkout,
-  addExerciseToWorkout,
+  addExercisesToWorkout,
   deleteExerciseInWorkout
 };
 
@@ -79,7 +79,7 @@ function getExercisesInWorkout(exerciseWorkout) {
 }
 
 //JSON body should be an array; each element in the array is { exercise_id, workout_id, order, exercise_details }
-function addExerciseToWorkout(exerciseWorkout) {
+function addExercisesToWorkout(exerciseWorkout) {
   return db('exercises_workouts')
     .insert(exerciseWorkout)
     .then(() => {

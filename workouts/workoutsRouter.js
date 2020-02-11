@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 // POST /workouts/exercises
 // ********************************************************
 router.post('/exercises', (req, res) => {
-  Workouts.addExerciseToWorkout(req.body)
+  Workouts.addExercisesToWorkout(req.body)
     .then(saved => {
       res.status(201).json(saved);
     })

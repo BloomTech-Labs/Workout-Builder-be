@@ -42,13 +42,11 @@ router.post('/', validTokenCheck, (req, res) => {
               exercisesArray.push(tempObject2);
             });
           });
-
           console.log(exercisesArray, '<-- exercisesArray');
-
-
-
-
-          res.status(201).json(savedWorkouts);
+          Workouts.addExercisesToWorkout(exercisesArray)
+            .then(savedExercises => {
+              res.status(201).json({savedProgram, savedWorkouts, savedExercises});
+            });
         });
     })
     .catch(error => {

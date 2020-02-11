@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
   validBodyCheck,
-  validTokenCheck,
+  validTokenCheck
 };
 
 const {jwtSecret} = require('../consts');
