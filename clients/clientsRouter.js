@@ -107,4 +107,31 @@ router.put('/:id', validTokenCheck, validBodyCheck(['first_name', 'last_name', '
     });
 });
 
+// --------------------------- CLIENTS_PROGRAMS ---------------------------- //
+
+// ********************************************************
+// POST /clients/programs
+// ********************************************************
+router.post('/programs', validTokenCheck, (req, res) => {
+  let programId = req.body.id;
+  //const coach_id = req.token.coachID;
+  let clientProgramArray = req.body.clients.map(el => {
+    let eachObject = {};
+    eachObject.client_id = el.id;
+    eachObject.program_id = programId;
+    eachObject.start_date = el.start_date;
+    return eachObject;
+  });
+  console.log(clientProgramArray, '<-- saved array');
+
+  Clients.addClientsToProgram(clientProgramArray)
+    .then(savedArray => {
+      console.log(savedArray, '<-- saved array');
+      res.status(201).json(savedArray);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
 module.exports = router;

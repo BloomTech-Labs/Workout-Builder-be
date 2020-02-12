@@ -65,4 +65,9 @@ To-do List:
         ]
     }
 
+    [
+        { program_id: 1, client_id: 1 },
+        { program_id: 1, client_id: 2 },
+        { program_id: 1, client_id: 3 },
+    ]
 */

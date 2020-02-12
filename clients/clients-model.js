@@ -5,7 +5,10 @@ module.exports = {
   getClientById,
   addClient,
   updateClient,
-  deleteClient
+  deleteClient,
+  getClientsInProgram,
+  addClientsToProgram,
+  deleteClientInProgram
 };
 
 function getClients(coach_id) {
@@ -54,5 +57,51 @@ function deleteClient(id) {
       if (count > 0) {
         return deletedClient;
       }
+    });
+}
+
+// function getClientsInProgram(id) {
+//   return db('clients_programs')
+//     .where({ id })
+//     .first();
+// }
+
+// function addClientsToProgram(clientProgram) {
+//   return db('clients_programs')
+//     .insert(clientProgram, 'id')
+//     .then(ids => {
+//       const [id] = ids;
+//       return getClientById(id);
+//     });
+// }
+
+//JSON body should be an array; each element in the array is { client_id, program_id }
+function getClientsInProgram(clientProgram) {
+  const clientIds = clientProgram.map(el => el.client_id);
+  const programIds = clientProgram.map(el => el.program_id);
+  return db('clients_programs')
+    .whereIn('client_id', clientIds)
+    .whereIn('program_id', programIds);
+}
+
+//JSON body should be an array; each element in the array is { client_id, program_id, start_date, current_day }
+function addClientsToProgram(clientProgram) {
+  return db('clients_programs')
+    .insert(clientProgram)
+    .then(() => {
+      return getClientsInProgram(clientProgram);
+    });
+}
+
+//JSON body should be an array; each element in the array is { client_id, program_id }
+function deleteClientInProgram(clientProgram) {
+  const clientIds = clientProgram.map(el => el.client_id);
+  const programIds = clientProgram.map(el => el.program_id);
+  return db('clients_programs')
+    .whereIn('client_id', clientIds)
+    .whereIn('program_id', programIds)
+    .del()
+    .then(count => {
+      return count;
     });
 }
