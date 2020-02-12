@@ -118,7 +118,7 @@ describe('exercisesRouter', function() {
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
-        expect(res.body).toMatchObject({'coach_id': 1, 'focal_points': null, 'id': 1, 'name': 'Burpees', 'thumbnail_url': null, 'type': null, 'video_url': null});
+        expect(res.body).toMatchObject({ 'focal_points': null, 'id': 1, 'name': 'Burpees', 'thumbnail_url': null, 'type': null, 'video_url': null});
       });
   });
   // this should be a 401 right?
