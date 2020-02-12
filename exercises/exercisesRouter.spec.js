@@ -12,7 +12,7 @@ describe('exercisesRouter', function() {
     await db('exercises').truncate();
     return request(server)
       .post('/auth/register')
-      .send({ first_name: 'Hello', last_name: 'World', email: 'helloworld@email.com', password: 'pass' })
+      .send({ first_name: 'Hello3', last_name: 'World3', email: 'helloworld3@email.com', password: 'pass' })
       .then(res => {
         expect(res.status).toBe(201);
         token = res.body.token;
