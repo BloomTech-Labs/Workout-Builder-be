@@ -24,12 +24,12 @@ router.post('/', validTokenCheck, (req, res) => {
         tempObject1.coach_id = coach_id;
         return tempObject1;
       });
-      console.log('This is workoutsArray:',workoutsArray);
+      // console.log('This is workoutsArray:',workoutsArray);
       Workouts.addWorkout(workoutsArray)
         .then(savedWorkouts => {
           // workoutIdArray will return an array of the workout IDs for the program
           let workoutIdArray = savedWorkouts.map(el => el.id);
-          console.log('This is workoutIdArray:',workoutIdArray);
+          // console.log('This is workoutIdArray:',workoutIdArray);
 
           let exercisesArray = [];
           req.body.workouts.forEach((elW, indexW) => {
@@ -42,10 +42,11 @@ router.post('/', validTokenCheck, (req, res) => {
               exercisesArray.push(tempObject2);
             });
           });
-          console.log('This is exercisesArray:',exercisesArray);
+          // console.log('This is exercisesArray:',exercisesArray);
           Workouts.addExercisesToWorkout(exercisesArray)
-            .then(savedExercises => {
-              res.status(201).json({savedProgram, savedWorkouts, savedExercises});
+            .then(() => {
+              bigDataResponseA(coach_id)
+                .then(data=>res.status(201).json(data));
             });
         });
     })
@@ -54,4 +55,60 @@ router.post('/', validTokenCheck, (req, res) => {
     });
 });
 
+// ********************************************************
+// GET /programs
+// ********************************************************
+router.get('/', validTokenCheck, (req,res) => {
+
+
+
+
+});
+
+// ********************************************************
+// This is the response for:
+// 1) POST /programs
+// 2) GET /programs
+// ********************************************************
+function bigDataResponseA(coach_id) {
+  return new Promise( (resolve) => {
+    Programs.getPrograms(coach_id)
+      .then(progsArray=>{
+
+        resolve(progsArray);
+
+
+
+
+
+
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  });
+}
+
+
+
+
+
 module.exports = router;
+
+// Workouts.addExercisesToWorkout(exercisesArray)
+//             .then(savedExercises => {
+//               res.status(201).json({savedProgram, savedWorkouts, savedExercises});
+//             });

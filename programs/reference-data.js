@@ -5,8 +5,8 @@
 {
 	"name": "progC",
 	"description": "progC desc",
-	"length": 21,
-	"phase": "strength",
+	"length": 7,
+	"phase": "progC phase",
 	"workouts": [
         {
             "name": "work1", 
@@ -25,8 +25,8 @@
             "day": 2, 
             "exercises": [
                 {"id": 4, "order":1, "exercise_details": "exD4_work2"}, 
-                {"id": 5, "order":2, "exercise_details": "exD5_work2"}, 
-                {"id": 6, "order":3, "exercise_details": "exD6_work2"} 
+                {"id": 1, "order":2, "exercise_details": "exD1_work2"}, 
+                {"id": 2, "order":3, "exercise_details": "exD2_work2"} 
             ]
         }, 
        
@@ -35,8 +35,8 @@
             "description": "work3 desc", 
             "day": 3, 
             "exercises": [
-                {"id": 1, "order":1, "exercise_details": "exD1_work3"}, 
-                {"id": 6, "order":2, "exercise_details": "exD7_work3"} 
+                {"id": 3, "order":1, "exercise_details": "exD3_work3"}, 
+                {"id": 1, "order":2, "exercise_details": "exD1_work3"} 
             ]
         }
     ]

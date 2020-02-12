@@ -32,7 +32,7 @@ function addWorkout(workouts) {
         for (let i = 0; i < workouts.length; i++) {
           builtArray[i] = ids[0] - (workouts.length-1) + i;
         }
-        console.log(builtArray, '<-- builtArray');
+        // console.log(builtArray, '<-- builtArray');
         return getWorkoutById(builtArray);
       }
       console.log(ids, '<-- ids');
