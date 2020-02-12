@@ -13,6 +13,11 @@
     "testEnvironment": "node",
     "setupFiles": [
       "dotenv/config"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
     ]
   },
   "repository": {
