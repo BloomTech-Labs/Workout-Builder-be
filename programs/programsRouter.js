@@ -18,31 +18,31 @@ router.post('/', validTokenCheck, (req, res) => {
     .then(savedProgram => {
       let programId = savedProgram.id;
       let workoutsArray = req.body.workouts.map(el => {
-        let tempObject = {...el};
-        delete tempObject.exercises;
-        tempObject.program_id = programId;
-        tempObject.coach_id = coach_id;
-        return tempObject;
+        let tempObject1 = {...el};
+        delete tempObject1.exercises;
+        tempObject1.program_id = programId;
+        tempObject1.coach_id = coach_id;
+        return tempObject1;
       });
-      console.log(workoutsArray);
+      console.log('This is workoutsArray:',workoutsArray);
       Workouts.addWorkout(workoutsArray)
         .then(savedWorkouts => {
           // workoutIdArray will return an array of the workout IDs for the program
           let workoutIdArray = savedWorkouts.map(el => el.id);
-          console.log(workoutIdArray, '<-- workoutIdArray');
+          console.log('This is workoutIdArray:',workoutIdArray);
 
           let exercisesArray = [];
           req.body.workouts.forEach((elW, indexW) => {
-            elW.exercises.forEach((elE, indexE) => {
+            elW.exercises.forEach((elE) => {
               let tempObject2 = {};
               tempObject2.exercise_id = elE.id;
               tempObject2.exercise_details = elE.exercise_details;
-              tempObject2.order = indexE + 1;
+              tempObject2.order = elE.order;
               tempObject2.workout_id = workoutIdArray[indexW];
               exercisesArray.push(tempObject2);
             });
           });
-          console.log(exercisesArray, '<-- exercisesArray');
+          console.log('This is exercisesArray:',exercisesArray);
           Workouts.addExercisesToWorkout(exercisesArray)
             .then(savedExercises => {
               res.status(201).json({savedProgram, savedWorkouts, savedExercises});
