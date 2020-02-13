@@ -8,7 +8,9 @@ module.exports = {
   deleteWorkout,
   getExercisesInWorkout,
   addExercisesToWorkout,
-  deleteExerciseInWorkout
+  deleteExerciseInWorkout,
+  getWorkoutByProgramId,
+  getExercisesByWorkoutId
 };
 
 function getWorkouts(coach_id) {
@@ -20,6 +22,12 @@ function getWorkoutById(id) {
   return db('workouts')
     .whereIn('id', id);
   //.where({ id });
+}
+
+function getWorkoutByProgramId(program_id) {
+  return db('workouts')
+    .where({program_id})
+    .select('id', 'name', 'description', 'day');
 }
 
 function addWorkout(workouts) {
@@ -76,6 +84,13 @@ function getExercisesInWorkout(exerciseWorkout) {
   return db('exercises_workouts')
     .whereIn('exercise_id', exerciseIds)
     .whereIn('workout_id', workoutIds);
+}
+
+function getExercisesByWorkoutId(workout_id) {
+  return db('exercises_workouts')
+    .where({workout_id}) // This is the correct line of code to use
+    // .where('workout_idAAA', workout_id) // This is code used for testing error handling should be commented out
+    .select('exercise_id','order','exercise_details');
 }
 
 //JSON body should be an array; each element in the array is { exercise_id, workout_id, order, exercise_details }
