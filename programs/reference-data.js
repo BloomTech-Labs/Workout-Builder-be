@@ -43,6 +43,49 @@
 }
 
 
+
+// This is the request body for the PUT method for creating programs
+{
+	"name": "progC",
+	"description": "progC desc",
+	"length": 7,
+	"phase": "progC phase",
+	"workouts": [
+        {
+            "name": "work1 - changed", 
+            "description": "work1 desc- changed", 
+            "day": 71, 
+            "exercises": [
+                {"id": 3, "order":11, "exercise_details": "exD1_work1"}, 
+                {"id": 2, "order":2, "exercise_details": "exD2_work1- changed"}, 
+                {"id": 1, "order":13, "exercise_details": "exD3_work1"} 
+            ]
+        }, 
+        
+        {
+            "name": "work2", 
+            "description": "work2 desc", 
+            "day": 2, 
+            "exercises": [
+                {"id": 4, "order":1, "exercise_details": "exD4_work2- changed"}, 
+                {"id": 1, "order":82, "exercise_details": "exD1_work2"}, 
+                {"id": 3, "order":3, "exercise_details": "exD2_work2"} 
+            ]
+        }, 
+       
+        {
+            "name": "work3", 
+            "description": "work3 desc- changed", 
+            "day": 31, 
+            "exercises": [
+                {"id": 3, "order":1, "exercise_details": "exD3_work3"}, 
+                {"id": 1, "order":27, "exercise_details": "exD1_work3- changed"} 
+            ]
+        }
+    ]
+}
+
+
 // This is the response body for the POST method for creating programs
 // this is also the response body for the GET method for getting programs
 [

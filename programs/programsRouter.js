@@ -104,8 +104,6 @@ router.post('/',validTokenCheck, (req,res)=>{
 
 });
 
-
-
 // ********************************************************
 // GET /programs
 // ********************************************************
@@ -118,8 +116,42 @@ router.get('/', validTokenCheck, (req,res) => {
     });
 });
 
+
 // ********************************************************
-// This funbction provides the response for:
+// PUT /programs
+// ********************************************************
+router.put('/',validTokenCheck,(req,res)=>{
+  let programObject = {...req.body};
+  delete programObject.workouts;
+  const coach_id = req.token.coachID;
+  programObject.coach_id = coach_id;
+  const program_id = programObject.id;
+
+  Programs.updateProgram(program_id,programObject)
+    .then(()=>{
+      return removeWorkoutsExerciseLinks(program_id);
+    })
+    .then(()=>{
+      return saveWorkoutsExerciseLinks(req.body,program_id,coach_id);
+    })
+    .then(()=>{
+      return bigDataResponseA(coach_id);
+    })
+    .then(data=>res.status(200).json(data))
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+
+// ********************************************************
+// DELETE /programs
+// ********************************************************
+
+
+
+// ********************************************************
+// This function provides the response for:
 // 1) POST /programs
 // 2) GET /programs
 // 3) PUT /programs
@@ -139,13 +171,12 @@ async function bigDataResponseA(coach_id) {
 }
 
 
-// ********************************************************
-// This funbction adds the workouts and exercise_workouts for:
+// **************************************************************
+// This function adds the workouts and exercise_workouts for:
 // 1) POST /programs
 // 2) PUT /programs
-// ********************************************************
+// **************************************************************
 async function saveWorkoutsExerciseLinks(bigDataObject,program_id,coach_id) {
-  
   //Create the workoutsArray 
   const workoutsArray = bigDataObject.workouts.map(el => {
     let tempObject1 = {...el};
@@ -155,13 +186,11 @@ async function saveWorkoutsExerciseLinks(bigDataObject,program_id,coach_id) {
     return tempObject1;
   });
 
-
   // Add elements of the workoutsArray one at a time to the workouts table
   // and build the exerciseArray
   const exercisesArray = [];
   for(let iW=0;iW<workoutsArray.length;iW++) {
     const workoutAdded = await Workouts.addWorkout(workoutsArray[iW]);
-    console.log('This is workoutAdded:',workoutAdded);
     bigDataObject.workouts[iW].exercises.forEach((elE) => {
       let tempObject2 = {};
       tempObject2.exercise_id = elE.id;
@@ -172,11 +201,22 @@ async function saveWorkoutsExerciseLinks(bigDataObject,program_id,coach_id) {
     });   
   }
 
-  console.log('Heree is the exerciseArray:',exercisesArray);
-
   // Add the exerciseArray in one go to the exercise_workouts table
   await Workouts.addExercisesToWorkout(exercisesArray);  
+}
 
+// **************************************************************
+// This function deletes the workouts and exercise_workouts for:
+// 1) PUT /programs
+// **************************************************************
+async function removeWorkoutsExerciseLinks(program_id) {
+  const workoutsArray = await Workouts.getWorkoutByProgramId(program_id);
+  for(let iW=0;iW<workoutsArray.length;iW++) {
+    await Workouts.deleteWorkout(workoutsArray[iW].id);
+  }
+  // Since there is a CASCADE setting for the workouts foreign key
+  // in the exercise_workouts table, once the workout is deleted, the 
+  // corresponding exercise_workout will also be deleted
 }
 
 
