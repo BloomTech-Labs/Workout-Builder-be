@@ -60,11 +60,7 @@ To-do List:
 - add clients to program
     program {
         id: 1,
-        clients: [
-            { id:1, start_date: '2020-02-12' },
-            { id:2, start_date: '2020-02-12' },
-            { id:3, start_date: '2020-02-12' }
-        ]
+        clients: [ 1, 2, 3 ]
     }
 
     [

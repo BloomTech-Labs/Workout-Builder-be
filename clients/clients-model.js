@@ -9,7 +9,8 @@ module.exports = {
   getClientsInProgram,
   addClientsToProgram,
   deleteProgramForClient,
-  addProgramToClient
+  addProgramToClient,
+  getDashboardInfo
 };
 
 function getClients(coach_id) {
@@ -92,6 +93,7 @@ function deleteProgramForClient(clientProgram) {
     });
 }
 
+//JSON body should be an object with keys: id, program_id; (i.e. { id: 1, program_id: 2 })
 function addProgramToClient(clientProgram) {
   let clientId = [];
   clientId.push(clientProgram.client_id);
@@ -105,4 +107,13 @@ function addProgramToClient(clientProgram) {
         .whereIn('program_id', programId)
         .first();
     });
+}
+
+function getDashboardInfo(coach_id) {
+  return db('clients_programs as cp')
+    .select('c.id', 'c.first_name', 'c.last_name', 'cp.start_date', 'p.id', 'p.length', 'p.phase')
+    .join('clients as c', 'cp.client_id', '=', 'c.id')
+    .join('programs as p', 'cp.program_id', '=', 'p.id')
+    .where('c.coach_id', coach_id)
+    .orderBy('cp.client_id');
 }
