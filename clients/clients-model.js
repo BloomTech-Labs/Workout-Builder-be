@@ -8,7 +8,7 @@ module.exports = {
   deleteClient,
   getClientsInProgram,
   addClientsToProgram,
-  deleteClientInProgram,
+  deleteProgramForClient,
   addProgramToClient
 };
 
@@ -80,7 +80,7 @@ function addClientsToProgram(clientProgram) {
 }
 
 //JSON body should be an array; each element in the array is { client_id, program_id }
-function deleteClientInProgram(clientProgram) {
+function deleteProgramForClient(clientProgram) {
   const clientIds = clientProgram.map(el => el.client_id);
   const programIds = clientProgram.map(el => el.program_id);
   return db('clients_programs')

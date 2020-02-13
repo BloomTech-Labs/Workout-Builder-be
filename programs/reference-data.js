@@ -79,3 +79,11 @@ To-do List:
         program_id: 2
     }
 */
+
+
+/*
+Questions:
+- should we add an 'image_url' property for the clients table? (dashboard)
+- when assigning clients to a program, coach must input start_date (figma)
+
+*/
