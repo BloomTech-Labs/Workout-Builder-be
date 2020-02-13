@@ -126,8 +126,27 @@ router.post('/programs', validTokenCheck, (req, res) => {
 
   Clients.addClientsToProgram(clientProgramArray)
     .then(savedArray => {
-      console.log(savedArray, '<-- saved array');
       res.status(201).json(savedArray);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+// ********************************************************
+// POST /clients/program
+// ********************************************************
+router.post('/program', validTokenCheck, (req, res) => {
+  let clientProgramObject = {};
+  clientProgramObject.client_id = req.body.id;
+  clientProgramObject.program_id = req.body.program_id;
+  clientProgramObject.start_date = req.body.start_date;
+  //const coach_id = req.token.coachID;
+  console.log(clientProgramObject, '<-- saved object');
+
+  Clients.addProgramToClient(clientProgramObject)
+    .then(savedObject => {
+      res.status(201).json(savedObject);
     })
     .catch(error => {
       res.status(500).json(error);

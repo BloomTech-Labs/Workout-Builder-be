@@ -57,11 +57,13 @@ To-do List:
 
 - model for clients_programs
 - endpoints for clients_programs
-- assigning program to clients
+- add clients to program
     program {
         id: 1,
         clients: [
-            1, 2, 3
+            { id:1, start_date: '2020-02-12' },
+            { id:2, start_date: '2020-02-12' },
+            { id:3, start_date: '2020-02-12' }
         ]
     }
 
@@ -70,4 +72,10 @@ To-do List:
         { program_id: 1, client_id: 2 },
         { program_id: 1, client_id: 3 },
     ]
+
+- add program to client
+    client {
+        id: 1,
+        program_id: 2
+    }
 */

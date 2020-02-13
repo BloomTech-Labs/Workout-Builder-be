@@ -8,7 +8,8 @@ module.exports = {
   deleteClient,
   getClientsInProgram,
   addClientsToProgram,
-  deleteClientInProgram
+  deleteClientInProgram,
+  addProgramToClient
 };
 
 function getClients(coach_id) {
@@ -60,21 +61,6 @@ function deleteClient(id) {
     });
 }
 
-// function getClientsInProgram(id) {
-//   return db('clients_programs')
-//     .where({ id })
-//     .first();
-// }
-
-// function addClientsToProgram(clientProgram) {
-//   return db('clients_programs')
-//     .insert(clientProgram, 'id')
-//     .then(ids => {
-//       const [id] = ids;
-//       return getClientById(id);
-//     });
-// }
-
 //JSON body should be an array; each element in the array is { client_id, program_id }
 function getClientsInProgram(clientProgram) {
   const clientIds = clientProgram.map(el => el.client_id);
@@ -103,5 +89,20 @@ function deleteClientInProgram(clientProgram) {
     .del()
     .then(count => {
       return count;
+    });
+}
+
+function addProgramToClient(clientProgram) {
+  let clientId = [];
+  clientId.push(clientProgram.client_id);
+  let programId = [];
+  programId.push(clientProgram.program_id);
+  return db('clients_programs')
+    .insert(clientProgram)
+    .then(() => {
+      return db('clients_programs')
+        .whereIn('client_id', clientId)
+        .whereIn('program_id', programId)
+        .first();
     });
 }
