@@ -145,9 +145,31 @@ router.put('/',validTokenCheck,(req,res)=>{
 
 
 // ********************************************************
-// DELETE /programs
+// DELETE /programs/:id
 // ********************************************************
+router.delete('/:id',validTokenCheck,(req,res)=>{
+  const program_id = req.params.id;
+  const coach_id = req.token.coachID;
 
+  Programs.getProgramById(program_id)
+    .then(program=>{
+      if (program && program.coach_id === coach_id) {
+        return Programs.deleteProgram(program_id);
+      } 
+      else if (!program) {
+        res.status(404).json({ error: `cannot delete program with id: ${program_id} because it does not exist` });
+      }
+      else {
+        res.status(403).json({ error: `you are not authorized to delete program with id: ${program_id}`});
+      }
+    })
+    .then(program=>{
+      res.status(200).json(program);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 
 
 // ********************************************************

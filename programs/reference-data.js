@@ -46,9 +46,10 @@
 
 // This is the request body for the PUT method for creating programs
 {
-	"name": "progC",
-	"description": "progC desc",
-	"length": 7,
+    "id":,
+	"name": "progC-changed",
+	"description": "progC desc-changed",
+	"length": 700,
 	"phase": "progC phase",
 	"workouts": [
         {
