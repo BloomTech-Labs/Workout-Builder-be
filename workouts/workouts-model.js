@@ -43,7 +43,7 @@ function addWorkout(workouts) {
         // console.log(builtArray, '<-- builtArray');
         return getWorkoutById(builtArray);
       }
-      console.log(ids, '<-- ids');
+      // console.log(ids, '<-- ids');
       return getWorkoutById(ids);
     });
 }
