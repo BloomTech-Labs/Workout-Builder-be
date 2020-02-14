@@ -6,9 +6,9 @@ const {validTokenCheck, validBodyCheck, validCoachIdCheck, validRecordIdCoachIdC
 // ********************************************************
 // POST /clients-programs
 // ********************************************************
-router.post('/clients', validTokenCheck, validBodyCheck(['id', 'clients']), validAddProgramToClientsCheck, (req, res) => {
+router.post('/clients', validTokenCheck, validBodyCheck(['id', 'clients']), validAddClientsToProgramCheck, (req, res) => {
   let programId = req.body.id;
-  //const coach_id = req.token.coachID;
+
   let clientProgramArray = req.body.clients.map(el => {
     let eachObject = {};
     let date = new Date();
@@ -31,15 +31,13 @@ router.post('/clients', validTokenCheck, validBodyCheck(['id', 'clients']), vali
 // ********************************************************
 // POST /clients-programs
 // ********************************************************
-router.post('/program', validTokenCheck, (req, res) => {
+router.post('/program', validTokenCheck, validBodyCheck(['id', 'program_id']), validAddProgramToClientCheck, (req, res) => {
   let clientProgramObject = {};
   let date = new Date();
   clientProgramObject.client_id = req.body.id;
   clientProgramObject.program_id = req.body.program_id;
-  //clientProgramObject.start_date = req.body.start_date;
   clientProgramObject.start_date = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 
-  //const coach_id = req.token.coachID;
   console.log(clientProgramObject, '<-- saved object');
 
   Clients.addProgramToClient(clientProgramObject)
@@ -79,12 +77,12 @@ router.get('/dashboard', validTokenCheck, (req, res) => {
     });
 });
 
-// ----------------------------------------------------------- //
+// ------------------------------ MIDDLEWARE ----------------------------------- //
 
 // ********************************************************
-// validAddProgramToClientsCheck
+// validAddClientsToProgramCheck
 // ********************************************************
-function validAddProgramToClientsCheck (req, res, next) {
+function validAddClientsToProgramCheck (req, res, next) {
   const coach_id = req.token.coachID;
 
   validRecordIdCoachIdCheck(coach_id, 'programs', [req.body.id])
@@ -102,6 +100,36 @@ function validAddProgramToClientsCheck (req, res, next) {
         res.status(400).json({ message: `client with id: ${returnObject.badId} does not exist` });
       }else if (returnObject.validCoachId === false) {
         res.status(400).json({ message: `you do not have access to client with id: ${returnObject.badCId}` });
+      } else {
+        next();
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+}
+
+// ********************************************************
+// validAddProgramToClientCheck
+// ********************************************************
+function validAddProgramToClientCheck (req, res, next) {
+  const coach_id = req.token.coachID;
+
+  validRecordIdCoachIdCheck(coach_id, 'clients', [req.body.id])
+    .then(returnObject => {
+      if (returnObject.idExists === false) {
+        res.status(400).json({ message: `client with id: ${req.body.id} does not exist` });
+      } else if (returnObject.validCoachId === false) {
+        res.status(400).json({ message: `you do not have access to client with id: ${req.body.id}` });
+      } else {
+        return validRecordIdCoachIdCheck(coach_id, 'programs', [req.body.program_id]);
+      }
+    })
+    .then(returnObject => {
+      if (returnObject.idExists === false) {
+        res.status(400).json({ message: `program with id: ${returnObject.badId} does not exist` });
+      }else if (returnObject.validCoachId === false) {
+        res.status(400).json({ message: `you do not have access to program with id: ${returnObject.badCId}` });
       } else {
         next();
       }
