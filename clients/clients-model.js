@@ -111,7 +111,7 @@ function addProgramToClient(clientProgram) {
 
 function getDashboardInfo(coach_id) {
   return db('clients_programs as cp')
-    .select('c.id', 'c.first_name', 'c.last_name', 'cp.start_date', 'p.id', 'p.length', 'p.phase')
+    .select('c.id as client_id', 'c.first_name', 'c.last_name', 'cp.start_date', 'p.id as program_id', 'p.name', 'p.length', 'p.phase')
     .join('clients as c', 'cp.client_id', '=', 'c.id')
     .join('programs as p', 'cp.program_id', '=', 'p.id')
     .where('c.coach_id', coach_id)
