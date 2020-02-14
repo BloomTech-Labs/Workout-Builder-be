@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Clients = require('./clients-model');
-const {validTokenCheck, validBodyCheck, validCoachIdCheck} = require('../middleware/custom_middleware');
+const {validTokenCheck, validBodyCheck, validCoachIdCheck, validRecordIdCoachIdCheck} = require('../middleware/custom_middleware');
 
 // ********************************************************
 // POST /clients-programs
 // ********************************************************
-router.post('/clients', validTokenCheck, (req, res) => {
+router.post('/clients', validTokenCheck, validBodyCheck(['id', 'clients']), validAddProgramToClientsCheck, (req, res) => {
   let programId = req.body.id;
   //const coach_id = req.token.coachID;
   let clientProgramArray = req.body.clients.map(el => {
@@ -84,22 +84,31 @@ router.get('/dashboard', validTokenCheck, (req, res) => {
 // ********************************************************
 // validAddProgramToClientsCheck
 // ********************************************************
-// function validAddProgramToClientsCheck (req, res, next) {
-//   const coach_id = req.token.coachID;
+function validAddProgramToClientsCheck (req, res, next) {
+  const coach_id = req.token.coachID;
 
-//   validCoachIdCheck(coach_id, 'programs', req.body.id)
-//     .then(returnObject => {
-//       if (returnObject.idExists === false) {
-//         res.status(400).json({ message: `program with id: ${req.body.id} does not exist` });
-//       } else if (returnObject.validCoachId === false) {
-//         res.status(400).json({ message: `you do not have access to program with id: ${req.body.id}` });
-//       } else {
-//         return validCoachIdCheck(coach_id, 'clients', req.body.clients);
-//       }
-//     })
-//     .then(returnObject2 => {
-
-//     })
-// }
+  validRecordIdCoachIdCheck(coach_id, 'programs', [req.body.id])
+    .then(returnObject => {
+      if (returnObject.idExists === false) {
+        res.status(400).json({ message: `program with id: ${req.body.id} does not exist` });
+      } else if (returnObject.validCoachId === false) {
+        res.status(400).json({ message: `you do not have access to program with id: ${req.body.id}` });
+      } else {
+        return validRecordIdCoachIdCheck(coach_id, 'clients', req.body.clients);
+      }
+    })
+    .then(returnObject => {
+      if (returnObject.idExists === false) {
+        res.status(400).json({ message: `client with id: ${returnObject.badId} does not exist` });
+      }else if (returnObject.validCoachId === false) {
+        res.status(400).json({ message: `you do not have access to client with id: ${returnObject.badCId}` });
+      } else {
+        next();
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+}
 
 module.exports = router;
