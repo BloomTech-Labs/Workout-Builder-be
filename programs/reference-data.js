@@ -74,6 +74,14 @@ To-do List:
         id: 1,
         program_id: 2
     }
+
+
+- verification middleware:
+    - client exists
+    - program exists
+    - client is associated with coach
+    - program is associated with coach
+    
 */
 
 

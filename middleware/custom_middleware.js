@@ -2,10 +2,12 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
   validBodyCheck,
-  validTokenCheck
+  validTokenCheck,
+  validCoachIdCheck
 };
 
 const {jwtSecret} = require('../consts');
+const db = require('../data/db-config');
 
 // ********************************************************
 // validBodyCheck
@@ -62,4 +64,20 @@ function validTokenCheck(req, res, next) {
   } else {
     res.status(400).json({ message: 'Please login first' });
   }
+}
+
+// ********************************************************
+// validCoachIdCheck
+// ********************************************************
+async function validCoachIdCheck(coach_id, table_name, id) {
+  let returnObject = {validCoachId: false, idExists: false};
+  let tempObject = await db(table_name).where({ id }).first();
+  if (tempObject && coach_id === tempObject.coach_id) {
+    returnObject.validCoachId = true;
+    returnObject.idExists = true;
+  } else if (tempObject && coach_id !== tempObject.coach_id) {
+    returnObject.validCoachId = false;
+    returnObject.idExists = true;
+  }
+  return returnObject;
 }
