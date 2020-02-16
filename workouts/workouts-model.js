@@ -13,30 +13,37 @@ module.exports = {
   getExercisesByWorkoutId
 };
 
+// The arg coach_id is a integer
 function getWorkouts(coach_id) {
   return db('workouts')
     .where({ coach_id });
 }
 
+// The arg id is an array of ids
 function getWorkoutById(id) {
   return db('workouts')
     .whereIn('id', id);
   //.where({ id });
 }
 
+// The arg program_id is an integer
 function getWorkoutByProgramId(program_id) {
   return db('workouts')
     .where({program_id})
     .select('id', 'name', 'description', 'day');
 }
 
+// The arg workouts is an array of workouts
 function addWorkout(workouts) {
-  return db('workouts')
+  // console.log('Here in addWorkout');
+  return db('workouts') //This is correct code - keep in final version of program
+  //return db('workoutsBAD') //Bad code for test - comment out in final version of program
     .insert(workouts, 'id')
     .then(ids => {
+      // console.log('This is ids in addWorkout:',ids);
       // added logic to account for differences between returning method of sqlite3 and postgres
-      let builtArray = [];
       if (workouts.length > 1 && ids.length === 1) {
+        let builtArray = [];
         for (let i = 0; i < workouts.length; i++) {
           builtArray[i] = ids[0] - (workouts.length-1) + i;
         }
@@ -48,6 +55,8 @@ function addWorkout(workouts) {
     });
 }
 
+// The arg id is an integer
+// The arg changes is an object
 function updateWorkout(id, changes) {
   return db('workouts')
     .where('id', id)
@@ -59,6 +68,7 @@ function updateWorkout(id, changes) {
     });
 }
 
+// The arg id is an integer
 function deleteWorkout(id) {
   let deletedWorkout = {};
   db('workouts')
@@ -86,6 +96,7 @@ function getExercisesInWorkout(exerciseWorkout) {
     .whereIn('workout_id', workoutIds);
 }
 
+// The arg workout_id is an integer
 function getExercisesByWorkoutId(workout_id) {
   return db('exercises_workouts')
     .where({workout_id}) // This is the correct line of code to use
@@ -95,7 +106,9 @@ function getExercisesByWorkoutId(workout_id) {
 
 //JSON body should be an array; each element in the array is { exercise_id, workout_id, order, exercise_details }
 function addExercisesToWorkout(exerciseWorkout) {
-  return db('exercises_workouts')
+  // console.log('Here in addExercisesToWorkout');
+  return db('exercises_workouts') //This is correct code - keep in final version of program
+  //return db('exercises_workoutsBAD') //Bad code for test - comment out in final version of program
     .insert(exerciseWorkout)
     .then(() => {
       return getExercisesInWorkout(exerciseWorkout);

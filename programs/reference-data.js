@@ -87,8 +87,7 @@
 }
 
 
-// This is the response body for the POST method for creating programs
-// this is also the response body for the GET method for getting programs
+// This is the response body for the POST/PUT/GET method for creating programs
 [
     {
         id: 1, 
