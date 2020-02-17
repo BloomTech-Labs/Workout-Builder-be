@@ -23,6 +23,7 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           FRONTEND_DOMAIN: ${{ secrets.FRONTEND_DOMAIN }}
+          DB_JWTSECRET: ${{ secrets.DB_JWTSECRET }}
   coverage:
     name: Test and publish test coverage
     runs-on: ubuntu-latest
