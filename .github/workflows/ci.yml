@@ -20,6 +20,8 @@ jobs:
       - run: npm test
         env:
           CI: true
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
   coverage:
     name: Test and publish test coverage
     runs-on: ubuntu-latest
