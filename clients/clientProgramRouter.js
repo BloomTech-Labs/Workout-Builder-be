@@ -4,9 +4,14 @@ const Clients = require('./clients-model');
 const Programs = require('../programs/programs-model');
 const {validTokenCheck, validBodyCheck, validRecordIdCoachIdCheck} = require('../middleware/custom_middleware');
 
-// ********************************************************
+/* ********************************************************
 // POST /clients-programs
-// ********************************************************
+// request object should look like this:
+{
+  program_id: 1,
+  client_ids: [ 1, 2, 3 ]
+}
+// ******************************************************** */
 router.post('/', validTokenCheck, validBodyCheck(['program_id', 'client_ids']), validAddClientsToProgramCheck, (req, res) => {
   let programId = req.body.program_id;
 
@@ -19,6 +24,14 @@ router.post('/', validTokenCheck, validBodyCheck(['program_id', 'client_ids']), 
     return eachObject;
   });
 
+  /*
+  take the request object and turn it into clientProgramArray which looks like this:
+  [
+    { program_id: 1, client_id: 1 },
+    { program_id: 1, client_id: 2 },
+    { program_id: 1, client_id: 3 },
+  ]
+  */
   Clients.addClientsToProgram(clientProgramArray)
     .then(savedArray => {
       res.status(201).json(savedArray);
