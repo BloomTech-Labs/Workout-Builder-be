@@ -23,13 +23,26 @@ To get the server running locally:
 - Knex is simple and optimal for server/database interaction
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Endpoints
 
 
 ### AUTH Routes
 
 ----
-#### _REGISTER_
+#### _Register a user with local account_
 
 * **Method**
 
@@ -77,7 +90,7 @@ To get the server running locally:
       **Content:** `{ message: 'local login was done previously' }`
 
 ----
-#### _LOGIN_
+#### _Login a user with a local account_
 
 * **Method**
 
@@ -124,7 +137,7 @@ To get the server running locally:
       **Content:** `{ message: 'Google social login was done previously, cannot local login' }`
 
 ----
-#### _GOOGLE LOGIN_
+#### _Login a user with Google social login_
 
 * **Endpoint**
 
@@ -137,6 +150,523 @@ To get the server running locally:
 * **URL Params**
 
   token, first_name, last_name
+
+
+
+### Program Routes
+
+----
+#### _Create a program with workouts and link workouts to exercises_
+
+* **Method**
+
+  `POST`
+
+* **Endpoint**
+
+  `/programs`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "name": "progC",
+        "description": "progC desc",
+        "length": 21,
+        "phase": "strength",
+        "workouts": [
+            {
+                "name": "work1", 
+                "description": "work1 desc", 
+                "day": 1, 
+                "exercises": [
+                    {"id": 1, "order":1, "exercise_details": "exD1_work1"}, 
+                    {"id": 2, "order":2, "exercise_details": "exD2_work1"}, 
+                    {"id": 3, "order":3, "exercise_details": "exD3_work1"} 
+                ]
+            }, 
+            
+            {
+                "name": "work2", 
+                "description": "work2 desc", 
+                "day": 2, 
+                "exercises": [
+                    {"id": 4, "order":1, "exercise_details": "exD4_work2"}, 
+                    {"id": 5, "order":2, "exercise_details": "exD5_work2"}, 
+                    {"id": 6, "order":3, "exercise_details": "exD6_work2"} 
+                ]
+            }, 
+          
+            {
+                "name": "work3", 
+                "description": "work3 desc", 
+                "day": 3, 
+                "exercises": [
+                    {"id": 1, "order":1, "exercise_details": "exD1_work3"}, 
+                    {"id": 6, "order":2, "exercise_details": "exD7_work3"} 
+                ]
+            }
+        ]
+    }
+    ```
+
+* **Notes**
+
+  ```
+  This is for the creation of a single program for a coach. 
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 201
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            id: 1, 
+            name: "Program 1", 
+            description: "program1 description", 
+            coach_id: 1, 
+            length: 10, 
+            phase: "strength",
+            workouts: [
+                {
+                    id: 1, 
+                    name: "push day", 
+                    description: "push day arm workout", 
+                    day: 1, 
+                    exercises: [
+                        {exercise_id: 1, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 2, order: 2, exercise_details: "50lbs dumbbells - 5 sets of 5"},
+                        {exercise_id: 3, order: 3, exercise_details: "70lbs bar - 5 sets of 5"}
+                    ]
+                }, 
+                {
+                    id: 2, 
+                    name: "pull day", 
+                    description: "pull day arm and back workout", 
+                    day: 2, 
+                    exercises: [
+                        {exercise_id: 4, order: 1, exercise_details: "bodyweight - 5 sets of 5"},
+                        {exercise_id: 5, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 6, order: 3, exercise_details: "30lbs dumbbells - 5 sets of 5"}
+                    ]
+                },
+                {
+                    id: 3, 
+                    name: "legs and core", 
+                    description: "legs and core day workout", 
+                    day: 3, 
+                    exercises: [
+                        {exercise_id: 7, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 8, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 9, order: 3, exercise_details: "bodyweight - 5 sets of 5"},
+                    ]
+                },
+            ],
+            assigned_clients: [1, 3, 5, 7, 9]
+        },
+
+
+        {
+            id: 2, 
+            name: "Program 2", 
+            description: "Test program description", 
+            coach_id: 1, 
+            length: 22, 
+            phase: "strength",
+            workouts: [
+                {
+                    id: 4, 
+                    name: "push day", 
+                    description: "push day arm workout", 
+                    day: 1, 
+                    exercises: [
+                        {exercise_id: 1, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 2, order: 2, exercise_details: "50lbs dumbbells - 5 sets of 5"},
+                        {exercise_id: 3, order: 3, exercise_details: "70lbs bar - 5 sets of 5"}
+                    ]
+                }, 
+                {
+                    id: 5, 
+                    name: "pull day", 
+                    description: "pull day arm and back workout", 
+                    day: 2, 
+                    exercises: [
+                        {exercise_id: 4, order: 1, exercise_details: "bodyweight - 5 sets of 5"},
+                        {exercise_id: 5, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 6, order: 3, exercise_details: "30lbs dumbbells - 5 sets of 5"}
+                    ]
+                },
+                {
+                    id: 6, 
+                    name: "legs and core", 
+                    description: "legs and core day workout", 
+                    day: 3, 
+                    exercises: [
+                        {exercise_id: 7, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 8, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 9, order: 3, exercise_details: "bodyweight - 5 sets of 5"},
+                    ]
+                },
+            ],
+            assigned_clients: [2, 4, 6]
+        }      
+      ]
+      ```
+      
+      
+      
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, invalid exercise_id, coach_id not associated with exercise_id
+
+  
+
+----
+
+#### _Query the backend for programs data with workouts and exercises in workouts_
+
+* **Method**
+
+  `GET`
+
+* **Endpoint**
+
+  `/programs`
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            id: 1, 
+            name: "Program 1", 
+            description: "program1 description", 
+            coach_id: 1, 
+            length: 10, 
+            phase: "strength",
+            workouts: [
+                {
+                    id: 1, 
+                    name: "push day", 
+                    description: "push day arm workout", 
+                    day: 1, 
+                    exercises: [
+                        {exercise_id: 1, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 2, order: 2, exercise_details: "50lbs dumbbells - 5 sets of 5"},
+                        {exercise_id: 3, order: 3, exercise_details: "70lbs bar - 5 sets of 5"}
+                    ]
+                }, 
+                {
+                    id: 2, 
+                    name: "pull day", 
+                    description: "pull day arm and back workout", 
+                    day: 2, 
+                    exercises: [
+                        {exercise_id: 4, order: 1, exercise_details: "bodyweight - 5 sets of 5"},
+                        {exercise_id: 5, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 6, order: 3, exercise_details: "30lbs dumbbells - 5 sets of 5"}
+                    ]
+                },
+                {
+                    id: 3, 
+                    name: "legs and core", 
+                    description: "legs and core day workout", 
+                    day: 3, 
+                    exercises: [
+                        {exercise_id: 7, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 8, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 9, order: 3, exercise_details: "bodyweight - 5 sets of 5"},
+                    ]
+                },
+            ],
+            assigned_clients: [1, 3, 5, 7, 9]
+        },
+
+
+        {
+            id: 2, 
+            name: "Program 2", 
+            description: "Test program description", 
+            coach_id: 1, 
+            length: 22, 
+            phase: "strength",
+            workouts: [
+                {
+                    id: 4, 
+                    name: "push day", 
+                    description: "push day arm workout", 
+                    day: 1, 
+                    exercises: [
+                        {exercise_id: 1, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 2, order: 2, exercise_details: "50lbs dumbbells - 5 sets of 5"},
+                        {exercise_id: 3, order: 3, exercise_details: "70lbs bar - 5 sets of 5"}
+                    ]
+                }, 
+                {
+                    id: 5, 
+                    name: "pull day", 
+                    description: "pull day arm and back workout", 
+                    day: 2, 
+                    exercises: [
+                        {exercise_id: 4, order: 1, exercise_details: "bodyweight - 5 sets of 5"},
+                        {exercise_id: 5, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 6, order: 3, exercise_details: "30lbs dumbbells - 5 sets of 5"}
+                    ]
+                },
+                {
+                    id: 6, 
+                    name: "legs and core", 
+                    description: "legs and core day workout", 
+                    day: 3, 
+                    exercises: [
+                        {exercise_id: 7, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 8, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 9, order: 3, exercise_details: "bodyweight - 5 sets of 5"},
+                    ]
+                },
+            ],
+            assigned_clients: [2, 4, 6]
+        }      
+      ]
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token
+
+----
+#### _Modify a program and its workouts and workout links to exercises_
+
+* **Method**
+
+  `PUT`
+
+* **Endpoint**
+
+  `/programs`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "id":2,
+        "name": "progC",
+        "description": "progC desc",
+        "length": 21,
+        "phase": "strength",
+        "workouts": [
+            {
+                "name": "work1", 
+                "description": "work1 desc", 
+                "day": 1, 
+                "exercises": [
+                    {"id": 1, "order":1, "exercise_details": "exD1_work1"}, 
+                    {"id": 2, "order":2, "exercise_details": "exD2_work1"}, 
+                    {"id": 3, "order":3, "exercise_details": "exD3_work1"} 
+                ]
+            }, 
+            
+            {
+                "name": "work2", 
+                "description": "work2 desc", 
+                "day": 2, 
+                "exercises": [
+                    {"id": 4, "order":1, "exercise_details": "exD4_work2"}, 
+                    {"id": 5, "order":2, "exercise_details": "exD5_work2"}, 
+                    {"id": 6, "order":3, "exercise_details": "exD6_work2"} 
+                ]
+            }, 
+          
+            {
+                "name": "work3", 
+                "description": "work3 desc", 
+                "day": 3, 
+                "exercises": [
+                    {"id": 1, "order":1, "exercise_details": "exD1_work3"}, 
+                    {"id": 6, "order":2, "exercise_details": "exD7_work3"} 
+                ]
+            }
+        ]
+    }
+    ```
+
+* **Notes**
+
+  ```
+  This is for the modification of a single program for a coach. When this request 
+  is received by the backend, the server will first delete all the current workouts
+  and exercises_workouts records associated with the program. Then it will modify the program record 
+  and then add new workouts and exercises_workouts records according to the request body. 
+  The token must be sent along with the request. The coach_id will be obtained
+  from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            id: 1, 
+            name: "Program 1", 
+            description: "program1 description", 
+            coach_id: 1, 
+            length: 10, 
+            phase: "strength",
+            workouts: [
+                {
+                    id: 1, 
+                    name: "push day", 
+                    description: "push day arm workout", 
+                    day: 1, 
+                    exercises: [
+                        {exercise_id: 1, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 2, order: 2, exercise_details: "50lbs dumbbells - 5 sets of 5"},
+                        {exercise_id: 3, order: 3, exercise_details: "70lbs bar - 5 sets of 5"}
+                    ]
+                }, 
+                {
+                    id: 2, 
+                    name: "pull day", 
+                    description: "pull day arm and back workout", 
+                    day: 2, 
+                    exercises: [
+                        {exercise_id: 4, order: 1, exercise_details: "bodyweight - 5 sets of 5"},
+                        {exercise_id: 5, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 6, order: 3, exercise_details: "30lbs dumbbells - 5 sets of 5"}
+                    ]
+                },
+                {
+                    id: 3, 
+                    name: "legs and core", 
+                    description: "legs and core day workout", 
+                    day: 3, 
+                    exercises: [
+                        {exercise_id: 7, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 8, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 9, order: 3, exercise_details: "bodyweight - 5 sets of 5"},
+                    ]
+                },
+            ],
+            assigned_clients: [1, 3, 5, 7, 9]
+        },
+
+
+        {
+            id: 2, 
+            name: "Program 2", 
+            description: "Test program description", 
+            coach_id: 1, 
+            length: 22, 
+            phase: "strength",
+            workouts: [
+                {
+                    id: 4, 
+                    name: "push day", 
+                    description: "push day arm workout", 
+                    day: 1, 
+                    exercises: [
+                        {exercise_id: 1, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 2, order: 2, exercise_details: "50lbs dumbbells - 5 sets of 5"},
+                        {exercise_id: 3, order: 3, exercise_details: "70lbs bar - 5 sets of 5"}
+                    ]
+                }, 
+                {
+                    id: 5, 
+                    name: "pull day", 
+                    description: "pull day arm and back workout", 
+                    day: 2, 
+                    exercises: [
+                        {exercise_id: 4, order: 1, exercise_details: "bodyweight - 5 sets of 5"},
+                        {exercise_id: 5, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 6, order: 3, exercise_details: "30lbs dumbbells - 5 sets of 5"}
+                    ]
+                },
+                {
+                    id: 6, 
+                    name: "legs and core", 
+                    description: "legs and core day workout", 
+                    day: 3, 
+                    exercises: [
+                        {exercise_id: 7, order: 1, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 8, order: 2, exercise_details: "135lbs bar - 5 sets of 5"},
+                        {exercise_id: 9, order: 3, exercise_details: "bodyweight - 5 sets of 5"},
+                    ]
+                },
+            ],
+            assigned_clients: [2, 4, 6]
+        }      
+      ]
+      ```
+      
+      
+      
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, invalid exercise_id/program_id, coach_id not associated with exercise_id/program_id      
+
+
+----
+
+#### _Delete a program_
+
+* **Method**
+
+  `DELETE`
+
+* **Endpoint**
+
+  `/programs/:id`
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will be obtained from the token.
+  The param id is the program_id that will be deleted. All linked workouts and exercise_workouts records
+  will also be deleted.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 3,
+        "name": "progC-changed",
+        "phase": "progC phase",
+        "description": "progC desc-changed",
+        "length": 700,
+        "coach_id": 1
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, invalid program_id, coach_id not associated with program_id 
+
+
+
+
+
 
 
 

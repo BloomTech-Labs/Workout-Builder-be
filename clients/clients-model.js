@@ -5,7 +5,8 @@ module.exports = {
   getClientById,
   addClient,
   updateClient,
-  deleteClient
+  deleteClient,
+  extractClientsInProgram
 };
 
 function getClients(coach_id) {
@@ -55,4 +56,9 @@ function deleteClient(id) {
         return deletedClient;
       }
     });
+}
+
+function extractClientsInProgram(program_id) {
+  return db('clients_programs')
+    .where('program_id', program_id);
 }
