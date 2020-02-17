@@ -59,8 +59,8 @@ To-do List:
 - endpoints for clients_programs
 - add clients to program
     program {
-        id: 1,
-        clients: [ 1, 2, 3 ]
+        program_id: 1,
+        client_ids: [ 1, 2, 3 ]
     }
 
     [
@@ -69,12 +69,17 @@ To-do List:
         { program_id: 1, client_id: 3 },
     ]
 
-- add program to client
+- not doing this:
     client {
-        id: 1,
-        program_id: 2
+        client_id: 1
+        program_id: [1, 2]
     }
-
+    
+- this can be done with the 'add clients to program'
+    client {
+        client_id: [1]
+        program_id: 1
+    }
 
 - verification middleware:
     - client exists

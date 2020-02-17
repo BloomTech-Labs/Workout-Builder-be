@@ -9,7 +9,6 @@ module.exports = {
   getClientsInProgram,
   addClientsToProgram,
   deleteProgramForClient,
-  addProgramToClient,
   getDashboardInfo
 };
 
@@ -63,9 +62,10 @@ function deleteClient(id) {
 }
 
 //JSON body should be an array; each element in the array is { client_id, program_id }
+//should ONLY accept one program_id
 function getClientsInProgram(clientProgram) {
   const clientIds = clientProgram.map(el => el.client_id);
-  const programIds = clientProgram.map(el => el.program_id);
+  const programIds = [clientProgram[0].program_id];
   return db('clients_programs')
     .whereIn('client_id', clientIds)
     .whereIn('program_id', programIds);
@@ -80,32 +80,13 @@ function addClientsToProgram(clientProgram) {
     });
 }
 
-//JSON body should be an array; each element in the array is { client_id, program_id }
+//clientProgram is an object {program_id: 1, client_id: 1}
 function deleteProgramForClient(clientProgram) {
-  const clientIds = clientProgram.map(el => el.client_id);
-  const programIds = clientProgram.map(el => el.program_id);
   return db('clients_programs')
-    .whereIn('client_id', clientIds)
-    .whereIn('program_id', programIds)
+    .where(clientProgram)
     .del()
     .then(count => {
       return count;
-    });
-}
-
-//JSON body should be an object with keys: id, program_id; (i.e. { id: 1, program_id: 2 })
-function addProgramToClient(clientProgram) {
-  let clientId = [];
-  clientId.push(clientProgram.client_id);
-  let programId = [];
-  programId.push(clientProgram.program_id);
-  return db('clients_programs')
-    .insert(clientProgram)
-    .then(() => {
-      return db('clients_programs')
-        .whereIn('client_id', clientId)
-        .whereIn('program_id', programId)
-        .first();
     });
 }
 
