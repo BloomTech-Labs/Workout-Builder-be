@@ -9,7 +9,8 @@ module.exports = {
   getClientsInProgram,
   addClientsToProgram,
   deleteProgramForClient,
-  getDashboardInfo
+  getDashboardInfo,
+  extractClientsInProgram
 };
 
 function getClients(coach_id) {
@@ -60,6 +61,12 @@ function deleteClient(id) {
       }
     });
 }
+
+function extractClientsInProgram(program_id) {
+  return db('clients_programs')
+    .where('program_id', program_id);
+}
+
 
 //JSON body should be an array; each element in the array is { client_id, program_id }
 //should ONLY accept one program_id
