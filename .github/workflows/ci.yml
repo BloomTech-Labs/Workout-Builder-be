@@ -20,6 +20,9 @@ jobs:
       - run: npm test
         env:
           CI: true
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          DB_JWTSECRET: ${{ secrets.DB_JWTSECRET }}
   coverage:
     name: Test and publish test coverage
     runs-on: ubuntu-latest
@@ -32,6 +35,9 @@ jobs:
       - uses: paambaati/codeclimate-action@v2.4.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CodeClimateReporterId }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          DB_JWTSECRET: ${{ secrets.DB_JWTSECRET }}
         with:
           coverageCommand: npm run coverage
           debug: true
