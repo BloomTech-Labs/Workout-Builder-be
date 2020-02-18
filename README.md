@@ -36,10 +36,10 @@ To get the server running locally:
 
 
 
-## Endpoints
+# Endpoints
 
 
-### AUTH Routes
+## Auth Routes
 
 ----
 #### _Register a user with local account_
@@ -151,11 +151,412 @@ To get the server running locally:
 
   token, first_name, last_name
 
+----
 
-
-### Program Routes
+## Client Routes
 
 ----
+#### _Get a list of clients associated with a coach_
+
+* **Method**
+
+  `GET`
+
+* **Endpoint**
+
+  `/clients`
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            "id": 1,
+            "first_name": "clientFirstA",
+            "last_name": "clientLastA",
+            "email": "ca@mail.com",
+            "coach_id": 1
+        },
+        {
+            "id": 2,
+            "first_name": "clientFirstB",
+            "last_name": "clientLastB",
+            "email": "cb@mail.com",
+            "coach_id": 1
+        },
+        {
+            "id": 5,
+            "first_name": "clientFirstE",
+            "last_name": "clientLastE",
+            "email": "ce@mail.com",
+            "coach_id": 1
+        }
+      ]
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token
+
+----
+#### _Get a specific client associated with a coach_
+
+* **Method**
+
+  `GET`
+
+* **Endpoint**
+
+  `/clients/:id`
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  
+  The param id is the client_id.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 1,
+        "first_name": "clientFirstA",
+        "last_name": "clientLastA",
+        "email": "ca@mail.com",
+        "coach_id": 1
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, invalid client_id, coach_id not associated with client_id
+
+----
+#### _Add a Client with personal details_
+
+* **Method**
+
+  `POST`
+
+* **Endpoint**
+
+  `/clients`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "first_name": "clientFirstD",
+        "last_name": "clientLastD",
+        "email": "cd@mail.com"
+    }
+    ```
+
+* **Notes**
+
+  ```
+  This is for the creation of a single client for a coach. 
+  
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 201
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 5,
+        "first_name": "clientFirstD",
+        "last_name": "clientLastD",
+        "email": "cd@mail.com",
+        "coach_id": 1
+      }
+      ```
+      
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys
+
+
+----
+
+#### _Modify a Client and their personal details_
+
+* **Method**
+
+  `PUT`
+
+* **Endpoint**
+
+  `/clients/:id`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "first_name": "new_first",
+        "last_name": "new_last",
+        "email": "newclient@mail.com"
+    }
+    ```
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will be obtained
+  from the token.
+
+  The param id is the client_id.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 5,
+        "first_name": "new_first",
+        "last_name": "new_last",
+        "email": "newclient@mail.com",
+        "coach_id": 1
+      }
+      ```
+      
+      
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys      
+
+----
+
+#### _Delete a Client_
+
+* **Method**
+
+  `DELETE`
+
+* **Endpoint**
+
+  `/clients/:id`
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will be obtained from the token.
+
+  The param id is the client_id that will be deleted.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 5,
+        "first_name": "new_first",
+        "last_name": "new_last",
+        "email": "newclient@mail.com",
+        "coach_id": 1
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, invalid client_id, coach_id not associated with client_id 
+
+----
+
+## Client-Programs Routes
+
+----
+
+#### _Get a coach's dashboard information_
+
+* **Method**
+
+  `GET`
+
+* **Endpoint**
+
+  `/clients-programs/dashboard`
+
+* **Notes**
+
+  ```
+  This will provide a coach's list of clients on active programs, including program details.
+
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            "client_id": 1,
+            "first_name": "clientFirstA",
+            "last_name": "clientLastA",
+            "start_date": "2020-2-17",
+            "program_id": 1,
+            "name": "progA",
+            "length": 21,
+            "phase": "strength"
+        },
+        {
+            "client_id": 2,
+            "first_name": "clientFirstB",
+            "last_name": "clientLastB",
+            "start_date": "2020-2-17",
+            "program_id": 9,
+            "name": "progC",
+            "length": 21,
+            "phase": "strength"
+        }
+      ]
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token
+
+----
+
+#### _Add clients to a program or vice versa_
+
+* **Method**
+
+  `POST`
+
+* **Endpoint**
+
+  `/clients-programs`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "program_id": 1,
+        "client_ids": [ 1, 2, 5 ]
+    }
+    ```
+
+* **Notes**
+
+  ```
+  This will add one or more clients to a program OR one program to a client. 
+  
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 201
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            "client_id": 1,
+            "program_id": 1,
+            "start_date": "2020-2-17",
+            "current_day": null
+        },
+        {
+            "client_id": 2,
+            "program_id": 1,
+            "start_date": "2020-2-17",
+            "current_day": null
+        },
+        {
+            "client_id": 5,
+            "program_id": 1,
+            "start_date": "2020-2-17",
+            "current_day": null
+        }
+      ]
+      ```
+      
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, invalid client_id/program_id, coach_id not associated with client_id/program_id
+
+
+----
+
+#### _Delete a program for a client or a client from a program_
+
+* **Method**
+
+  `DELETE`
+
+* **Endpoint**
+
+  `/clients-programs`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "client_id": 5,
+        "program_id": 1
+    }
+    ```
+
+* **Notes**
+
+  ```
+  This will remove the link between a client and program.
+
+  The token must be sent along with the request. The coach_id will be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      "1 item deleted successfully"
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, invalid client_id/program_id, coach_id not associated with client_id/program_id 
+
+----
+
+## Program Routes
+
+----
+
 #### _Create a program with workouts and link workouts to exercises_
 
 * **Method**
@@ -676,11 +1077,11 @@ To get the server running locally:
 
 | Name | Type | Required | Unique | Description |
 | ---- | ---- | -------- | ------ | ----- |
-| id | integer | yes | yes | Coach's id |
-| first_name | string | yes<sup>1</sup> | no | Coach's first name |
-| last_name | string | yes<sup>1</sup> | no | Coach's last name  |
-| email | string | yes | yes | Coach's email (max 100 char) |
-| password | string | yes<sup>2</sup> | no | Coach's password (max 100 char) |
+| id | integer | yes | yes | Coach id |
+| first_name | string | yes<sup>1</sup> | no | Coach first name |
+| last_name | string | yes<sup>1</sup> | no | Coach last name  |
+| email | string | yes | yes | Coach email (max 100 char) |
+| password | string | yes<sup>2</sup> | no | Coach password (max 100 char) |
 
 <sup>1</sup> _for registration only_
 
@@ -696,6 +1097,144 @@ To get the server running locally:
 }
 ```
 
+----
+
+#### EXERCISES
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Exercise id |
+| name | string | yes | no | Exercise name |
+| type | string | no | no | Exercise type  |
+| focal_points | string | no | yes | Notes/Description/points of focus during Exercise (max 1000 char) |
+| video_url | string | no | no | Exercise video (max 1000 char) |
+| thumbnail_url | string | no | no | Exercise image (max 1000 char) |
+| coach_id | integer | yes | no | Coach id (foreign key) |
+
+
+```
+{
+  id: UUID
+  name: STRING
+  type: STRING
+  focal_points: STRING
+  video_url: STRING
+  thumbnail_url: STRING
+  coach_id: INTEGER
+}
+```
+
+----
+
+#### WORKOUTS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Workout id |
+| name | string | yes | no | Workout name |
+| description | string | no | no | Workout description (max 1000 char) |
+| day | integer | yes | no | The day of the program to which this workout belongs |
+| coach_id | integer | yes | no | Coach id (foreign key) |
+| program_id | string | yes | no | Program id (foreign key) |
+
+```
+{
+  id: UUID
+  name: STRING
+  description: STRING
+  day: INTEGER
+  coach_id: INTEGER
+  program_id: INTEGER
+}
+```
+
+----
+
+#### EXERCISES_WORKOUTS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| exercise_id | integer | yes | no | Exercise id (foreign key) |
+| workout_id | integer | yes | no | Workout id (foreign key) |
+| order | integer | yes | no | The order in which the exercise will be performed in the workout |
+| exercise_details | string | yes | no | Sets/reps/time for an exercise in a specific workout (max 1000 char) |
+
+```
+{
+  exercise_id: INTEGER
+  workout_id: INTEGER
+  order: INTEGER
+  exercise_details: STRING
+}
+```
+
+----
+
+#### PROGRAMS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Program id |
+| name | string | yes | no | Program name |
+| description | string | no | no | Program description (max 1000 char) |
+| phase | string | no | no | Type/Goal of Program |
+| length | integer | yes | no | Program length in days |
+| coach_id | integer | yes | no | Coach id (foreign key) |
+
+```
+{
+  id: UUID
+  name: STRING
+  description: STRING
+  phase: STRING
+  length: INTEGER
+  coach_id: INTEGER
+}
+```
+
+----
+
+#### CLIENTS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Client id |
+| first_name | string | yes | no | Client first name |
+| last_name | string | yes | no | Client last name |
+| email | string | yes | yes | Client email |
+| coach_id | integer | yes | no | Coach id (foreign key) |
+
+```
+{
+  id: UUID
+  first_name: STRING
+  last_name: STRING
+  email: STRING
+  coach_id: INTEGER
+}
+```
+
+----
+
+#### CLIENTS_PROGRAMS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| client_id | integer | yes | no | Client id (foreign key) |
+| program_id | integer | yes | no | Program id (foreign key) |
+| start_date | date | yes | no | The date the program is assigned to the client |
+| current_day | integer | no | no | The day of the program the client is currently on |
+
+```
+{
+  client_id: INTEGER
+  program_id: INTEGER
+  start_date: DATE
+  current_day: INTEGER
+}
+```
+
+----
 
 ## Actions
 
