@@ -156,7 +156,7 @@ To get the server running locally:
 ## Client Routes
 
 
-### _Get a list of clients associated with a coach_
+### _Get a list of a coach's clients_
 
 * **Method**
 
@@ -209,7 +209,7 @@ To get the server running locally:
     * **Reason:** Invalid token
 
 ----
-### _Get a specific client associated with a coach_
+### _Get a specific client's information_
 
 * **Method**
 
@@ -248,7 +248,7 @@ To get the server running locally:
     * **Reason:** Invalid token, invalid client_id, coach_id not associated with client_id
 
 ----
-### _Add a Client with personal details_
+### _Add a client with personal details_
 
 * **Method**
 
@@ -299,7 +299,7 @@ To get the server running locally:
 
 ----
 
-### _Modify a Client and their personal details_
+### _Modify a client and their personal details_
 
 * **Method**
 
@@ -350,7 +350,7 @@ To get the server running locally:
 
 ----
 
-### _Delete a Client_
+### _Delete a client_
 
 * **Method**
 
@@ -389,8 +389,7 @@ To get the server running locally:
 
 ----
 
-## Client-Programs Routes
-
+## Client-Program Routes
 
 
 ### _Get a coach's dashboard information_
