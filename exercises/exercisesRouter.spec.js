@@ -34,7 +34,7 @@ describe('exercisesRouter', function() {
       });
 
   });
-  // should this error message return a 401?
+
   it ('it should not post since no token', function() {
 
     return request(server)
@@ -100,7 +100,6 @@ describe('exercisesRouter', function() {
       });
   });
 
-  // this should be a 401 right?
   it ('it should not get since no token', function() {
 
     return request(server)
@@ -121,7 +120,7 @@ describe('exercisesRouter', function() {
         expect(res.body).toMatchObject({ 'focal_points': null, 'id': 1, 'name': 'Burpees', 'thumbnail_url': null, 'type': null, 'video_url': null});
       });
   });
-  // this should be a 401 right?
+
   it ('it should not get since no token', function() {
 
     return request(server)
@@ -131,12 +130,12 @@ describe('exercisesRouter', function() {
       });
   });
   it ('it should not get an exercise since it does not exist', function() {
-    // this should be a 404?
+
     return request(server)
       .get('/exercises/55')
       .set('Authorization', token)
       .then(res => {
-        expect(res.status).toBe(500);
+        expect(res.status).toBe(404);
       });
   });
   // ------------------- Delete Request ---------------------- //
@@ -149,7 +148,6 @@ describe('exercisesRouter', function() {
       });
   });
 
-  // this should be a 401 right?
   it ('it should not delete an exercise since no token', function () {
     return request(server)
       .delete('/exercises/2')

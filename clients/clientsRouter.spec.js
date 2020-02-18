@@ -34,7 +34,7 @@ describe('clientsRouter', function() {
       });
 
   });
-  // should this error message return a 401?
+
   it ('it should not post since no token', function() {
 
     return request(server)
@@ -100,7 +100,6 @@ describe('clientsRouter', function() {
       });
   });
 
-  // this should be a 401 right?
   it ('it should not get since no token', function() {
 
     return request(server)
@@ -121,7 +120,7 @@ describe('clientsRouter', function() {
         expect(res.body).toMatchObject({first_name:'tod',last_name:'Smith',email:'ts@gmail.com'});
       });
   });
-  // this should be a 401 right?
+
   it ('it should not get since no token', function() {
 
     return request(server)
@@ -136,7 +135,7 @@ describe('clientsRouter', function() {
       .get('/clients/55')
       .set('Authorization', token)
       .then(res => {
-        expect(res.status).toBe(500);
+        expect(res.status).toBe(404);
       });
   });
   // ------------------- Delete Request ---------------------- //
@@ -149,7 +148,6 @@ describe('clientsRouter', function() {
       });
   });
 
-  // this should be a 401 right?
   it ('it should not delete a client since no token', function () {
     return request(server)
       .delete('/clients/2')
