@@ -4,19 +4,33 @@ const request = require('supertest');
 const server = require('../api/server');
 
 let token ;
+let token2;
 
 // ------------------- CLEARING DATABASE and Registering Account---------------------- //
 describe('clientsRouter', function() {
   beforeAll(async() => {
     await db('coaches').truncate();
     await db('clients').truncate();
-    return request(server)
+    await request(server)
       .post('/auth/register')
       .send({ first_name: 'Hello2', last_name: 'World2', email: 'helloworld2@email.com', password: 'pass' })
       .then(res => {
         expect(res.status).toBe(201);
         token = res.body.token;
-
+      });
+    await request(server)
+      .post('/auth/register')
+      .send({ first_name: 'HelloClients', last_name: 'HelloClients', email: 'helloworldClients@email.com', password: 'pas2s' })
+      .then(res => {
+        expect(res.status).toBe(201);
+        token2 = res.body.token;
+      });
+    await request(server)
+      .post('/clients')
+      .set('Authorization', token2)
+      .send({first_name:'terry',last_name:'yodo',email:'ty@gmail.com'})
+      .then(res => {
+        expect(res.status).toBe(201);
       });
 
   });
@@ -113,7 +127,7 @@ describe('clientsRouter', function() {
   it ('it should get an client', function() {
 
     return request(server)
-      .get('/clients/1')
+      .get('/clients/2')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
@@ -130,7 +144,7 @@ describe('clientsRouter', function() {
       });
   });
   it ('it should not get a client since it does not exist', function() {
-    // this should be a 404?
+
     return request(server)
       .get('/clients/55')
       .set('Authorization', token)
@@ -138,10 +152,20 @@ describe('clientsRouter', function() {
         expect(res.status).toBe(404);
       });
   });
+
+  it ('it should not get an exercise since you do not have access', function() {
+
+    return request(server)
+      .get('/clients/1')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(403);
+      });
+  });
   // ------------------- Delete Request ---------------------- //
   it ('it should delete a client', function () {
     return request(server)
-      .delete('/clients/2')
+      .delete('/clients/3')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
@@ -163,12 +187,19 @@ describe('clientsRouter', function() {
         expect(res.status).toBe(404);
       });
   });
-
+  it ('it should not delete an exercise since no access', function () {
+    return request(server)
+      .delete('/clients/1')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(403);
+      });
+  });
   // ------------------- Put Request ---------------------- //
   it ('it should update data to clients db', function() {
 
     return request(server)
-      .put('/clients/1')
+      .put('/clients/2')
       .set('Authorization', token)
       .send({first_name:'jerry',last_name:'Smiths',email:'js@gmail.com'})
 
@@ -212,6 +243,17 @@ describe('clientsRouter', function() {
       .send({first_name:'jerry',last_name:'Smiths',email:'js@gmail.com'})
       .then(res => {
         expect(res.status).toBe(404);
+      });
+  });
+
+  it ('it should not update data to exercises db since no access', function() {
+
+    return request(server)
+      .put('/clients/1')
+      .set('Authorization', token)
+      .send({first_name:'jerry',last_name:'Smiths',email:'js@gmail.com'})
+      .then(res => {
+        expect(res.status).toBe(403);
       });
   });
 });

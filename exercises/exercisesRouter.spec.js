@@ -4,19 +4,34 @@ const request = require('supertest');
 const server = require('../api/server');
 
 let token ;
+let token2;
 
 // ------------------- CLEARING DATABASE And Registering Account---------------------- //
 describe('exercisesRouter', function() {
   beforeAll(async() => {
     await db('coaches').truncate();
     await db('exercises').truncate();
-    return request(server)
+    await request(server)
       .post('/auth/register')
       .send({ first_name: 'Hello3', last_name: 'World3', email: 'helloworld3@email.com', password: 'pass' })
       .then(res => {
         expect(res.status).toBe(201);
         token = res.body.token;
+      });
+    await request(server)
+      .post('/auth/register')
+      .send({ first_name: 'HelloExercises', last_name: 'HelloExercises', email: 'helloworldExercises@email.com', password: 'pas2s' })
+      .then(res => {
+        expect(res.status).toBe(201);
+        token2 = res.body.token;
+      });
+    await request(server)
+      .post('/exercises')
+      .set('Authorization', token2)
+      .send({name:'jumping jacks'})
 
+      .then(res => {
+        expect(res.status).toBe(201);
       });
 
   });
@@ -113,11 +128,11 @@ describe('exercisesRouter', function() {
   it ('it should get an exercise', function() {
 
     return request(server)
-      .get('/exercises/1')
+      .get('/exercises/2')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
-        expect(res.body).toMatchObject({ 'focal_points': null, 'id': 1, 'name': 'Burpees', 'thumbnail_url': null, 'type': null, 'video_url': null});
+        expect(res.body).toMatchObject({ 'focal_points': null, 'id': 2, 'name': 'Burpees', 'thumbnail_url': null, 'type': null, 'video_url': null});
       });
   });
 
@@ -138,10 +153,19 @@ describe('exercisesRouter', function() {
         expect(res.status).toBe(404);
       });
   });
+  it ('it should not get an exercise since you do not have access', function() {
+
+    return request(server)
+      .get('/exercises/1')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(403);
+      });
+  });
   // ------------------- Delete Request ---------------------- //
   it ('it should delete an exercise', function () {
     return request(server)
-      .delete('/exercises/2')
+      .delete('/exercises/3')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
@@ -163,12 +187,20 @@ describe('exercisesRouter', function() {
         expect(res.status).toBe(404);
       });
   });
+  it ('it should not delete an exercise since no access', function () {
+    return request(server)
+      .delete('/exercises/1')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(403);
+      });
+  });
 
   // ------------------- Put Request ---------------------- //
   it ('it should update data to exercises db', function() {
 
     return request(server)
-      .put('/exercises/1')
+      .put('/exercises/2')
       .set('Authorization', token)
       .send({name:'pushup'})
 
@@ -212,6 +244,16 @@ describe('exercisesRouter', function() {
       .send({name:'pushup'})
       .then(res => {
         expect(res.status).toBe(404);
+      });
+  });
+  it ('it should not update data to exercises db since no access', function() {
+
+    return request(server)
+      .put('/exercises/1')
+      .set('Authorization', token)
+      .send({name:'pushup'})
+      .then(res => {
+        expect(res.status).toBe(403);
       });
   });
 });
