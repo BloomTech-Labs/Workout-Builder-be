@@ -41,8 +41,8 @@ To get the server running locally:
 
 ## Auth Routes
 
-----
-#### _Register a user with local account_
+
+### _Register a user with local account_
 
 * **Method**
 
@@ -90,7 +90,7 @@ To get the server running locally:
       **Content:** `{ message: 'local login was done previously' }`
 
 ----
-#### _Login a user with a local account_
+### _Login a user with a local account_
 
 * **Method**
 
@@ -137,7 +137,7 @@ To get the server running locally:
       **Content:** `{ message: 'Google social login was done previously, cannot local login' }`
 
 ----
-#### _Login a user with Google social login_
+### _Login a user with Google social login_
 
 * **Endpoint**
 
@@ -155,8 +155,8 @@ To get the server running locally:
 
 ## Client Routes
 
-----
-#### _Get a list of clients associated with a coach_
+
+### _Get a list of clients associated with a coach_
 
 * **Method**
 
@@ -209,7 +209,7 @@ To get the server running locally:
     * **Reason:** Invalid token
 
 ----
-#### _Get a specific client associated with a coach_
+### _Get a specific client associated with a coach_
 
 * **Method**
 
@@ -248,7 +248,7 @@ To get the server running locally:
     * **Reason:** Invalid token, invalid client_id, coach_id not associated with client_id
 
 ----
-#### _Add a Client with personal details_
+### _Add a Client with personal details_
 
 * **Method**
 
@@ -299,7 +299,7 @@ To get the server running locally:
 
 ----
 
-#### _Modify a Client and their personal details_
+### _Modify a Client and their personal details_
 
 * **Method**
 
@@ -350,7 +350,7 @@ To get the server running locally:
 
 ----
 
-#### _Delete a Client_
+### _Delete a Client_
 
 * **Method**
 
@@ -391,9 +391,9 @@ To get the server running locally:
 
 ## Client-Programs Routes
 
-----
 
-#### _Get a coach's dashboard information_
+
+### _Get a coach's dashboard information_
 
 * **Method**
 
@@ -448,7 +448,7 @@ To get the server running locally:
 
 ----
 
-#### _Add clients to a program or vice versa_
+### _Add clients to a program or vice versa_
 
 * **Method**
 
@@ -511,7 +511,7 @@ To get the server running locally:
 
 ----
 
-#### _Delete a program for a client or a client from a program_
+### _Delete a program for a client or a client from a program_
 
 * **Method**
 
@@ -555,9 +555,8 @@ To get the server running locally:
 
 ## Program Routes
 
-----
 
-#### _Create a program with workouts and link workouts to exercises_
+### _Create a program with workouts and link workouts to exercises_
 
 * **Method**
 
@@ -729,7 +728,7 @@ To get the server running locally:
 
 ----
 
-#### _Query the backend for programs data with workouts and exercises in workouts_
+### _Query the backend for programs data with workouts and exercises in workouts_
 
 * **Method**
 
@@ -851,7 +850,7 @@ To get the server running locally:
     * **Reason:** Invalid token
 
 ----
-#### _Modify a program and its workouts and workout links to exercises_
+### _Modify a program and its workouts and workout links to exercises_
 
 * **Method**
 
@@ -1026,7 +1025,7 @@ To get the server running locally:
 
 ----
 
-#### _Delete a program_
+### _Delete a program_
 
 * **Method**
 
