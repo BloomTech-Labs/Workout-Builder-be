@@ -14,7 +14,8 @@ function getPrograms(coach_id) {
 }
 
 function getProgramById(id) {
-  return db('programs')
+  return db('programs') //Correct line of code - keep in final program version
+  // return db('programsBAD') //Bad line of code for testing - comment out in final program version
     .where({ id })
     .first();
 }

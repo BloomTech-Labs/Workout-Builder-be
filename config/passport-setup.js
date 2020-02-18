@@ -15,10 +15,10 @@ function googleStrt(accessToken, refreshToken, users, done) {
         done(null, currentUser);
       } else {
       // if not, create user in our db
-        const coach = { 
-          first_name: users.name.givenName, 
-          last_name: users.name.familyName,  
-          email: users._json.email    
+        const coach = {
+          first_name: users.name.givenName,
+          last_name: users.name.familyName,
+          email: users._json.email
         };
         Coaches.addCoach(coach)
           .then((newUser) => {
@@ -28,14 +28,12 @@ function googleStrt(accessToken, refreshToken, users, done) {
     });
 }
 
-
-passport.use( 
+passport.use(
   new GoogleStrategy( {
     clientID: process.env.CLIENT_ID,
     clientSecret:process.env.CLIENT_SECRET,
     callbackURL:'/auth/google/callback'
   }, (aT, rT, usr, dn) => {googleStrt(aT, rT, usr, dn);}  )
 );
-
 
 module.exports = googleStrt;

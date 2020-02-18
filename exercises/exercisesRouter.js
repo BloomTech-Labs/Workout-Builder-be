@@ -27,10 +27,13 @@ router.get('/:id', validTokenCheck, (req, res) => {
 
   Exercises.getExerciseById(id)
     .then(exercise => {
-      if (exercise.coach_id === coach_id) {
+
+      if (exercise && exercise.coach_id === coach_id) {
         res.status(200).json(exercise);
+      } else if (!exercise) {
+        res.status(404).json({ error: `cannot get exercise with id: ${id} because it does not exist` });
       } else {
-        res.status(403).json({ error: `you are not authorized to access exercise with id: ${id}`});
+        res.status(403).json({ error: `you are not authorized to get exercise with id: ${id}`});
       }
     })
     .catch(error => {

@@ -6,12 +6,18 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "test": "jest --watch --runInBand"
+    "test": "jest --detectOpenHandles --forceExit --runInBand",
+    "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
   },
   "jest": {
     "testEnvironment": "node",
     "setupFiles": [
       "dotenv/config"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
     ]
   },
   "repository": {
@@ -19,7 +25,7 @@
     "url": "git+https://github.com/Lambda-School-Labs/Workout-Builder-be.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Lambda-School-Labs/Workout-Builder-be/issues"
   },

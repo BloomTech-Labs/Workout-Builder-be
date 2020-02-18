@@ -10,13 +10,13 @@ describe ('test google strategy function', () => {
 
   describe('New google login will add in a new coach', () => {
     it('a new google login', async () => {
-      
+
       const usersMockA = {
         name: {givenName:'HelloNew', familyName:'WorldNew'},
         _json: {email:'testGoog@mail.com'}
       };
 
-      let coachesObj = await 
+      let coachesObj = await
       new Promise(function(resolve) {
         function doneMock(a,b) {
           resolve(b);
@@ -33,7 +33,7 @@ describe ('test google strategy function', () => {
   describe('Put in a new coach for the next test', () => {
     it('add a new coach', async ()=> {
       await Coaches.addCoach({
-        email: 'abc@def.com', 
+        email: 'abc@def.com',
         password:'1234',
         first_name: 'Sunny',
         last_name: 'Day'
@@ -48,7 +48,7 @@ describe ('test google strategy function', () => {
         _json: {email:'abc@def.com'}
       };
 
-      let coachesObj = await 
+      let coachesObj = await
       new Promise(function(resolve) {
         function doneMock(a,b) {
           resolve(b);
@@ -62,8 +62,5 @@ describe ('test google strategy function', () => {
 
     });
   });
-
-
-
 
 });
