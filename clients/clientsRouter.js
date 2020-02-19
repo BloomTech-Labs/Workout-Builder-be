@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Clients = require('./clients-model');
-const {validTokenCheck, validBodyCheck} = require('../middleware/custom_middleware');
+const { validTokenCheck, validBodyCheck } = require('../middleware/custom_middleware');
 
 //********************************************************
 //GET /
@@ -32,7 +32,7 @@ router.get('/:id', validTokenCheck, (req, res) => {
       } else if (!client) {
         res.status(404).json({ error: `client with id: ${id} does not exist` });
       } else {
-        res.status(403).json({ error: `you are not authorized to access client with id: ${id}`});
+        res.status(403).json({ error: `you are not authorized to access client with id: ${id}` });
       }
     })
     .catch(error => {
@@ -47,10 +47,25 @@ router.post('/', validTokenCheck, validBodyCheck(['first_name', 'last_name', 'em
   const coach_id = req.token.coachID;
   const clientData = req.body;
   clientData.coach_id = coach_id;
+  let emailIsUnique = true;
 
-  Clients.addClient(clientData)
+  Clients.getClients(coach_id)
+    .then(clientsArray => {
+      for (let i = 0; i < clientsArray.length; i++) {
+        if (clientsArray[i].email.toLowerCase() === clientData.email.toLowerCase()) {
+          emailIsUnique = false;
+        }
+      }
+      if (emailIsUnique === true) {
+        return Clients.addClient(clientData);
+      } else {
+        res.status(400).json({ error: 'The email you provided belongs to another client' });
+      }
+    })
     .then(client => {
-      res.status(201).json(client);
+      if (client) {
+        res.status(201).json(client);
+      }
     })
     .catch(error => {
       res.status(500).json(error);
@@ -74,7 +89,7 @@ router.delete('/:id', validTokenCheck, (req, res) => {
       } else if (!client) {
         res.status(404).json({ error: `cannot delete client with id: ${id} because it does not exist` });
       } else {
-        res.status(403).json({ error: `you are not authorized to delete client with id: ${id}`});
+        res.status(403).json({ error: `you are not authorized to delete client with id: ${id}` });
       }
     })
     .catch(error => {
@@ -87,21 +102,40 @@ router.delete('/:id', validTokenCheck, (req, res) => {
 //********************************************************
 router.put('/:id', validTokenCheck, validBodyCheck(['first_name', 'last_name', 'email']), (req, res) => {
   const coach_id = req.token.coachID;
-  const clientData = req.body;
   const id = req.params.id;
+  const clientData = req.body;
   clientData.coach_id = coach_id;
+  let emailIsUnique = true;
+  let clientEmail;
 
   Clients.getClientById(id)
     .then(client => {
+      clientEmail = client.email;
       if (client && client.coach_id === coach_id) {
-        Clients.updateClient(id, clientData)
-          .then(client => {
-            res.status(200).json(client);
-          });
+        return Clients.getClients(coach_id);
       } else if (!client) {
         res.status(404).json({ error: `cannot update client with id: ${id} because it does not exist` });
       } else {
-        res.status(403).json({ error: `you are not authorized to update client with id: ${id}`});
+        res.status(403).json({ error: `you are not authorized to update client with id: ${id}` });
+      }
+    })
+    .then(clientsArray => {
+      if (clientsArray) {
+        for (let i = 0; i < clientsArray.length; i++) {
+          if (clientsArray[i].email.toLowerCase() === clientData.email.toLowerCase() && clientsArray[i].email !== clientEmail) {
+            emailIsUnique = false;
+          }
+        }
+        if (emailIsUnique === true) {
+          return Clients.updateClient(id, clientData);
+        } else {
+          res.status(400).json({ error: 'The email you provided belongs to another client' });
+        }
+      }
+    })
+    .then(client => {
+      if (client) {
+        res.status(200).json(client);
       }
     })
     .catch(error => {

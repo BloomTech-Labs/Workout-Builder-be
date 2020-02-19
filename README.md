@@ -1236,6 +1236,8 @@ To get the server running locally:
 
 ## Actions
 
+#### Coaches Model
+
 `addCoach(coach)` -> Creates a new coach and returns that coach
 
 `findCoachBy(email)` -> Returns a single coach by email
@@ -1244,21 +1246,78 @@ To get the server running locally:
 
 ---
 
-`updateOrg(orgId)` -> Update an organization by ID
+#### Exercises Model
 
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
+`getExercises(coach_id)` -> Returns all exercises for given coach id
 
-`getUser(userId)` -> Returns a single user by user ID
+`getExerciseById(id)` -> Returns a single exercise by id
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+`addExercise(exercise)` -> Creates a new exercise and returns that exercise
 
-`updateUser(userId, changes object)` -> Updates a single user by ID.
+`updateExercise(id, changes)` -> Modifies a single exercise by id and returns the modified exercise
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+`deleteExercise(id)` -> Deletes a single exercise by id and returns the deleted exercise
+
+---
+
+#### Workouts Model
+
+`getWorkouts(coach_id)` -> Returns all workouts for given coach id
+
+`getWorkoutById(id)` -> Returns a single workout by id
+
+`getWorkoutByProgramId(program_id)` -> Returns all workouts for given program id
+
+`addWorkout(workouts)` -> Creates one or more new workouts and returns the workouts 
+
+`updateWorkout(id, changes)` -> Modifies a single workout by id and returns the modified workout
+
+`deleteWorkout(id)` -> Deletes a single workout by id and returns the deleted workout
+
+`getExercisesInWorkout(exerciseWorkout)` -> 
+
+`getExercisesByWorkoutId(workout_id)` -> Returns all exercises for the given workout id
+
+`addExercisesToWorkout(exerciseWorkout)` -> Adds exercises to given workout and returns them
+
+`deleteExerciseInWorkout(exerciseWorkout)` -> Deletes specified exercises in given workout
+
+#### Programs Model
+
+`getPrograms(coach_id)` -> Returns all programs for given coach id
+
+`getProgramById(id)` -> Returns a single program by id
+
+`addProgram(program)` -> Creates a new program and returns that program
+
+`updateProgram(id, changes)` -> Modifies a single program by id and returns the modified program
+
+`deleteProgram(id)` -> Deletes a single program by id and returns the deleted program
+
+#### Clients Model
+
+`getClients(coach_id)` ->
+
+`getClientById(id)` ->
+
+`addClient(client)` ->
+
+`updateClient(id, changes)` ->
+
+`deleteClient(id)` ->
+
+`extractClientsInProgram(program_id)` ->
+
+`getClientsInProgram(clientProgram)` ->
+
+`addClientsToProgram(clientProgram)` ->
+
+`deleteProgramForClient(clientProgram)` ->
+
+`getDashboardInfo(coach_id)` ->
+
+
+---
 
 ## Environment Variables
 
