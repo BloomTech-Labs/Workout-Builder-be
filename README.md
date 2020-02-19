@@ -27,15 +27,6 @@ To get the server running locally:
 
 
 
-
-
-
-
-
-
-
-
-
 # Endpoints
 
 
@@ -1069,6 +1060,8 @@ To get the server running locally:
 
 
 
+
+
 # Data Model
 
 #### COACHES
@@ -1274,7 +1267,7 @@ To get the server running locally:
 
 `deleteWorkout(id)` -> Deletes a single workout by id and returns the deleted workout
 
-`getExercisesInWorkout(exerciseWorkout)` -> 
+`getExercisesInWorkout(exerciseWorkout)` -> Returns all given exercises linked to given workouts
 
 `getExercisesByWorkoutId(workout_id)` -> Returns all exercises for the given workout id
 
@@ -1296,25 +1289,25 @@ To get the server running locally:
 
 #### Clients Model
 
-`getClients(coach_id)` ->
+`getClients(coach_id)` -> Returns all clients for given coach id
 
-`getClientById(id)` ->
+`getClientById(id)` -> Returns a single client by id
 
-`addClient(client)` ->
+`addClient(client)` -> Creates a new client and returns that client
 
-`updateClient(id, changes)` ->
+`updateClient(id, changes)` -> Modifies a single client by id and returns the modified client
 
-`deleteClient(id)` ->
+`deleteClient(id)` -> Deletes a single client by id and returns the deleted client
 
-`extractClientsInProgram(program_id)` ->
+`extractClientsInProgram(program_id)` -> Returns all clients assigned to the given program id
 
-`getClientsInProgram(clientProgram)` ->
+`getClientsInProgram(clientProgram)` -> Returns all given clients linked to given programs
 
-`addClientsToProgram(clientProgram)` ->
+`addClientsToProgram(clientProgram)` -> Creates one or more new client-program links and returns them
 
-`deleteProgramForClient(clientProgram)` ->
+`deleteProgramForClient(clientProgram)` -> Deletes a single client-program link and returns the count
 
-`getDashboardInfo(coach_id)` ->
+`getDashboardInfo(coach_id)` -> Returns dashboard info from many tables for the given coach id
 
 
 ---
