@@ -112,8 +112,8 @@ router.put('/:id', validTokenCheck, validBodyCheck(['first_name', 'last_name', '
 
   Clients.getClientById(id)
     .then(client => {
-      clientEmail = client.email;
       if (client && client.coach_id === coach_id) {
+        clientEmail = client.email;
         return Clients.getClients(coach_id);
       } else if (!client) {
         res.status(404).json({ error: `cannot update client with id: ${id} because it does not exist` });
