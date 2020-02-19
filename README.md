@@ -285,7 +285,7 @@ To get the server running locally:
 * **Error Response**
     * **Code:** 400
 
-    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, client email already in use
 
 
 ----
@@ -337,7 +337,7 @@ To get the server running locally:
 * **Error Response**
     * **Code:** 400
 
-    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys      
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, client email already in use  
 
 ----
 
