@@ -25,7 +25,19 @@ To get the server running locally:
 
 
 
+Table of contents
+=================
 
+  
+   * [Table of contents](#table-of-contents)
+  
+   * [Endpoints](#usage)
+      * [Authentication Routes](#auth-routes)
+      * [Exercise Routes](#exercise-routes)
+      * [Program Routes](#program-routes)
+      
+   * [Tests](#tests)
+   * [Dependency](#dependency)
 
 
 
@@ -37,13 +49,18 @@ To get the server running locally:
 
 
 ## Endpoints
-
+---
 
 ### AUTH Routes
 
+* [Local Register](#_Register-a-user-with-local-account_)
+* [Local Login](#_Login-a-user-with-a-local-account_)
+* [Google Login](#_Login-a-user-with-Google-social-login_)
+
+### [Return to table of contents](#table-of-contents)
 ----
 #### _Register a user with local account_
-
+ [Authentication Routes](#auth-routes)
 * **Method**
 
   `POST`
@@ -91,7 +108,7 @@ To get the server running locally:
 
 ----
 #### _Login a user with a local account_
-
+ [Authentication Routes](#auth-routes)
 * **Method**
 
   `POST`
@@ -138,7 +155,7 @@ To get the server running locally:
 
 ----
 #### _Login a user with Google social login_
-
+ [Authentication Routes](#auth-routes)
 * **Endpoint**
 
   `/auth/google`
@@ -151,12 +168,217 @@ To get the server running locally:
 
   token, first_name, last_name
 
+---
+### Exercise Routes
+* [Create an Exercise](#_Create-an-exercise_)
+* [Get all Exercises for that coach](#_Get-all-exercise-for-that-coach_)
+* [Get one exercise for that coach](#_Get-one-exercise-for-that-coach_)
+* [Update an exercise for that coach](#_Update-an-exercise-for-that-coach_)
+* [Delete an Exercise](#_Delete-an-Exercise_)
+
+### [Return to table of contents](#table-of-contents)
+#### _Create an exercise_
+
+[Exercise Routes](#exercise-routes)
+* **Method**
+
+  `POST`
+
+* **Endpoint**
+
+  `/exercises`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "name": "exercise",
+        "type": type,
+        "focal_points": "a focal point",
+        "video_url":  "a url",
+        "thumbnail_url": "a url",
+        
+    }
+    ```
+
+* **Success Response**
+    * **Code:** 201
+
+    * **Body of response is JSON. Example is shown below:** 
+
+    ```
+        {
+        "id": 1,
+        "name": "exercise",
+        "type": type,
+        "focal_points": "a focal point",
+        "video_url":  "a url",
+        "thumbnail_url": "a url",
+        "coach_id": 1
+    }
+    ```
+    * **Error Response**
+    * **Code:** 400
+
+    * **Reason:**  "missing field name in request body, no access, coach_id does not exist
+---
+
+#### _Get all exercise for that coach_
+
+[Exercise Routes](#exercise-routes)
+* **Method**
+
+  `Get`
+
+* **Endpoint**
+
+  `/exercises`
 
 
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+
+    ```
+        {
+        "id": 1,
+        "name": "exercise",
+        "type": type,
+        "focal_points": "a focal point",
+        "video_url":  "a url",
+        "thumbnail_url": "a url",
+        "coach_id": 1
+    }
+    ```
+    * **Error Response**
+    * **Code:** 400
+
+    * **Reason:**  "no access"
+---
+#### _Get one exercise for that coach_
+[Exercise Routes](#exercise-routes)
+* **Method**
+
+  `Get`
+
+* **Endpoint**
+
+  `/exercises/:id`
+
+
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+
+    ```
+        {
+        "id": 1,
+        "name": "exercise",
+        "type": type,
+        "focal_points": "a focal point",
+        "video_url":  "a url",
+        "thumbnail_url": "a url",
+        "coach_id": 1
+    }
+    ```
+    * **Error Response**
+    * **Code:** 400
+
+    * **Reason:**  "no access, item does not exist"
+---
+#### _Update an exercise for that coach_
+[Exercise Routes](#exercise-routes)
+* **Method**
+
+  `put`
+
+* **Endpoint**
+
+  `/exercises/:id`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "name": "exercise",
+        "type": type,
+        "focal_points": "a focal point",
+        "video_url":  "a url",
+        "thumbnail_url": "a url",
+       
+    }
+    ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+
+    ```
+    {
+        "id": 1,
+        "name": "exercise",
+        "type": type,
+        "focal_points": "a focal point",
+        "video_url":  "a url",
+        "thumbnail_url": "a url",
+        "coach_id": 1
+    }
+    ```
+    * **Error Response**
+    * **Code:** 400
+
+    * **Reason:**  "no access, missing or wrong field, item does not exist"
+---
+#### _Delete an Exercise_
+   [Exercise Routes](#exercise-routes)
+* **Method**
+
+  `DELETE`
+
+* **Endpoint**
+
+  `/exercises/:id`
+
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 1,
+        "name": "exercise",
+        "type": type,
+        "focal_points": "a focal point",
+        "video_url":  "a url",
+        "thumbnail_url": "a url",
+        "coach_id": 1
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, invalid exercise_id
+
+
+---
 ### Program Routes
+* [Create program](#_Create-a-program-with-workouts-and-link-workouts-to-exercises_)
+* [Get all programs for that coach](#_Query-the-backend-for-programs-data-with-workouts-and-exercises-in-workouts_)
+* [Edit a program](#_Modify-a-program-and-its-workouts-and-workout-links-to-exercises_)
+* [Delete a program](#__Delete-a-program_)
 
+
+### [Return to table of contents](#table-of-contents)
 ----
 #### _Create a program with workouts and link workouts to exercises_
+  [Program Routes](#program-routes)
 
 * **Method**
 
@@ -329,7 +551,7 @@ To get the server running locally:
 ----
 
 #### _Query the backend for programs data with workouts and exercises in workouts_
-
+   [Program Routes](#program-routes)
 * **Method**
 
   `GET`
@@ -451,7 +673,7 @@ To get the server running locally:
 
 ----
 #### _Modify a program and its workouts and workout links to exercises_
-
+   [Program Routes](#program-routes)
 * **Method**
 
   `PUT`
@@ -626,7 +848,7 @@ To get the server running locally:
 ----
 
 #### _Delete a program_
-
+   [Program Routes](#program-routes)
 * **Method**
 
   `DELETE`
