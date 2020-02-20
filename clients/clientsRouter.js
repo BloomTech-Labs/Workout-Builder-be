@@ -30,9 +30,9 @@ router.get('/:id', validTokenCheck, (req, res) => {
       if (client && client.coach_id === coach_id) {
         res.status(200).json(client);
       } else if (!client) {
-        res.status(404).json({ error: `client with id: ${id} does not exist` });
+        res.status(404).json({ error: `cannot get client with id: ${id} because it does not exist` });
       } else {
-        res.status(403).json({ error: `you are not authorized to access client with id: ${id}` });
+        res.status(403).json({ error: `you are not authorized to get client with id: ${id}`});
       }
     })
     .catch(error => {

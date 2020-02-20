@@ -20,7 +20,8 @@ function addCoach(coach) {
 
 function findCoachBy(email) {
   email = email.toLowerCase();
-  return db('coaches')
+  return db('coaches') //This line of code is good - keep in final version
+  // return db('coachesBAD') //This line of code is bad - comment out in final version
     .where({email})
     .first();
 }

@@ -1,4 +1,6 @@
 /* eslint-disable no-multiple-empty-lines */
+/*
+
 const express = require('express');
 const router = express.Router();
 const Workouts = require('./workouts-model');
@@ -64,3 +66,5 @@ router.delete('/exercises', (req, res) => {
 });
 
 module.exports = router;
+
+*/
