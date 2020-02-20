@@ -16,14 +16,14 @@ describe('exercisesRouter', function() {
       .send({ first_name: 'Hello3', last_name: 'World3', email: 'helloworld3@email.com', password: 'pass' })
       .then(res => {
         expect(res.status).toBe(201);
-        token = res.body.token;
+        token = `Bearer ${res.body.token}`;
       });
     await request(server)
       .post('/auth/register')
       .send({ first_name: 'HelloExercises', last_name: 'HelloExercises', email: 'helloworldExercises@email.com', password: 'pas2s' })
       .then(res => {
         expect(res.status).toBe(201);
-        token2 = res.body.token;
+        token2 = `Bearer ${res.body.token}`;
       });
     await request(server)
       .post('/exercises')
