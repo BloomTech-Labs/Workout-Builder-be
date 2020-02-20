@@ -19,7 +19,7 @@ exports.up = function(knex) {
         .inTable('programs')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
-      tbl.date('start_date')
+      tbl.string('start_date')
         .notNullable();
       tbl.integer('current_day');
 
