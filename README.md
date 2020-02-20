@@ -33,6 +33,8 @@ Table of contents
   
    * [Endpoints](#usage)
       * [Authentication Routes](#auth-routes)
+      * [Client Routes](#client-routes)
+      * [Client-Program Routes](#client-program-routes)
       * [Exercise Routes](#exercise-routes)
       * [Program Routes](#program-routes)
       
@@ -169,6 +171,425 @@ Table of contents
   token, first_name, last_name
 
 ---
+
+### Client Routes
+* [Get all clients for that coach](#_Get-all-clients-for-that-coach_)
+* [Get a specific client](#_Get-a-specific-client_)
+* [Create a client](#_Create-a-client_)
+* [Modify a client](#_Modify-a-client_)
+* [Delete a client](#_Delete-a-client_)
+
+### [Return to table of contents](#table-of-contents)
+
+#### _Get all clients for that coach_
+[Client Routes](#client-routes)
+
+* **Method**
+
+  `GET`
+
+* **Endpoint**
+
+  `/clients`
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            "id": 1,
+            "first_name": "clientFirstA",
+            "last_name": "clientLastA",
+            "email": "ca@mail.com",
+            "coach_id": 1
+        },
+        {
+            "id": 2,
+            "first_name": "clientFirstB",
+            "last_name": "clientLastB",
+            "email": "cb@mail.com",
+            "coach_id": 1
+        },
+        {
+            "id": 5,
+            "first_name": "clientFirstE",
+            "last_name": "clientLastE",
+            "email": "ce@mail.com",
+            "coach_id": 1
+        }
+      ]
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token
+
+----
+#### _Get a specific client_
+[Client Routes](#client-routes)
+
+* **Method**
+
+  `GET`
+
+* **Endpoint**
+
+  `/clients/:id`
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  
+  The param id is the client_id.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 1,
+        "first_name": "clientFirstA",
+        "last_name": "clientLastA",
+        "email": "ca@mail.com",
+        "coach_id": 1
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, invalid client_id, coach_id not associated with client_id
+
+----
+
+#### _Create a client_
+[Client Routes](#client-routes)
+
+* **Method**
+
+  `POST`
+
+* **Endpoint**
+
+  `/clients`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "first_name": "clientFirstD",
+        "last_name": "clientLastD",
+        "email": "cd@mail.com"
+    }
+    ```
+
+* **Notes**
+
+  ```
+  This is for the creation of a single client for a coach. 
+  
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 201
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 5,
+        "first_name": "clientFirstD",
+        "last_name": "clientLastD",
+        "email": "cd@mail.com",
+        "coach_id": 1
+      }
+      ```
+      
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, client email already in use
+
+----
+
+#### _Modify a client_
+[Client Routes](#client-routes)
+
+* **Method**
+
+  `PUT`
+
+* **Endpoint**
+
+  `/clients/:id`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "first_name": "new_first",
+        "last_name": "new_last",
+        "email": "newclient@mail.com"
+    }
+    ```
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will be obtained
+  from the token.
+
+  The param id is the client_id.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 5,
+        "first_name": "new_first",
+        "last_name": "new_last",
+        "email": "newclient@mail.com",
+        "coach_id": 1
+      }
+      ```
+      
+      
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, client email already in use  
+
+----
+
+#### _Delete a client_
+[Client Routes](#client-routes)
+
+* **Method**
+
+  `DELETE`
+
+* **Endpoint**
+
+  `/clients/:id`
+
+* **Notes**
+
+  ```
+  The token must be sent along with the request. The coach_id will be obtained from the token.
+
+  The param id is the client_id that will be deleted.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      {
+        "id": 5,
+        "first_name": "new_first",
+        "last_name": "new_last",
+        "email": "newclient@mail.com",
+        "coach_id": 1
+      }
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, invalid client_id, coach_id not associated with client_id 
+
+----
+
+### Client-Program Routes
+* [Get a coach's dashboard information](#_Get-a-coach's-dashboard-information_)
+* [Add clients to a program or vice versa](#_Add-clients-to-a-program-or-vice-versa_)
+* [Delete a program for a client or vice versa](#_Delete-a-program-for-a-client-or-vice-versa_)
+
+### [Return to table of contents](#table-of-contents)
+
+#### _Get a coach's dashboard information_
+[Client-Program Routes](#client-program-routes)
+
+* **Method**
+
+  `GET`
+
+* **Endpoint**
+
+  `/clients-programs/dashboard`
+
+* **Notes**
+
+  ```
+  This will provide a coach's list of clients on active programs, including program details.
+
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            "client_id": 1,
+            "first_name": "clientFirstA",
+            "last_name": "clientLastA",
+            "start_date": "2020-2-17",
+            "program_id": 1,
+            "name": "progA",
+            "length": 21,
+            "phase": "strength"
+        },
+        {
+            "client_id": 2,
+            "first_name": "clientFirstB",
+            "last_name": "clientLastB",
+            "start_date": "2020-2-17",
+            "program_id": 9,
+            "name": "progC",
+            "length": 21,
+            "phase": "strength"
+        }
+      ]
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token
+
+----
+
+#### _Add clients to a program or vice versa_
+[Client-Program Routes](#client-program-routes)
+
+* **Method**
+
+  `POST`
+
+* **Endpoint**
+
+  `/clients-programs`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "program_id": 1,
+        "client_ids": [ 1, 2, 5 ]
+    }
+    ```
+
+* **Notes**
+
+  ```
+  This will add one or more clients to a program OR one program to a client. 
+  
+  The token must be sent along with the request. The coach_id will
+  be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 201
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      [
+        {
+            "client_id": 1,
+            "program_id": 1,
+            "start_date": "2020-2-17",
+            "current_day": null
+        },
+        {
+            "client_id": 2,
+            "program_id": 1,
+            "start_date": "2020-2-17",
+            "current_day": null
+        },
+        {
+            "client_id": 5,
+            "program_id": 1,
+            "start_date": "2020-2-17",
+            "current_day": null
+        }
+      ]
+      ```
+      
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, invalid client_id/program_id, coach_id not associated with client_id/program_id
+
+----
+
+#### _Delete a program for a client or vice versa_
+[Client-Program Routes](#client-program-routes)
+
+* **Method**
+
+  `DELETE`
+
+* **Endpoint**
+
+  `/clients-programs`
+
+* **Body of request is JSON. Example is shown below.**
+
+    ```
+    {
+        "client_id": 5,
+        "program_id": 1
+    }
+    ```
+
+* **Notes**
+
+  ```
+  This will remove the link between a client and program.
+
+  The token must be sent along with the request. The coach_id will be obtained from the token.
+  ```
+
+* **Success Response**
+    * **Code:** 200
+
+    * **Body of response is JSON. Example is shown below:** 
+      ```
+      "1 item deleted successfully"
+      ```
+
+* **Error Response**
+    * **Code:** 400
+
+    * **Reason:** Invalid token, Missing request body, Bad/Missing body keys, invalid client_id/program_id, coach_id not associated with client_id/program_id 
+
+
+----
+
+
 ### Exercise Routes
 * [Create an Exercise](#_Create-an-exercise_)
 * [Get all Exercises for that coach](#_Get-all-exercise-for-that-coach_)
@@ -898,11 +1319,11 @@ Table of contents
 
 | Name | Type | Required | Unique | Description |
 | ---- | ---- | -------- | ------ | ----- |
-| id | integer | yes | yes | Coach's id |
-| first_name | string | yes<sup>1</sup> | no | Coach's first name |
-| last_name | string | yes<sup>1</sup> | no | Coach's last name  |
-| email | string | yes | yes | Coach's email (max 100 char) |
-| password | string | yes<sup>2</sup> | no | Coach's password (max 100 char) |
+| id | integer | yes | yes | Coach id |
+| first_name | string | yes<sup>1</sup> | no | Coach first name |
+| last_name | string | yes<sup>1</sup> | no | Coach last name  |
+| email | string | yes | yes | Coach email (max 100 char) |
+| password | string | yes<sup>2</sup> | no | Coach password (max 100 char) |
 
 <sup>1</sup> _for registration only_
 
@@ -918,8 +1339,149 @@ Table of contents
 }
 ```
 
+----
+
+#### EXERCISES
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Exercise id |
+| name | string | yes | no | Exercise name |
+| type | string | no | no | Exercise type  |
+| focal_points | string | no | yes | Notes/Description/points of focus during Exercise (max 1000 char) |
+| video_url | string | no | no | Exercise video (max 1000 char) |
+| thumbnail_url | string | no | no | Exercise image (max 1000 char) |
+| coach_id | integer | yes | no | Coach id (foreign key) |
+
+
+```
+{
+  id: UUID
+  name: STRING
+  type: STRING
+  focal_points: STRING
+  video_url: STRING
+  thumbnail_url: STRING
+  coach_id: INTEGER
+}
+```
+
+----
+
+#### WORKOUTS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Workout id |
+| name | string | yes | no | Workout name |
+| description | string | no | no | Workout description (max 1000 char) |
+| day | integer | yes | no | The day of the program to which this workout belongs |
+| coach_id | integer | yes | no | Coach id (foreign key) |
+| program_id | string | yes | no | Program id (foreign key) |
+
+```
+{
+  id: UUID
+  name: STRING
+  description: STRING
+  day: INTEGER
+  coach_id: INTEGER
+  program_id: INTEGER
+}
+```
+
+----
+
+#### EXERCISES_WORKOUTS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| exercise_id | integer | yes | no | Exercise id (foreign key) |
+| workout_id | integer | yes | no | Workout id (foreign key) |
+| order | integer | yes | no | The order in which the exercise will be performed in the workout |
+| exercise_details | string | yes | no | Sets/reps/time for an exercise in a specific workout (max 1000 char) |
+
+```
+{
+  exercise_id: INTEGER
+  workout_id: INTEGER
+  order: INTEGER
+  exercise_details: STRING
+}
+```
+
+----
+
+#### PROGRAMS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Program id |
+| name | string | yes | no | Program name |
+| description | string | no | no | Program description (max 1000 char) |
+| phase | string | no | no | Type/Goal of Program |
+| length | integer | yes | no | Program length in days |
+| coach_id | integer | yes | no | Coach id (foreign key) |
+
+```
+{
+  id: UUID
+  name: STRING
+  description: STRING
+  phase: STRING
+  length: INTEGER
+  coach_id: INTEGER
+}
+```
+
+----
+
+#### CLIENTS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| id | integer | yes | yes | Client id |
+| first_name | string | yes | no | Client first name |
+| last_name | string | yes | no | Client last name |
+| email | string | yes | yes | Client email |
+| coach_id | integer | yes | no | Coach id (foreign key) |
+
+```
+{
+  id: UUID
+  first_name: STRING
+  last_name: STRING
+  email: STRING
+  coach_id: INTEGER
+}
+```
+
+----
+
+#### CLIENTS_PROGRAMS
+
+| Name | Type | Required | Unique | Description |
+| ---- | ---- | -------- | ------ | ----- |
+| client_id | integer | yes | no | Client id (foreign key) |
+| program_id | integer | yes | no | Program id (foreign key) |
+| start_date | date | yes | no | The date the program is assigned to the client |
+| current_day | integer | no | no | The day of the program the client is currently on |
+
+```
+{
+  client_id: INTEGER
+  program_id: INTEGER
+  start_date: DATE
+  current_day: INTEGER
+}
+```
+
+----
+
 
 ## Actions
+
+#### Coaches Model
 
 `addCoach(coach)` -> Creates a new coach and returns that coach
 
@@ -929,22 +1491,78 @@ Table of contents
 
 ---
 
-`updateOrg(orgId)` -> Update an organization by ID
+#### Exercises Model
 
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
+`getExercises(coach_id)` -> Returns all exercises for given coach id
 
-`getUser(userId)` -> Returns a single user by user ID
+`getExerciseById(id)` -> Returns a single exercise by id
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+`addExercise(exercise)` -> Creates a new exercise and returns that exercise
 
-`updateUser(userId, changes object)` -> Updates a single user by ID.
+`updateExercise(id, changes)` -> Modifies a single exercise by id and returns the modified exercise
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+`deleteExercise(id)` -> Deletes a single exercise by id and returns the deleted exercise
 
+---
+
+#### Workouts Model
+
+`getWorkouts(coach_id)` -> Returns all workouts for given coach id
+
+`getWorkoutById(id)` -> Returns a single workout by id
+
+`getWorkoutByProgramId(program_id)` -> Returns all workouts for given program id
+
+`addWorkout(workouts)` -> Creates one or more new workouts and returns the workouts 
+
+`updateWorkout(id, changes)` -> Modifies a single workout by id and returns the modified workout
+
+`deleteWorkout(id)` -> Deletes a single workout by id and returns the deleted workout
+
+`getExercisesInWorkout(exerciseWorkout)` -> Returns all given exercises linked to given workouts
+
+`getExercisesByWorkoutId(workout_id)` -> Returns all exercises for the given workout id
+
+`addExercisesToWorkout(exerciseWorkout)` -> Adds exercises to given workout and returns them
+
+`deleteExerciseInWorkout(exerciseWorkout)` -> Deletes specified exercises in given workout
+
+#### Programs Model
+
+`getPrograms(coach_id)` -> Returns all programs for given coach id
+
+`getProgramById(id)` -> Returns a single program by id
+
+`addProgram(program)` -> Creates a new program and returns that program
+
+`updateProgram(id, changes)` -> Modifies a single program by id and returns the modified program
+
+`deleteProgram(id)` -> Deletes a single program by id and returns the deleted program
+
+#### Clients Model
+
+`getClients(coach_id)` -> Returns all clients for given coach id
+
+`getClientById(id)` -> Returns a single client by id
+
+`addClient(client)` -> Creates a new client and returns that client
+
+`updateClient(id, changes)` -> Modifies a single client by id and returns the modified client
+
+`deleteClient(id)` -> Deletes a single client by id and returns the deleted client
+
+`extractClientsInProgram(program_id)` -> Returns all clients assigned to the given program id
+
+`getClientsInProgram(clientProgram)` -> Returns all given clients linked to given programs
+
+`addClientsToProgram(clientProgram)` -> Creates one or more new client-program links and returns them
+
+`deleteProgramForClient(clientProgram)` -> Deletes a single client-program link and returns the count
+
+`getDashboardInfo(coach_id)` -> Returns dashboard info from many tables for the given coach id
+
+
+---
 ## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
