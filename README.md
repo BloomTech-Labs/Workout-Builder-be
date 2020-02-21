@@ -1464,14 +1464,14 @@ Table of contents
 | ---- | ---- | -------- | ------ | ----- |
 | client_id | integer | yes | no | Client id (foreign key) |
 | program_id | integer | yes | no | Program id (foreign key) |
-| start_date | date | yes | no | The date the program is assigned to the client |
+| start_date | string | yes | no | The date the program is assigned to the client |
 | current_day | integer | no | no | The day of the program the client is currently on |
 
 ```
 {
   client_id: INTEGER
   program_id: INTEGER
-  start_date: DATE
+  start_date: STRING
   current_day: INTEGER
 }
 ```
