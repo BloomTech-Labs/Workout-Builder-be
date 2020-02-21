@@ -423,7 +423,7 @@ Table of contents
 ----
 
 ### Client-Program Routes
-* [Get a coach's dashboard information](#get-a-coach's-dashboard-information)
+* [Get a coach's dashboard information](#Get-a-coach's-dashboard-information)
 * [Add clients to a program or vice versa](#Add-clients-to-a-program-or-vice-versa)
 * [Delete a program for a client or vice versa](#Delete-a-program-for-a-client-or-vice-versa)
 
