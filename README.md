@@ -38,8 +38,10 @@ Table of contents
       * [Exercise Routes](#exercise-routes)
       * [Program Routes](#program-routes)
       
-   * [Tests](#tests)
-   * [Dependency](#dependency)
+   * [Data Models](#data-model)
+   * [Actions](#actions)
+   * [Environment Variables](#Environment-Variables)
+
 
 
 
@@ -173,11 +175,11 @@ Table of contents
 ---
 
 ### Client Routes
-* [Get all clients for that coach](#_Get-all-clients-for-that-coach_)
-* [Get a specific client](#_Get-a-specific-client_)
-* [Create a client](#_Create-a-client_)
-* [Modify a client](#_Modify-a-client_)
-* [Delete a client](#_Delete-a-client_)
+* [Get all clients for that coach](#Get-all-clients-for-that-coach)
+* [Get a specific client](#Get-a-specific-client)
+* [Create a client](#Create-a-client)
+* [Modify a client](#Modify-a-client)
+* [Delete a client](#Delete-a-client)
 
 ### [Return to table of contents](#table-of-contents)
 
@@ -420,9 +422,9 @@ Table of contents
 ----
 
 ### Client-Program Routes
-* [Get a coach's dashboard information](#_Get-a-coach's-dashboard-information_)
-* [Add clients to a program or vice versa](#_Add-clients-to-a-program-or-vice-versa_)
-* [Delete a program for a client or vice versa](#_Delete-a-program-for-a-client-or-vice-versa_)
+* [Get a coach's dashboard information](#Get-a-coach's-dashboard-information)
+* [Add clients to a program or vice versa](#Add-clients-to-a-program-or-vice-versa)
+* [Delete a program for a client or vice versa](#Delete-a-program-for-a-client-or-vice-versa)
 
 ### [Return to table of contents](#table-of-contents)
 
@@ -591,11 +593,11 @@ Table of contents
 
 
 ### Exercise Routes
-* [Create an Exercise](#_Create-an-exercise_)
-* [Get all Exercises for that coach](#_Get-all-exercise-for-that-coach_)
-* [Get one exercise for that coach](#_Get-one-exercise-for-that-coach_)
-* [Update an exercise for that coach](#_Update-an-exercise-for-that-coach_)
-* [Delete an Exercise](#_Delete-an-Exercise_)
+* [Create an Exercise](#Create-an-exercise)
+* [Get all Exercises for that coach](#Get-all-exercise-for-that-coach)
+* [Get one exercise for that coach](#Get-one-exercise-for-that-coach)
+* [Update an exercise for that coach](#Update-an-exercise-for-that-coach)
+* [Delete an Exercise](#Delete-an-Exercise)
 
 ### [Return to table of contents](#table-of-contents)
 #### _Create an exercise_
@@ -790,10 +792,10 @@ Table of contents
 
 ---
 ### Program Routes
-* [Create program](#_Create-a-program-with-workouts-and-link-workouts-to-exercises_)
-* [Get all programs for that coach](#_Query-the-backend-for-programs-data-with-workouts-and-exercises-in-workouts_)
-* [Edit a program](#_Modify-a-program-and-its-workouts-and-workout-links-to-exercises_)
-* [Delete a program](#__Delete-a-program_)
+* [Create program](#Create-a-program-with-workouts-and-link-workouts-to-exercises)
+* [Get all programs for that coach](#Query-the-backend-for-programs-data-with-workouts-and-exercises-in-workouts)
+* [Edit a program](#Modify-a-program-and-its-workouts-and-workout-links-to-exercises)
+* [Delete a program](#Delete-a-program)
 
 
 ### [Return to table of contents](#table-of-contents)
@@ -1314,7 +1316,7 @@ Table of contents
 
 
 # Data Model
-
+### [Return to table of contents](#table-of-contents)
 #### COACHES
 
 | Name | Type | Required | Unique | Description |
@@ -1480,7 +1482,7 @@ Table of contents
 
 
 ## Actions
-
+### [Return to table of contents](#table-of-contents)
 #### Coaches Model
 
 `addCoach(coach)` -> Creates a new coach and returns that coach
