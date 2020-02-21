@@ -423,13 +423,13 @@ Table of contents
 ----
 
 ### Client-Program Routes
-* [Get a coach's dashboard information](#Get-a-coach's-dashboard-information)
+* [Get a coach's dashboard information](#Get-dashboard-information-for-a-coach)
 * [Add clients to a program or vice versa](#Add-clients-to-a-program-or-vice-versa)
 * [Delete a program for a client or vice versa](#Delete-a-program-for-a-client-or-vice-versa)
 
 ### [Return to table of contents](#table-of-contents)
 
-#### _Get a coach's dashboard information_
+#### _Get dashboard information for a coach_
 [Client-Program Routes](#client-program-routes)
 
 * **Method**
