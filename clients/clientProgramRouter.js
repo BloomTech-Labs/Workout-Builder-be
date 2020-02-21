@@ -4,14 +4,14 @@ const Clients = require('./clients-model');
 const Programs = require('../programs/programs-model');
 const {validTokenCheck, validBodyCheck, validRecordIdCoachIdCheck} = require('../middleware/custom_middleware');
 
-/* ********************************************************
+// ********************************************************
 // POST /clients-programs
+// ********************************************************
 // request object should look like this:
-{
-  program_id: 1,
-  client_ids: [ 1, 2, 3 ]
-}
-// ******************************************************** */
+// {
+//  program_id: 1,
+//  client_ids: [ 1, 2, 3 ]
+// }
 router.post('/', validTokenCheck, validBodyCheck(['program_id', 'client_ids']), validAddClientsToProgramCheck, (req, res) => {
   let programId = req.body.program_id;
 
@@ -25,29 +25,21 @@ router.post('/', validTokenCheck, validBodyCheck(['program_id', 'client_ids']), 
   });
 
   /*
-  take the request object and turn it into clientProgramArray which looks like this:
-  [
-    { program_id: 1, client_id: 1 },
-    { program_id: 1, client_id: 2 },
-    { program_id: 1, client_id: 3 },
-  ]
+  Take the request object and turn it into clientProgramArray which looks like this:
+    [
+      { program_id: 1, client_id: 1 },
+      { program_id: 1, client_id: 2 },
+      { program_id: 1, client_id: 3 },
+    ]
   */
-  let clientIDS = [];
-  let dbclientIDS = [];
-  let alreadyLinked = false;
 
-  for (let i=0; i<clientProgramArray.length; i++) {
-    dbclientIDS.push(clientProgramArray[i].client_id);
-  }
+  let alreadyLinked = false;
 
   Clients.extractClientsInProgram(programId)
     .then(array => {
       for (let i=0; i<array.length; i++) {
-        clientIDS.push(array[i].client_id);
-      }
-      for (let i=0; i<clientIDS.length; i++) {
-        for (let j=0; j<dbclientIDS.length; j++) {
-          if (clientIDS[i] === dbclientIDS[j]) {
+        for (let j=0; j<clientProgramArray.length; j++) {
+          if (array[i].client_id === clientProgramArray[j].client_id) {
             alreadyLinked = true;
           }
         }
@@ -167,14 +159,14 @@ function validAddClientsToProgramCheck (req, res, next) {
     });
 }
 
-router.get('/getclients', validTokenCheck, (req, res) => {
+// router.get('/getclients', validTokenCheck, (req, res) => {
 
-  Clients.extractClientsInProgram(2)
-    .then(data => {
-      res.status(200).json(data);
-    })
-    .catch(error => {
-      res.status(500).json(error);
-    });
-});
+//   Clients.extractClientsInProgram(2)
+//     .then(data => {
+//       res.status(200).json(data);
+//     })
+//     .catch(error => {
+//       res.status(500).json(error);
+//     });
+// });
 module.exports = router;
