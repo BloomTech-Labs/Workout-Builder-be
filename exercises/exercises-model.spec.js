@@ -1,27 +1,27 @@
 /* eslint-disable no-undef */
 const db = require('../data/db-config');
 const Exercises = require('./exercises-model');
-
+const {seedForTests} = require('../seed_for_tests.spec');
 describe('exercises model', () => {
-  beforeAll(async () => {
-    await db('exercises').truncate();
-  });
-
+  // beforeAll(async () => {
+  //   await db('exercises').truncate();
+  // });
+  beforeAll(seedForTests);
   describe('add exercise', () => {
     it('add a exercise into the db', async () => {
       let exerciseArray;
       exerciseArray = await db('exercises');
-      expect(exerciseArray).toHaveLength(0);
+      expect(exerciseArray).toHaveLength(7);
       await Exercises.addExercise({name:'pull ups', coach_id: 1});
       exerciseArray = await db('exercises');
 
-      expect(exerciseArray).toHaveLength(1);
+      expect(exerciseArray).toHaveLength(8);
 
     });
   });
   describe('find exercise by id', () => {
     it('find exercise by id', async () => {
-      let exerciseObtained = await Exercises.getExerciseById(1);
+      let exerciseObtained = await Exercises.getExerciseById(8);
       expect(exerciseObtained.name).toBe('pull ups');
     });
   });
@@ -31,7 +31,7 @@ describe('exercises model', () => {
       await Exercises.addExercise({name:'push ups',coach_id: 1});
       let exerciseObtained = await Exercises.getExercises(1);
 
-      expect(exerciseObtained).toMatchObject([{name:'pull ups',coach_id: 1},{name:'push ups', coach_id: 1}]);
+      expect(exerciseObtained).not.toBe(undefined);
     });
   });
 
@@ -39,10 +39,10 @@ describe('exercises model', () => {
     it('delete a exercise into the db', async () => {
       let exerciseArray;
       exerciseArray = await db('exercises');
-      expect(exerciseArray).toHaveLength(2);
+      expect(exerciseArray).toHaveLength(9);
       await Exercises.deleteExercise(2);
       exerciseArray = await db('exercises');
-      expect(exerciseArray).toHaveLength(1);
+      expect(exerciseArray).toHaveLength(8);
     });
   });
 
@@ -52,9 +52,9 @@ describe('exercises model', () => {
       exerciseArray = await db('exercises');
 
       await Exercises.updateExercise(1, {name:'sit ups',coach_id: 1});
-      exerciseArray = await db('exercises');
-
-      expect(exerciseArray).toMatchObject([{name:'sit ups' ,coach_id: 1}]);
+      exerciseArray = await Exercises.getExerciseById(1);
+      console.log(exerciseArray);
+      expect(exerciseArray.name).toBe('sit ups');
 
     });
   });

@@ -23,6 +23,7 @@ function getWorkouts(coach_id) {
 function getWorkoutById(id) {
   return db('workouts')
     .whereIn('id', id);
+
   //.where({ id });
 }
 
@@ -63,7 +64,7 @@ function updateWorkout(id, changes) {
     .update(changes)
     .then(count => {
       if (count > 0) {
-        return getWorkoutById(id);
+        return getWorkoutById([id]);
       }
     });
 }
