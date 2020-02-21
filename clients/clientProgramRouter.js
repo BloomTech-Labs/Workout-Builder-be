@@ -83,7 +83,7 @@ router.delete('/', validTokenCheck, validBodyCheck(['client_id', 'program_id']),
         if (coach_id !== programObject.coach_id) {
           const errMsg = `you cannot delete record with program_id: ${record.program_id} ` +
         'because you do not have access to it';
-          res.status(404).json({ error: errMsg });
+          res.status(403).json({ error: errMsg });
         } else {
           return Clients.getClientById(record.client_id);
         }
@@ -94,7 +94,7 @@ router.delete('/', validTokenCheck, validBodyCheck(['client_id', 'program_id']),
         if (coach_id !== clientObject.coach_id) {
           const errMsg = `you cannot delete record with client_id: ${record.client_id} ` +
         'because you do not have access to it';
-          res.status(404).json({ error: errMsg });
+          res.status(403).json({ error: errMsg });
         } else {
           return Clients.deleteProgramForClient(record);
         }

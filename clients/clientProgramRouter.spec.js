@@ -95,72 +95,74 @@ describe('clientProgramRouter', function() {
 
   // ------------------- Get request for all clients for one coach ---------------------- //
 
-  //   // seeding a 2nd client
-  //   it('it should add another client for get all', function() {
-  //     return request(server)
-  //       .post('/clients')
-  //       .set('Authorization', token)
-  //       .send({first_name:'tod2',last_name:'Smith2',email:'ts2@gmail.com'})
+  it('should get dashboard info', function() {
+    return request(server)
+      .get('/clients-programs/dashboard')
+      .set('Authorization', token)
+      .then(res => {
+        expect(res.status).toBe(200);
+        expect(res.body[0].name).toBe('progB');
+        expect(res.body[5].first_name).toBe('clientFirstI');
+      });
+  });
 
-  //       .then(res => {
-  //         expect(res.status).toBe(201);
-  //       });
-  //   });
-  //   it('getting 200 and data from clients route', function() {
-  //     return request(server)
-  //       .get('/clients')
-  //       .set('Authorization', token)
-  //       .then(res => {
-  //         expect(res.status).toBe(200);
-  //         expect(res.body).toMatchObject([{first_name:'tod',last_name:'Smith',email:'ts@gmail.com'},{first_name:'tod2',last_name:'Smith2',email:'ts2@gmail.com'}]);
+  it ('should not get any data since no token', function() {
+    return request(server)
+      .get('/clients-programs/dashboard')
+      .then(res => {
+        expect(res.status).toBe(400);
+      });
+  });
 
-  //       });
-  //   });
+  // ------------------- Delete Request ---------------------- //
 
-  //   it ('it should not get since no token', function() {
+  it ('it should delete a client from a program or vice versa', function () {
+    return request(server)
+      .delete('/clients-programs')
+      .set('Authorization', token)
+      .send({program_id: 2, client_id: 9})
+      .then(res => {
+        expect(res.status).toBe(200);
+      });
+  });
 
-  //     return request(server)
-  //       .get('/clients')
-  //       .then(res => {
-  //         expect(res.status).toBe(400);
-  //       });
-  //   });
+  it ('it should not delete a client from a program since no token', function () {
+    return request(server)
+      .delete('/clients-programs')
+      .send({program_id: 2, client_id: 9})
+      .then(res => {
+        expect(res.status).toBe(400);
+      });
+  });
 
-  //   // ------------------- Delete Request ---------------------- //
+  it ('it should not delete a client from a program since the client does not exist', function () {
+    return request(server)
+      .delete('/clients-programs')
+      .set('Authorization', token)
+      .send({program_id: 2, client_id: 17})
+      .then(res => {
+        expect(res.status).toBe(404);
+      });
+  });
 
-  //   it ('it should delete a client', function () {
-  //     return request(server)
-  //       .delete('/clients/3')
-  //       .set('Authorization', token)
-  //       .then(res => {
-  //         expect(res.status).toBe(200);
-  //       });
-  //   });
+  it ('it should not delete a client from a program since the program does not exist', function () {
+    return request(server)
+      .delete('/clients-programs')
+      .set('Authorization', token)
+      .send({program_id: 5, client_id: 9})
+      .then(res => {
+        expect(res.status).toBe(404);
+      });
+  });
 
-  //   it ('it should not delete a client since no token', function () {
-  //     return request(server)
-  //       .delete('/clients/2')
-  //       .then(res => {
-  //         expect(res.status).toBe(400);
-  //       });
-  //   });
-
-  //   it ('it should not delete a client since the client does not exist', function () {
-  //     return request(server)
-  //       .delete('/clients/55')
-  //       .set('Authorization', token)
-  //       .then(res => {
-  //         expect(res.status).toBe(404);
-  //       });
-  //   });
-
-  //   it ('it should not delete an exercise since no access', function () {
-  //     return request(server)
-  //       .delete('/clients/1')
-  //       .set('Authorization', token)
-  //       .then(res => {
-  //         expect(res.status).toBe(403);
-  //       });
-  //   });
+  it ('it should not delete a client from a program since you do not have access', function () {
+    return request(server)
+      .delete('/clients-programs')
+      .set('Authorization', token)
+      .send({program_id: 1, client_id: 4})
+      .then(res => {
+        expect(res.status).toBe(403);
+      });
+  });
 
 });
