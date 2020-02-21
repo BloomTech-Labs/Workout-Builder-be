@@ -2,7 +2,7 @@
 
 const request = require('supertest');
 const server = require('../api/server');
-const {seedForTests} = require('../seed-for-tests.spec');
+const {seedForTests} = require('../seed_for_tests.spec');
 
 let token;
 
@@ -20,7 +20,7 @@ describe('clientProgramRouter', function() {
       .send({ email: 'as@mail.com', password: 'qaz' })
       .then(res => {
         expect(res.status).toBe(200);
-        token = res.body.token;
+        token = `Bearer ${res.body.token}`;
         console.log('token', token);
       });
 

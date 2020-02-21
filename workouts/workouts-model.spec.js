@@ -87,7 +87,7 @@ describe('workouts model', () => {
 
   test('delete exercise_workout record by exercise id & workout_id', async ()=>{
     const receivedData = await Workouts.deleteExerciseInWorkout([{exercise_id:6,workout_id:4}]);
-    expect(receivedData).toEqual(1);\
+    expect(receivedData).toEqual(1);
   });
 
 

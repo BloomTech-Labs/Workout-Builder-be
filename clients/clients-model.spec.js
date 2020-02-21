@@ -12,11 +12,11 @@ describe('Clients model', () => {
     it('add a client into the db', async () => {
       let clientArray;
       clientArray = await db('clients');
-      expect(clientArray).toHaveLength(6);
+      expect(clientArray).toHaveLength(9);
       await Clients.addClient({first_name:'client', last_name:'dude',email: 'client@mail.com',coach_id: 1});
       clientArray = await db('clients');
 
-      expect(clientArray).toHaveLength(7);
+      expect(clientArray).toHaveLength(10);
 
     });
   });
@@ -41,10 +41,10 @@ describe('Clients model', () => {
     it('delete a client into the db', async () => {
       let clientArray;
       clientArray = await db('clients');
-      expect(clientArray).toHaveLength(8);
+      expect(clientArray).toHaveLength(11);
       await Clients.deleteClient(2);
       clientArray = await db('clients');
-      expect(clientArray).toHaveLength(7);
+      expect(clientArray).toHaveLength(10);
     });
   });
 

@@ -134,7 +134,7 @@ describe('clientsRouter', function() {
   it ('it should get a client', function() {
 
     return request(server)
-      .get('/clients/8')
+      .get('/clients/11')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
@@ -174,7 +174,7 @@ describe('clientsRouter', function() {
   it ('it should update data to clients db', function() {
 
     return request(server)
-      .put('/clients/8')
+      .put('/clients/11')
       .set('Authorization', token)
       .send({first_name:'jerry',last_name:'Smiths',email:'js@gmail.com'})
 
@@ -234,7 +234,7 @@ describe('clientsRouter', function() {
   // ------------------- Delete Request ---------------------- //
   it ('it should delete a client', function () {
     return request(server)
-      .delete('/clients/8')
+      .delete('/clients/11')
       .set('Authorization', token)
       .then(res => {
         expect(res.status).toBe(200);
