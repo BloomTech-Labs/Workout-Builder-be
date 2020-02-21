@@ -55,9 +55,9 @@ Table of contents
 
 ### AUTH Routes
 
-* [Local Register](#Register-a-user-with-local-account_)
-* [Local Login](#Login-a-user-with-a-local-account_)
-* [Google Login](#Login-a-user-with-Google-social-login_)
+* [Local Register](#Register-a-user-with-local-account)
+* [Local Login](#Login-a-user-with-a-local-account)
+* [Google Login](#Login-a-user-with-Google-social-login)
 
 ### [Return to table of contents](#table-of-contents)
 ----
