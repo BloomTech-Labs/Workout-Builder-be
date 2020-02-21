@@ -70,32 +70,31 @@ async function seedForTests() {
     {first_name: 'clientFirstC', last_name: 'clientLastC', email: 'clientc@mail.com', coach_id: 1,},
     {first_name: 'clientFirstD', last_name: 'clientLastD', email: 'clientd@mail.com', coach_id: 2,},
     {first_name: 'clientFirstE', last_name: 'clientLastE', email: 'cliente@mail.com', coach_id: 2,},
-    {first_name: 'clientFirstF', last_name: 'clientLastF', email: 'clientf@mail.com', coach_id: 2,}
+    {first_name: 'clientFirstF', last_name: 'clientLastF', email: 'clientf@mail.com', coach_id: 2,},
+    {first_name: 'clientFirstG', last_name: 'clientLastG', email: 'clientg@mail.com', coach_id: 1,},
+    {first_name: 'clientFirstH', last_name: 'clientLastH', email: 'clienth@mail.com', coach_id: 1,},
+    {first_name: 'clientFirstI', last_name: 'clientLastI', email: 'clienti@mail.com', coach_id: 1,}
   ]);
 
   //Seed the clients_programs table
   await db('clients_programs').truncate();
   await db('clients_programs').insert([
     //For coach_id =1
-    {client_id:3, program_id:2, start_date:'2020-2-10', current_day:1},
-    {client_id:1, program_id:2, start_date:'2020-6-15', current_day:4},
-    {client_id:2, program_id:2, start_date:'2020-12-05', current_day:7},
-    // //For coach_id = 2
-    {client_id:6, program_id:1, start_date:'2020-3-11', current_day:2},
-    {client_id:5, program_id:1, start_date:'2020-4-17', current_day:5},
-    {client_id:4, program_id:1, start_date:'2020-11-30', current_day:14}
+    {client_id:3, program_id:2, start_date:'02/10/2020', current_day:1},
+    {client_id:1, program_id:2, start_date:'03/15/2020', current_day:4},
+    {client_id:2, program_id:2, start_date:'02/15/2020', current_day:7},
 
+    // //For coach_id = 2
+    {client_id:6, program_id:1, start_date:'05/10/2020', current_day:2},
+    {client_id:5, program_id:1, start_date:'06/15/2020', current_day:5},
+    {client_id:4, program_id:1, start_date:'07/15/2020', current_day:14}
   ]);
 
 }
 
-describe('This is a dummy test in seed_for_tests.spec.js', ()=>{
-  describe('dummy', ()=> {
-    it('dummy',()=>{
-      let dummy = true;
-      expect(dummy).toBe(true);
-    });
-  });
+test('dummy',()=>{
+  let dummy = true;
+  expect(dummy).toBe(true);
 });
 
 
