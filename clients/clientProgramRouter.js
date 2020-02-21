@@ -32,9 +32,36 @@ router.post('/', validTokenCheck, validBodyCheck(['program_id', 'client_ids']), 
     { program_id: 1, client_id: 3 },
   ]
   */
-  Clients.addClientsToProgram(clientProgramArray)
+  let clientIDS = [];
+  let dbclientIDS = [];
+  let alreadyLinked = false;
+
+  for (let i=0; i<clientProgramArray.length; i++) {
+    dbclientIDS.push(clientProgramArray[i].client_id);
+  }
+
+  Clients.extractClientsInProgram(programId)
+    .then(array => {
+      for (let i=0; i<array.length; i++) {
+        clientIDS.push(array[i].client_id);
+      }
+      for (let i=0; i<clientIDS.length; i++) {
+        for (let j=0; j<dbclientIDS.length; j++) {
+          if (clientIDS[i] === dbclientIDS[j]) {
+            alreadyLinked = true;
+          }
+        }
+      }
+      if (alreadyLinked === true) {
+        res.status(400).json({ error: `one or more of the clients are already linked to program with id: ${programId}`});
+      } else {
+        return Clients.addClientsToProgram(clientProgramArray);
+      }
+    })
     .then(savedArray => {
-      res.status(201).json(savedArray);
+      if (savedArray) {
+        res.status(201).json(savedArray);
+      }
     })
     .catch(error => {
       res.status(500).json(error);
@@ -125,12 +152,14 @@ function validAddClientsToProgramCheck (req, res, next) {
       }
     })
     .then(returnObject => {
-      if (returnObject.idExists === false) {
-        res.status(400).json({ message: `client with id: ${returnObject.badId} does not exist` });
-      }else if (returnObject.validCoachId === false) {
-        res.status(400).json({ message: `you do not have access to client with id: ${returnObject.badCId}` });
-      } else {
-        next();
+      if (returnObject) {
+        if (returnObject.idExists === false) {
+          res.status(400).json({ message: `client with id: ${returnObject.badId} does not exist` });
+        }else if (returnObject.validCoachId === false) {
+          res.status(400).json({ message: `you do not have access to client with id: ${returnObject.badCId}` });
+        } else {
+          next();
+        }
       }
     })
     .catch(error => {
@@ -138,4 +167,14 @@ function validAddClientsToProgramCheck (req, res, next) {
     });
 }
 
+router.get('/getclients', validTokenCheck, (req, res) => {
+
+  Clients.extractClientsInProgram(2)
+    .then(data => {
+      res.status(200).json(data);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 module.exports = router;
