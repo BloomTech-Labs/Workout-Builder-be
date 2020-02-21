@@ -41,6 +41,7 @@ Table of contents
    * [Data Models](#data-model)
    * [Actions](#actions)
    * [Environment Variables](#Environment-Variables)
+   * [Project Information](#Contributing)
 
 
 
@@ -422,7 +423,7 @@ Table of contents
 ----
 
 ### Client-Program Routes
-* [Get a coach's dashboard information](#Get-a-coach's-dashboard-information)
+* [Get a coach's dashboard information](#get-a-coach's-dashboard-information)
 * [Add clients to a program or vice versa](#Add-clients-to-a-program-or-vice-versa)
 * [Delete a program for a client or vice versa](#Delete-a-program-for-a-client-or-vice-versa)
 
@@ -1566,7 +1567,7 @@ Table of contents
 
 ---
 ## Environment Variables
-
+### [Return to table of contents](#table-of-contents)
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
@@ -1621,3 +1622,6 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 ## Documentation
 
 See [Frontend Documentation](https://github.com/Lambda-School-Labs/Workout-Builder-fe) for details on the frontend of our project.
+
+
+### [Return to table of contents](#table-of-contents)
