@@ -2,63 +2,83 @@
 const db = require('../data/db-config');
 const Clients = require('./clients-model');
 const {seedForTests} = require('../seed_for_tests.spec');
+const {jestTestOrder} = require('../consts');
 
-describe('Clients model', () => {
+module.exports = {
+  clientModelSpecTest
+};
+
+function clientModelSpecTest() {
+
+  describe('Clients model', () => {
   // beforeAll(async () => {
   //   await db('clients').truncate();
   // });
-  beforeAll(seedForTests);
-  describe('add client', () => {
-    it('add a client into the db', async () => {
-      let clientArray;
-      clientArray = await db('clients');
-      expect(clientArray).toHaveLength(9);
-      await Clients.addClient({first_name:'client', last_name:'dude',email: 'client@mail.com',coach_id: 1});
-      clientArray = await db('clients');
+    // beforeAll(seedForTests);
 
-      expect(clientArray).toHaveLength(10);
-
+    beforeAll(async () => {
+      jestTestOrder.push('clientModelSpecTest');
+      await seedForTests();
     });
-  });
-  describe('find client by id', () => {
-    it('find client by id', async () => {
-      let clientObtained = await Clients.getClientById(1);
-      expect(clientObtained.email).toBe('clienta@mail.com');
 
-      expect(clientObtained.first_name).toBe('clientFirstA');
+    describe('add client', () => {
+      it('add a client into the db', async () => {
+        let clientArray;
+        clientArray = await db('clients');
+        expect(clientArray).toHaveLength(9);
+        await Clients.addClient({first_name:'client', last_name:'dude',email: 'client@mail.com',coach_id: 1});
+        clientArray = await db('clients');
+
+        expect(clientArray).toHaveLength(10);
+
+      });
     });
-  });
-  describe('find all clients for that coach', () => {
-    it('find all clients for that coach', async () => {
-      await Clients.addClient({first_name:'client2', last_name:'dude2',email: 'client2@mail.com',coach_id: 1});
-      let clientObtained = await Clients.getClients(1);
+    describe('find client by id', () => {
+      it('find client by id', async () => {
+        let clientObtained = await Clients.getClientById(1);
+        expect(clientObtained.email).toBe('clienta@mail.com');
 
-      expect(clientObtained).not.toBe(undefined);
+        expect(clientObtained.first_name).toBe('clientFirstA');
+      });
     });
-  });
+    describe('find all clients for that coach', () => {
+      it('find all clients for that coach', async () => {
+        await Clients.addClient({first_name:'client2', last_name:'dude2',email: 'client2@mail.com',coach_id: 1});
+        let clientObtained = await Clients.getClients(1);
 
-  describe('delete client', () => {
-    it('delete a client into the db', async () => {
-      let clientArray;
-      clientArray = await db('clients');
-      expect(clientArray).toHaveLength(11);
-      await Clients.deleteClient(2);
-      clientArray = await db('clients');
-      expect(clientArray).toHaveLength(10);
+        expect(clientObtained).not.toBe(undefined);
+      });
     });
-  });
 
-  describe('update client', () => {
-    it('update a client into the db', async () => {
-      let clientArray;
-      clientArray = await db('clients');
-
-      await Clients.updateClient(3, {first_name:'joe', last_name:'bob',email: 'joebob@mail.com',coach_id: 1});
-      clientArray = await Clients.getClientById(3);
-
-      expect(clientArray.first_name).toBe('joe');
-
+    describe('delete client', () => {
+      it('delete a client into the db', async () => {
+        let clientArray;
+        clientArray = await db('clients');
+        expect(clientArray).toHaveLength(11);
+        await Clients.deleteClient(2);
+        clientArray = await db('clients');
+        expect(clientArray).toHaveLength(10);
+      });
     });
+
+    describe('update client', () => {
+      it('update a client into the db', async () => {
+        let clientArray;
+        clientArray = await db('clients');
+
+        await Clients.updateClient(3, {first_name:'joe', last_name:'bob',email: 'joebob@mail.com',coach_id: 1});
+        clientArray = await Clients.getClientById(3);
+
+        expect(clientArray.first_name).toBe('joe');
+
+      });
+    });
+
   });
 
+}
+
+test('dummy',()=>{
+  let dummy = true;
+  expect(dummy).toBe(true);
 });
