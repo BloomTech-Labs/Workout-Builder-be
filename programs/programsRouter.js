@@ -202,7 +202,7 @@ async function saveWorkoutsExerciseLinks(bigDataObject,program_id,coach_id) {
     // console.log('Here in saveWorkoutsExerciseLinks');
     bigDataObject.workouts[iW].exercises.forEach((elE) => {
       let tempObject2 = {};
-      tempObject2.exercise_id = elE.id;
+      tempObject2.exercise_id = elE.exercise_id;
       tempObject2.exercise_details = elE.exercise_details;
       tempObject2.order = elE.order;
       tempObject2.workout_id = workoutAdded[0].id;
@@ -270,7 +270,7 @@ function checkPostPutEpKeys(isPut) {
     //Check exercises
     if(!isError) {
       const wrkOutLen = workouts.length;
-      keys = ['id','order','exercise_details'];
+      keys = ['exercise_id','order','exercise_details'];
       let iW=0;
       while(!isError && iW<wrkOutLen) {
         const exercises = workouts[iW].exercises;
@@ -332,7 +332,7 @@ function chkCoachIDRecordIDPostPutEp(isPut) {
         let iW=0;
         while(passExerIdChk && iW<woLength) {
           const exercises = workouts[iW].exercises;
-          const exerIdArray = exercises.map(el=>el.id);
+          const exerIdArray = exercises.map(el=>el.exercise_id);
           const rcdObj = await validRecordIdCoachIdCheck(coach_id,'exercises',exerIdArray);
           if(!rcdObj.idExists) {
             passExerIdChk=false;
