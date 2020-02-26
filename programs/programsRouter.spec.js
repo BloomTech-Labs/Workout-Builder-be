@@ -79,7 +79,7 @@ describe('programs router tests', ()=>{
   });
 
 
-  test('get programs by coach id', async ()=>{
+  test('post a program', async ()=>{
     const res = await request(server).post('/programs').set('Authorization', token)
       .send({
         'name': 'progC',
@@ -92,9 +92,9 @@ describe('programs router tests', ()=>{
             'description': 'work1 desc',
             'day': 1,
             'exercises': [
-              {'id': 1, 'order':1, 'exercise_details': 'exD1_work1'},
-              {'id': 2, 'order':2, 'exercise_details': 'exD2_work1'},
-              {'id': 3, 'order':3, 'exercise_details': 'exD3_work1'}
+              {'exercise_id': 1, 'order':1, 'exercise_details': 'exD1_work1'},
+              {'exercise_id': 2, 'order':2, 'exercise_details': 'exD2_work1'},
+              {'exercise_id': 3, 'order':3, 'exercise_details': 'exD3_work1'}
             ]
           },
 
@@ -103,9 +103,9 @@ describe('programs router tests', ()=>{
             'description': 'work2 desc',
             'day': 2,
             'exercises': [
-              {'id': 4, 'order':1, 'exercise_details': 'exD4_work2'},
-              {'id': 1, 'order':2, 'exercise_details': 'exD1_work2'},
-              {'id': 2, 'order':3, 'exercise_details': 'exD2_work2'}
+              {'exercise_id': 4, 'order':1, 'exercise_details': 'exD4_work2'},
+              {'exercise_id': 1, 'order':2, 'exercise_details': 'exD1_work2'},
+              {'exercise_id': 2, 'order':3, 'exercise_details': 'exD2_work2'}
             ]
           },
 
@@ -114,8 +114,8 @@ describe('programs router tests', ()=>{
             'description': 'work3 desc',
             'day': 3,
             'exercises': [
-              {'id': 3, 'order':1, 'exercise_details': 'exD3_work3'},
-              {'id': 1, 'order':2, 'exercise_details': 'exD1_work3'}
+              {'exercise_id': 3, 'order':1, 'exercise_details': 'exD3_work3'},
+              {'exercise_id': 1, 'order':2, 'exercise_details': 'exD1_work3'}
             ]
           }
         ]
@@ -252,7 +252,7 @@ describe('programs router tests', ()=>{
     ]);
   });
 
-  test('get programs by coach id', async ()=>{
+  test('delete a program', async ()=>{
     const res = await request(server).delete('/programs/3').set('Authorization', token);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({

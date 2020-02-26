@@ -827,9 +827,9 @@ Table of contents
                 "description": "work1 desc", 
                 "day": 1, 
                 "exercises": [
-                    {"id": 1, "order":1, "exercise_details": "exD1_work1"}, 
-                    {"id": 2, "order":2, "exercise_details": "exD2_work1"}, 
-                    {"id": 3, "order":3, "exercise_details": "exD3_work1"} 
+                    {"exercise_id": 1, "order":1, "exercise_details": "exD1_work1"}, 
+                    {"exercise_id": 2, "order":2, "exercise_details": "exD2_work1"}, 
+                    {"exercise_id": 3, "order":3, "exercise_details": "exD3_work1"} 
                 ]
             }, 
             
@@ -838,9 +838,9 @@ Table of contents
                 "description": "work2 desc", 
                 "day": 2, 
                 "exercises": [
-                    {"id": 4, "order":1, "exercise_details": "exD4_work2"}, 
-                    {"id": 5, "order":2, "exercise_details": "exD5_work2"}, 
-                    {"id": 6, "order":3, "exercise_details": "exD6_work2"} 
+                    {"exercise_id": 4, "order":1, "exercise_details": "exD4_work2"}, 
+                    {"exercise_id": 5, "order":2, "exercise_details": "exD5_work2"}, 
+                    {"exercise_id": 6, "order":3, "exercise_details": "exD6_work2"} 
                 ]
             }, 
           
@@ -849,8 +849,8 @@ Table of contents
                 "description": "work3 desc", 
                 "day": 3, 
                 "exercises": [
-                    {"id": 1, "order":1, "exercise_details": "exD1_work3"}, 
-                    {"id": 6, "order":2, "exercise_details": "exD7_work3"} 
+                    {"exercise_id": 1, "order":1, "exercise_details": "exD1_work3"}, 
+                    {"exercise_id": 6, "order":2, "exercise_details": "exD7_work3"} 
                 ]
             }
         ]
@@ -1122,9 +1122,9 @@ Table of contents
                 "description": "work1 desc", 
                 "day": 1, 
                 "exercises": [
-                    {"id": 1, "order":1, "exercise_details": "exD1_work1"}, 
-                    {"id": 2, "order":2, "exercise_details": "exD2_work1"}, 
-                    {"id": 3, "order":3, "exercise_details": "exD3_work1"} 
+                    {"exercise_id": 1, "order":1, "exercise_details": "exD1_work1"}, 
+                    {"exercise_id": 2, "order":2, "exercise_details": "exD2_work1"}, 
+                    {"exercise_id": 3, "order":3, "exercise_details": "exD3_work1"} 
                 ]
             }, 
             
@@ -1133,9 +1133,9 @@ Table of contents
                 "description": "work2 desc", 
                 "day": 2, 
                 "exercises": [
-                    {"id": 4, "order":1, "exercise_details": "exD4_work2"}, 
-                    {"id": 5, "order":2, "exercise_details": "exD5_work2"}, 
-                    {"id": 6, "order":3, "exercise_details": "exD6_work2"} 
+                    {"exercise_id": 4, "order":1, "exercise_details": "exD4_work2"}, 
+                    {"exercise_id": 5, "order":2, "exercise_details": "exD5_work2"}, 
+                    {"exercise_id": 6, "order":3, "exercise_details": "exD6_work2"} 
                 ]
             }, 
           
@@ -1144,8 +1144,8 @@ Table of contents
                 "description": "work3 desc", 
                 "day": 3, 
                 "exercises": [
-                    {"id": 1, "order":1, "exercise_details": "exD1_work3"}, 
-                    {"id": 6, "order":2, "exercise_details": "exD7_work3"} 
+                    {"exercise_id": 1, "order":1, "exercise_details": "exD1_work3"}, 
+                    {"exercise_id": 6, "order":2, "exercise_details": "exD7_work3"} 
                 ]
             }
         ]
