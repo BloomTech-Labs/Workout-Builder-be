@@ -1,32 +1,32 @@
 
 exports.up = function(knex) {
   return knex.schema
-    .createTable('exercises_workouts', tbl => {
-      tbl.primary(['exercise_id', 'workout_id']);
+    .createTable('clients_programs', tbl => {
+      tbl.primary(['client_id', 'program_id']);
       tbl
-        .integer('exercise_id')
+        .integer('client_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('exercises')
+        .inTable('clients')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
       tbl
-        .integer('workout_id')
+        .integer('program_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('workouts')
+        .inTable('programs')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
-      tbl.integer('order')
+      tbl.string('start_date')
         .notNullable();
-      tbl.string('exercise_details', 1000)
-        .notNullable();
+      tbl.integer('current_day');
+
     });
 };
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists('exercises_workouts');
+    .dropTableIfExists('clients_programs');
 };
