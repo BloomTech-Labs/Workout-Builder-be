@@ -10,7 +10,12 @@ const clientProgramRouter = require('../clients/clientProgramRouter');
 
 // create server
 const server = express();
+const Sentry = require('@sentry/node');
 
+Sentry.init({ dsn: process.env.SENTRY_DSN });
+
+// The request handler must be the first middleware on the app
+server.use(Sentry.Handlers.requestHandler());
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
@@ -26,5 +31,8 @@ server.use('/exercises', exercisesRouter);
 server.use('/clients', clientsRouter);
 server.use('/programs', programsRouter);
 server.use('/clients-programs', clientProgramRouter);
+
+// The error handler must be before any other error middleware and after all controllers
+server.use(Sentry.Handlers.errorHandler());
 
 module.exports = server;
